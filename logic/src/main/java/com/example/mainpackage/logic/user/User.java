@@ -8,18 +8,28 @@ package com.example.mainpackage.logic.user;
 import java.io.Serializable;
 
 public class User implements Serializable{
-    
-    private final String username;
-    
-    public static User createUser(String username) {
-        if (username == null || username.isEmpty()) {
-            return null;
+
+    private static User sInstance;
+
+    private String username;
+
+    public static User getInstance() {
+        if (sInstance == null) {
+            synchronized (User.class) {
+                if (sInstance == null) {
+                    sInstance = new User();
+                }
+            }
         }
-        
-        return new User(username);
+
+        return sInstance;
+    }
+
+    private User() {
+        // Do nothing.
     }
     
-    private User(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
@@ -31,6 +41,5 @@ public class User implements Serializable{
     public String toString() {
         return "User{" + "username=" + username + '}';
     }
-    
-    
+
 }

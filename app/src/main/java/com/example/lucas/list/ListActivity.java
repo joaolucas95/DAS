@@ -1,6 +1,7 @@
 package com.example.lucas.list;
 
 import com.example.lucas.edit.EditActivity;
+import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
 
 import android.content.Intent;
@@ -19,6 +20,20 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void setUiComponents() {
+        setupToolbar();
+        setNewButton();
+    }
+
+    private void setupToolbar() {
+        String username = LogicController.getInstance().getFacade().getCurrentUsername();
+
+        String helloMessage = getString(R.string.hello_message, username);
+
+        //noinspection ConstantConditions
+        getSupportActionBar().setTitle(helloMessage);
+    }
+
+    private void setNewButton() {
         findViewById(R.id.btn_new).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

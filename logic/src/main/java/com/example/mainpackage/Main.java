@@ -12,6 +12,7 @@ import com.example.mainpackage.logic.project.Test;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.user.User;
+import com.example.mainpackage.logic.utils.Config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,9 +30,9 @@ public class Main {
         //printTestB(true, true, false, false); //testing the global project
 
         //User for tests
-        User user = User.createUser("Joaquim");
+        User.getInstance().setUsername("Joaquim");
 
-        Project projectTestA = printTestAWithCommands(user); //testing the module TestA with commands and saving in binary file; also return the created project
+        Project projectTestA = printTestAWithCommands(User.getInstance()); //testing the module TestA with commands and saving in binary file; also return the created project
         printTestASimulations(projectTestA);
         //Project projectTestB = printTestBWithCommands(user); //testing the module TestB with commands and saving in binary file
         //printTestBSimulations(projectTestB);

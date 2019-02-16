@@ -5,7 +5,7 @@
  */
 package com.example.mainpackage.logic.project.FileManagement;
 
-import com.example.mainpackage.Config;
+import com.example.mainpackage.logic.utils.Config;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;

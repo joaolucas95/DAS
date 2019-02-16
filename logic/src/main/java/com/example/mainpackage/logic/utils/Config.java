@@ -1,4 +1,4 @@
-package com.example.mainpackage;
+package com.example.mainpackage.logic.utils;
 
 public class Config {
     public static int FILE_TYPE_BINARY = 0;

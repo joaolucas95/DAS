@@ -5,7 +5,7 @@
  */
 package com.example.mainpackage.logic.project.FileManagement;
 
-import com.example.mainpackage.Config;
+import com.example.mainpackage.logic.utils.Config;
 import com.example.mainpackage.logic.project.FileManagement.SaveFilePackage.SaveProjectBuilder;
 import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.BinaryLoadProjectAdapter;
 import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.BlifLoadProjectAdapter;

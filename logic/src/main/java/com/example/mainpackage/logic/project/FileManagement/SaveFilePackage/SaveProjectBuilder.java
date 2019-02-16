@@ -5,7 +5,7 @@
  */
 package com.example.mainpackage.logic.project.FileManagement.SaveFilePackage;
 
-import com.example.mainpackage.Config;
+import com.example.mainpackage.logic.utils.Config;
 import com.example.mainpackage.logic.project.Project;
 
 /**

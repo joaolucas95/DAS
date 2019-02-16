@@ -6,4 +6,6 @@
 	<string name="edit_save">Save</string>
 	<string name="edit_undo">Undo</string>
 	<string name="edit_redo">Redo</string>
+	<string name="hello_message">Hello %1$s</string>
+	<string name="invalid_username">Invalid username</string>
 </resources>
