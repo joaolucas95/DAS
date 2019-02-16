@@ -1,0 +1,81 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.example.mainpackage.logic.project;
+
+import com.example.mainpackage.logic.project.component.Component;
+import com.example.mainpackage.logic.project.component.ComponentModule;
+import com.example.mainpackage.logic.project.component.ComponentOutput;
+import com.example.mainpackage.logic.project.component.ComponentType;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ComponentBuilder {
+
+    private List<Component> data;
+
+    public ComponentBuilder() {
+        this.data = new ArrayList<>();
+    }
+
+    public void addNewComponent(Component component)
+    {
+        this.data.add(component);
+    }
+
+
+    public void connectToComponent(Command command){
+
+    }
+
+    public Component build(){
+
+        Component finalComponent = Component.getComponent(ComponentType.PROJECT);
+        ((ComponentModule) finalComponent).addComponent(data);
+
+        //set the output components as previous of component
+        for(Component component : data){
+            if(component instanceof ComponentOutput)
+                finalComponent.setPrevious(component);
+        }
+        return finalComponent;
+    }
+
+    public void addComponentToData(Component component)
+    {
+        this.data.add(component);
+    }
+
+    public void removeComponentFromData(String componentToRemove){
+        //remove the component...
+        for(Component component : data){
+            if(component.getName().equals(componentToRemove))
+            {
+                data.remove(component);
+                break;
+            }
+        }
+    }
+
+    public Component findComponentWithName(String name){
+        for(Component component : data){
+            //if is a module component verify his data
+            if(component instanceof ComponentModule){
+                for(Component componentOfModule : ((ComponentModule)component).getData()){
+                    if(componentOfModule.getName().equals(name))
+                        return componentOfModule;
+                }
+            }
+            else
+            {
+                if(component.getName().equals(name))
+                    return component;
+            }
+        }
+        return null;
+    }
+
+}
