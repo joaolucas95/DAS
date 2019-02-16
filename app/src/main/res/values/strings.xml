@@ -2,4 +2,5 @@
 	<string name="app_name">DAS</string>
 	<string name="enter_name">Enter name:</string>
 	<string name="enter">Enter</string>
+	<string name="new_project">New project</string>
 </resources>
