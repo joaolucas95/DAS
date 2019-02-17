@@ -1,5 +1,7 @@
 package com.example.mainpackage;
 
+import com.example.mainpackage.logic.project.component.ComponentType;
+
 import java.util.List;
 
 public interface ILogicFacade {
@@ -8,5 +10,7 @@ public interface ILogicFacade {
 
     String getCurrentUsername();
 
-    List<String> getComponentsNames();
+    List<ComponentType> getComponentsTypes();
+
+    String getComponentsTypeName(ComponentType type);
 }

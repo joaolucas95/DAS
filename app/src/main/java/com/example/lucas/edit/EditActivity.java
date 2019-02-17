@@ -2,6 +2,7 @@ package com.example.lucas.edit;
 
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
+import com.example.mainpackage.logic.project.component.ComponentType;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,20 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EditActivity extends AppCompatActivity {
+
+    private ComponentType mSelectedType;
+    private List<ComponentType> mTypes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        setUiComponents();
+        mTypes = LogicController.getInstance().getFacade().getComponentsTypes();
+        mSelectedType = mTypes.get(0);
     }
 
     @Override
@@ -59,15 +63,14 @@ public class EditActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setUiComponents() {
-
-    }
-
     private void showAddDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.choose_component);
 
-        List<String> componentNames = LogicController.getInstance().getFacade().getComponentsNames();
+        List<String> componentNames = new ArrayList<>();
+        for (ComponentType type : mTypes) {
+            componentNames.add(LogicController.getInstance().getFacade().getComponentsTypeName(type));
+        }
 
         if (componentNames.isEmpty()) {
             Toast.makeText(this, R.string.dialog_not_found, Toast.LENGTH_SHORT).show();
@@ -77,18 +80,19 @@ public class EditActivity extends AppCompatActivity {
         String[] components = new String[componentNames.size()];
         components = componentNames.toArray(components);
 
-        int checkedItem = 1;
+        int checkedItem = 0;
         builder.setSingleChoiceItems(components, checkedItem, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // user checked an item
+                // Do nothing.
             }
         });
 
         builder.setPositiveButton(R.string.edit_add, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // user clicked OK
+                int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                mSelectedType = mTypes.get(pos);
             }
         });
 
@@ -96,5 +100,9 @@ public class EditActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    public ComponentType getSelectedType() {
+        return mSelectedType;
     }
 }

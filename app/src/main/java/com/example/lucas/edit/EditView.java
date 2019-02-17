@@ -1,6 +1,10 @@
 package com.example.lucas.edit;
 
+import com.example.mainpackage.logic.project.component.ComponentType;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Point;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -29,7 +33,11 @@ public class EditView extends AppCompatImageView {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 Point point = new Point((int) event.getX(), (int) event.getY());
-                Toast.makeText(getContext(), point.toString(), Toast.LENGTH_SHORT).show();
+
+                //noinspection ConstantConditions
+                ComponentType type = getActivity().getSelectedType();
+
+                Toast.makeText(getContext(), type.name() + ", " + point.toString(), Toast.LENGTH_SHORT).show();
                 break;
 
                 default:
@@ -39,5 +47,18 @@ public class EditView extends AppCompatImageView {
 
 
         return true;
+    }
+
+    private EditActivity getActivity() {
+        Context context = getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof EditActivity) {
+                return (EditActivity) context;
+            }
+
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+
+        return null;
     }
 }

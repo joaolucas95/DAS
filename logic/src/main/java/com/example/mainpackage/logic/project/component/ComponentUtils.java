@@ -9,22 +9,22 @@ public class ComponentUtils {
         // Do nothing.
     }
 
-    public static List<String> getComponentsNames() {
+    public static List<ComponentType> getComponentsTypes() {
         ComponentType[] components = ComponentType.values();
 
-        List<String> aux = new ArrayList<>();
+        List<ComponentType> aux = new ArrayList<>();
         for (ComponentType type: components) {
             if (type == ComponentType.PROJECT) {
                 continue;
             }
 
-            aux.add(getComponentName(type));
+            aux.add(type);
         }
 
         return aux;
     }
 
-    private static String getComponentName(ComponentType type) {
+    public static String getComponentName(ComponentType type) {
         switch (type) {
             case INPUT:
                 return "Input";
