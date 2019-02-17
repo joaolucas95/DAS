@@ -4,4 +4,9 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
+	<com.example.lucas.edit.EditView
+			android:id="@+id/edit_view"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"/>
+
 </RelativeLayout>
