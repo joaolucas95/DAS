@@ -1,72 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.statemachinepackage;
 
-/**
- *
- * @author BrunoCoelho
- */
-public class ModuleManagementState implements IState {
-    @Override
-    public IState getProjectManagement() {
-        return this;
+
+import com.example.mainpackage.logic.project.CommandAddComponent;
+import com.example.mainpackage.logic.project.CommandManager;
+import com.example.mainpackage.logic.project.component.ComponentType;
+
+public class ModuleManagementState extends StateAdapter{
+    
+    public ModuleManagementState(CommandManager commandManager) {
+        super(commandManager);
     }
 
     @Override
-    public IState getGlobalModuleManagement() {
+    public IState addSimpleComponent(ComponentType type) {
+        CommandAddComponent cmAddComponent = new CommandAddComponent(type);
+        commandManager.apply(cmAddComponent);
         return this;
     }
-
+    
     @Override
-    public IState getModuleManagement() {
-        return this;
+    public IState selectComponent(String componentName) {
+        return new DefiningPreviousState(commandManager, componentName, this);
     }
-
-    @Override
-    public IState finishProjectManagement() {
-        return this;
-    }
-
-    @Override
-    public IState addModule() {
-        return this;
-    }
-
-    @Override
-    public IState selectModule() {
-        return this;
-    }
-
-    @Override
-    public IState finishGlobalModuleManagement() {
-        return this;
-    }
-
-    @Override
-    public IState cancelDefiningPrevious() {
-        return this;
-    }
-
-    @Override
-    public IState definePrevious() {
-        return this;
-    }
-
-    @Override
-    public IState addSimpleComponent() {
-        return this;
-    }
-
-    @Override
-    public IState selectSimpleComponent() {
-        return this;
-    }
-
-    @Override
-    public IState finishModuleManagement() {
-        return this;
-    }
+    
 }

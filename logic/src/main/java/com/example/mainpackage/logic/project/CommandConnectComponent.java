@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.project;
 
 import com.example.mainpackage.logic.project.component.Component;
@@ -11,17 +6,16 @@ import java.io.Serializable;
 
 public class CommandConnectComponent implements Command, Serializable{
 
-    private String componentName1;
-    private String componentName2;
-
+    String componentName1, componentName2;
+    
     public CommandConnectComponent(String componentName1, String componentName2) {
         this.componentName1 = componentName1;
         this.componentName2 = componentName2;
     }
-
+   
     @Override
     public void doCommand(ComponentBuilder componentBuilder) {
-
+        
         Component c1 = componentBuilder.findComponentWithName(componentName1);
         Component c2 = componentBuilder.findComponentWithName(componentName2);
 

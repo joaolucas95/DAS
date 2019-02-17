@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.project.component;
 
 import java.util.ArrayList;
@@ -13,7 +8,7 @@ public abstract class ComponentSimple extends Component {
     
     protected List<Component> previous;
     
-    ComponentSimple(String name) {
+    public ComponentSimple(String name) {
         super(name);
     }    
     

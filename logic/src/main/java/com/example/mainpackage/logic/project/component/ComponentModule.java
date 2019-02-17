@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.project.component;
 
 import java.util.ArrayList;
@@ -16,7 +11,7 @@ public class ComponentModule extends Component {
     private List<Component> data;
     private List<Component> outputs;
     
-    ComponentModule(String name, boolean isProject) {
+    public ComponentModule(String name, boolean isProject) {
         super(name);
         this.isProject = isProject;
         this.data = new ArrayList<>();
@@ -87,7 +82,7 @@ public class ComponentModule extends Component {
         return this.outputs;
     }
     public List<Component> getInputList(){
-        List<Component> inputList = new ArrayList<>();
+        List<Component> inputList = new ArrayList();
         for(Component component : data)
         {
             if(component instanceof ComponentInput)

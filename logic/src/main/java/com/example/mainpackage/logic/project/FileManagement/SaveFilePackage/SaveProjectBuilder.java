@@ -1,17 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.project.FileManagement.SaveFilePackage;
 
-import com.example.mainpackage.logic.utils.Config;
 import com.example.mainpackage.logic.project.Project;
 
-/**
- *
- * @author BrunoCoelho
- */
+import mainpackage.Config;
+
 public abstract class SaveProjectBuilder {
     
     public abstract boolean saveProject(String fileName, Project project);

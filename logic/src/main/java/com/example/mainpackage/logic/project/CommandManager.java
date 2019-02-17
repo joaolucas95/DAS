@@ -1,27 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.project;
+
+import com.example.mainpackage.logic.project.component.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author BrunoCoelho
- */
 public class CommandManager {
-    private List<Command> undoList;
-    private List<Command> redoList;
+    List<Command> undoList;
+    List<Command> redoList;
     
-    private ComponentBuilder componentBuilder;
+    protected ComponentBuilder componentBuilder;
 
     public CommandManager(ComponentBuilder componentBuilder) {
         this.componentBuilder = componentBuilder;
-        this.undoList = new ArrayList<>();
-        this.redoList = new ArrayList<>();
+        this.undoList = new ArrayList();
+        this.redoList = new ArrayList();
     }
 
     public void apply(Command c){
@@ -44,5 +37,9 @@ public class CommandManager {
         Command last =redoList.remove(redoList.size()-1);
         last.doCommand(componentBuilder);
         undoList.add(last);
+    }
+    
+    public Component finishComponentEditor(){
+        return componentBuilder.build();
     }
 }

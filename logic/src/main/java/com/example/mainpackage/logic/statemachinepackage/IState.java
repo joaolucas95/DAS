@@ -1,34 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.statemachinepackage;
 
-/**
- *
- * @author BrunoCoelho
- */
+import com.example.mainpackage.logic.project.component.ComponentType;
+
 public interface IState {
-    
-    IState getProjectManagement(); //for WaitingOperationState
-
-    IState getGlobalModuleManagement(); //for ProjectsManagementState
-    IState getModuleManagement(); //for ProjectsManagementState
-    IState finishProjectManagement(); //for ProjectsManagementState
-
-    
-    IState addModule(); //for GlobalModuleManagement
-    IState selectModule(); //for GlobalModuleManagement
-    IState finishGlobalModuleManagement(); //for GlobalModuleManagement
-
+        
+    IState addModule(String projectName); //for GlobalModuleManagement
+    //for GlobalModuleManagement and ModuleManagement
+    //when call this method in GlobalModuleManagement or ModuleManagement we are defining the first component
+    //when we call this method in DefiningPreviousState we are defining  the second component... And define the connection between the selected components
+    IState selectComponent(String componentName);
     IState cancelDefiningPrevious(); //for DefiningPreviousState
-    IState definePrevious(); //for DefiningPreviousState
-    
-    
-    IState addSimpleComponent(); //for ModulesManagementState
-    IState selectSimpleComponent(); //for ModulesManagementState
-    IState finishModuleManagement(); //for ModulesManagementState
+    IState addSimpleComponent(ComponentType type); //for ModulesManagementState
 
 
     

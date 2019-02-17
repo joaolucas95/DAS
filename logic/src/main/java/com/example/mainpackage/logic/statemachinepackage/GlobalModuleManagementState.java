@@ -1,72 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.statemachinepackage;
 
-/**
- *
- * @author BrunoCoelho
- */
-public class GlobalModuleManagementState implements IState {
+import com.example.mainpackage.logic.project.CommandAddComponent;
+import com.example.mainpackage.logic.project.CommandManager;
+import com.example.mainpackage.logic.project.component.ComponentType;
+
+public class GlobalModuleManagementState extends StateAdapter{
+
+    public GlobalModuleManagementState(CommandManager commandManager) {
+        super(commandManager);
+    }
+    
     @Override
-    public IState getProjectManagement() {
+    public IState addSimpleComponent(ComponentType type) {
+        
+        //if type isnt a input or a output do not had new simple component
+        if(!(type.equals(ComponentType.INPUT) || type.equals(ComponentType.OUTPUT)))
+            return this;
+        
+        CommandAddComponent cmAddComponent = new CommandAddComponent(type);
+        commandManager.apply(cmAddComponent);
         return this;
     }
 
     @Override
-    public IState getGlobalModuleManagement() {
+    public IState addModule(String projectName) {
+        CommandAddComponent cmAddComponent = new CommandAddComponent(ComponentType.PROJECT, projectName);
+        commandManager.apply(cmAddComponent);
         return this;
     }
+    
+    
 
     @Override
-    public IState getModuleManagement() {
-        return this;
+    public IState selectComponent(String componentName) {
+        return new DefiningPreviousState(commandManager, componentName, this);
     }
+    
 
-    @Override
-    public IState finishProjectManagement() {
-        return this;
-    }
-
-    @Override
-    public IState addModule() {
-        return this;
-    }
-
-    @Override
-    public IState selectModule() {
-        return this;
-    }
-
-    @Override
-    public IState finishGlobalModuleManagement() {
-        return this;
-    }
-
-    @Override
-    public IState cancelDefiningPrevious() {
-        return this;
-    }
-
-    @Override
-    public IState definePrevious() {
-        return this;
-    }
-
-    @Override
-    public IState addSimpleComponent() {
-        return this;
-    }
-
-    @Override
-    public IState selectSimpleComponent() {
-        return this;
-    }
-
-    @Override
-    public IState finishModuleManagement() {
-        return this;
-    }
 }

@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.project.FileManagement;
 
-import com.example.mainpackage.logic.utils.Config;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;
@@ -21,23 +15,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mainpackage.Config;
 
-/**
- *
- * @author BrunoCoelho
- */
 public class File {
     
     private java.io.File file;
 
-    /*
-    
-    https://github.com/brunocoelho1997/NavalBattleGame/blob/master/app/src/main/java/com/example/brunocoelho/navalbattle/Profiles/File.java
-    
-    */
     public static boolean saveProjectAsBinFile(String filePathString, String projectName, Project project) {
 
         //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
@@ -100,7 +87,7 @@ public class File {
                     //if the component is a componentModule the previous components are their output elements... So we need get his previous list by his inputs
                     if(component instanceof ComponentModule)
                     {
-                        previousList = new ArrayList<>();
+                        previousList = new ArrayList();
                         for(Component componenttmp : ((ComponentModule)component).getInputList())
                         {
                             previousList.addAll(componenttmp.getPrevious());

@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.example.mainpackage.logic.project.FileManagement.loadfilepackage;
+
 
 import com.example.mainpackage.logic.project.Project;
 
-public class BlifLoadProjectAdapter extends LoadProject {
+public class BlifLoadProjectAdapter extends LoadProject{
 
     BlifLoadProject flBlifLoadProject;
 
