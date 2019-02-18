@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
         FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(this).get(FileHistoryViewModel.class);
 
         User usertmp = new User(input);

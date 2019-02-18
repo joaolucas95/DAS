@@ -17,6 +17,17 @@ public class FilePathRepository {
 
     public LiveData<List<FilePath>> getAllFilesPath() { return mFilePathDao.getAllFilesPath(); }
 
+    public List<FilePath> findAllFilesPathOfUser(int user_id) {
+        return mFilePathDao.findAllFilesPathOfUser(user_id);
+    }
+
+    public FilePath findFilePathEntityByFilePath(String filePath) {
+        return mFilePathDao.findFilePathEntityByFilePath(filePath);
+    }
+
+    public LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id) { return mFilePathDao.getAllFilesPathOfUser(user_id); }
+
+
     public void insert (FilePath filePath) {
         new FilePathRepository.insertAsyncTask(mFilePathDao).execute(filePath);
     }
@@ -33,6 +44,26 @@ public class FilePathRepository {
         protected Void doInBackground(final FilePath... params) {
 
             mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    public void delete (FilePath filePath) {
+        new FilePathRepository.deleteAsyncTask(mFilePathDao).execute(filePath);
+    }
+
+    private static class deleteAsyncTask extends AsyncTask<FilePath, Void, Void> {
+
+        private FilePathDao mAsyncTaskDao;
+
+        deleteAsyncTask(FilePathDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final FilePath... params) {
+
+            mAsyncTaskDao.deleteById(params[0].id);
             return null;
         }
     }

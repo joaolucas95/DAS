@@ -2,6 +2,7 @@ package com.example.lucas.list;
 
 import com.example.lucas.edit.EditActivity;
 import com.example.lucas.logic.LogicController;
+import com.example.lucas.logic.dblogic.FilePath;
 import com.example.lucas.logic.dblogic.User;
 import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 import com.example.lucas.main.R;
@@ -27,17 +28,53 @@ public class ListActivity extends AppCompatActivity {
         setUiComponents();
 
 
-        FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(this).get(FileHistoryViewModel.class);
+        final FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(this).get(FileHistoryViewModel.class);
 
+/*
+        //
+        //  example - add file path to user
+        //
+        String username = LogicController.getInstance().getFacade().getCurrentUsername();
+        User user = mFileHistoryViewModel.findUserByUsername(username);
+        FilePath filePath = new FilePath("projetoxpt" , user.id);
+        mFileHistoryViewModel.insertFilePath(filePath);
+
+        //
+        //  example - remove file path
+        //
+        //FilePath filePath = mFileHistoryViewModel.findFilePathEntityByFilePath("projetoxpt");
+        //if(filePath != null)
+            //mFileHistoryViewModel.deleteFilePath(filePath);
+*/
+        //just a test
         mFileHistoryViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(@Nullable List<User> users) {
+
                 Log.d("test", "------ All users");
                 for(User user : users)
+                {
                     Log.d("test", String.valueOf(user));
+                    Log.d("test", "FilePath list:\n");
+
+                    for(FilePath filePath : mFileHistoryViewModel.findAllFilesPathOfUser(user.id))
+                        Log.d("test", String.valueOf(filePath));
+                }
                 Log.d("test", "---------");
             }
         });
+
+        String username = LogicController.getInstance().getFacade().getCurrentUsername();
+        User user = mFileHistoryViewModel.findUserByUsername(username);
+        if(user != null)
+        {
+            mFileHistoryViewModel.getAllFilesPathOfUser(user.id).observe(this, new Observer<List<FilePath>>() {
+                @Override
+                public void onChanged(@Nullable List<FilePath> filePaths) {
+                    //TODO: add data of this list to adapter
+                }
+            });
+        }
 
     }
 

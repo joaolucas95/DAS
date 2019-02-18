@@ -22,7 +22,15 @@ public interface FilePathDao {
     @Query("SELECT * from filepath_table")
     LiveData<List<FilePath>> getAllFilesPath();
 
-    @Query("SELECT * from filepath_table where user_id= :user_id")
+    @Query("SELECT * from filepath_table where user_id = :user_id")
     List<FilePath> findAllFilesPathOfUser(int user_id);
 
+    @Query("SELECT * from filepath_table where user_id = :user_id")
+    LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id);
+
+    @Query("DELETE FROM filepath_table where id = :filepath_id")
+    void deleteById(int filepath_id);
+
+    @Query("SELECT * from filepath_table where filePath = :filePath")
+    FilePath findFilePathEntityByFilePath(String filePath);
 }

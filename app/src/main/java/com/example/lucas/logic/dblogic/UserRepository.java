@@ -23,6 +23,7 @@ public class UserRepository {
         return mUserDao.findAllUsers();
     }
 
+    public User findUserByUsername(String username){ return mUserDao.findUserByUsername(username); }
 
     public void insert (User user) {
         new insertAsyncTask(mUserDao).execute(user);
