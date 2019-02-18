@@ -2,7 +2,10 @@ package com.example.lucas.main;
 
 import com.example.lucas.list.ListActivity;
 import com.example.lucas.logic.LogicController;
+import com.example.lucas.logic.dblogic.User;
+import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,6 +43,12 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.invalid_username, Toast.LENGTH_SHORT).show();
             return;
         }
+
+
+        FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(this).get(FileHistoryViewModel.class);
+
+        User usertmp = new User(input);
+        mFileHistoryViewModel.insertUser(usertmp);
 
         LogicController.getInstance().getFacade().setCurrentUsername(input);
         startActivity(new Intent(MainActivity.this, ListActivity.class));

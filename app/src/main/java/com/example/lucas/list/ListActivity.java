@@ -2,12 +2,20 @@ package com.example.lucas.list;
 
 import com.example.lucas.edit.EditActivity;
 import com.example.lucas.logic.LogicController;
+import com.example.lucas.logic.dblogic.User;
+import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 import com.example.lucas.main.R;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -17,6 +25,20 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         setUiComponents();
+
+
+        FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(this).get(FileHistoryViewModel.class);
+
+        mFileHistoryViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(@Nullable List<User> users) {
+                Log.d("test", "------ All users");
+                for(User user : users)
+                    Log.d("test", String.valueOf(user));
+                Log.d("test", "---------");
+            }
+        });
+
     }
 
     private void setUiComponents() {
