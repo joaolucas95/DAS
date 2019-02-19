@@ -13,6 +13,7 @@ import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 import com.example.mainpackage.logic.user.User;
+import com.example.mainpackage.logic.utils.Config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import mainpackage.Config;
 
 public class Main {
     
@@ -38,12 +37,23 @@ public class Main {
         Project projectTestA = printTestAWithStateMachine(User.getInstance());
         printTestASimulations(projectTestA);
         printTestATests(projectTestA);
-                
+        if(saveProject(projectTestA, Config.FILE_TYPE_BINARY))
+            System.out.println("Project saved with success.");
+        else
+            System.out.println("Error saving the project: " + projectTestA);
+
+
+
         //Project projectTestB = printTestBWithCommands(user); //testing the module TestB with commands and saving in binary file
         Project projectTestB = printTestBWithStateMachine(User.getInstance());
         printTestBSimulations(projectTestB);
         printTestBTests(projectTestB);
-   
+        if(saveProject(projectTestB, Config.FILE_TYPE_BINARY))
+            System.out.println("Project saved with success.");
+        else
+            System.out.println("Error saving the project: " + projectTestB);
+
+
      //   printTestSavingProjectBinaryFile();
     }
     
@@ -58,7 +68,7 @@ public class Main {
         
         try {
             ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            result = projectFileManagement.saveProject(project, mainpackage.Config.FILE_TYPE_BINARY);
+            result = projectFileManagement.saveProject(project, Config.FILE_TYPE_BINARY);
             
             if(result)
                 System.out.println("Project saved with success.");
@@ -142,19 +152,22 @@ public class Main {
         
         Project project = new Project(user, projectName);
         project.setComponentModule(model);
-        
+
+        return project;
+    }
+
+    private static boolean saveProject(Project project, int fileType){
+        boolean result;
         try {
             ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            result = projectFileManagement.saveProject(project, Config.FILE_TYPE_BINARY);
-            
-            if(result)
-                System.out.println("Project saved with success.");
-            else
-                System.out.println("Error saving the project: " + project);
+            result = projectFileManagement.saveProject(project, fileType);
+
+            return result;
+
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
-        return project;
     }
     
     private static Component createModelTestWithStateMachine(){
@@ -236,19 +249,7 @@ public class Main {
         
         Project project = new Project(user,projectName);
         project.setComponentModule(model);
-        
-        try {
-            ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            result = projectFileManagement.saveProject(project, Config.FILE_TYPE_BINARY);
-            
-            if(result)
-                System.out.println("Project saved with success.");
-            else
-                System.out.println("Error saving the project: " + project);
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+
         return project;
     }
     
@@ -372,7 +373,7 @@ public class Main {
         project.setSignalForSimulation(signal);
         
         runSimulation(project);
-        
+
     }
     
     private static void printTestBSimulations(Project project) {

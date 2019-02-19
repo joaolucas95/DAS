@@ -5,10 +5,10 @@ import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.Bina
 import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.BlifLoadProjectAdapter;
 import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.LoadProject;
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.utils.Config;
 
 import java.util.Arrays;
 import java.util.List;
-import mainpackage.Config;
 
 public class ProjectFileManagement {
     
@@ -24,7 +24,8 @@ public class ProjectFileManagement {
         String fileName = project.getName();
         saveProjectBuilder = SaveProjectBuilder.getBuilder(fileType);
         result = saveProjectBuilder.saveProject(fileName, project);
-        
+
+        exportTestsToHtml(project);
         /*
         if(result)
             File.saveLastComponentNumber(project.getComponentModule().getUniqueNumber());
@@ -33,7 +34,11 @@ public class ProjectFileManagement {
   
         return result;
     }
-    
+
+    private void exportTestsToHtml(Project project) {
+        File.exportTestsToHtml("", project);
+    }
+
     public Project loadProject(String fileName) throws Exception{
         int type = getProjectType(fileName);
         if(type == Config.FILE_TYPE_BINARY)

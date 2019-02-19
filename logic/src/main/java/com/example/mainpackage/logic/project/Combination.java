@@ -1,8 +1,9 @@
 package com.example.mainpackage.logic.project;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class Combination {
+public class Combination implements Serializable {
     
     private final Map<String, Boolean> values;
     

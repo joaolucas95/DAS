@@ -1,8 +1,7 @@
 package com.example.mainpackage.logic.project.FileManagement.SaveFilePackage;
 
 import com.example.mainpackage.logic.project.Project;
-
-import mainpackage.Config;
+import com.example.mainpackage.logic.utils.Config;
 
 public abstract class SaveProjectBuilder {
     

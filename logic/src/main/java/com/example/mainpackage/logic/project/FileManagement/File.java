@@ -1,9 +1,12 @@
 package com.example.mainpackage.logic.project.FileManagement;
 
+import com.example.mainpackage.logic.project.Combination;
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.project.Test;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.project.component.ComponentModule;
+import com.example.mainpackage.logic.utils.Config;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,11 +18,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mainpackage.Config;
 
 public class File {
     
@@ -238,5 +241,66 @@ public class File {
         }
 
         return project.getComponentModule();
+    }
+
+    public static boolean exportTestsToHtml(String filePath, Project project) {
+        try {
+
+            List<ComponentInput> inputTempTempList = new ArrayList();
+
+            List<String> content = new ArrayList();
+            content.add("<!DOCTYPE html><html>");
+            content.add("<head>");
+            content.add("<title>" + project.getName() +" </title>");
+            content.add("<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css'>\n" +
+                    "  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>\n" +
+                    "  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js'></script>");
+            content.add("</head>");
+            content.add("<body>");
+            content.add("<div class='container'>");
+            content.add("<h3>Running Test...</h3>");
+            content.add("<div class='panel panel-default'>");
+
+            content.add("<div class='panel-heading'>Project Name: " + project.getName() + "</div>");
+            content.add("<div class='panel-body'>");
+
+            for(Test test : project.getTests())
+            {
+
+                content.add("<b>Input Signal:</b> " + printStringCombinationHtml(test.getSignalInput().getCombinations()) + "</br>");
+                content.add("<b>Expected Signal:</b> " + printStringCombinationHtml(test.getSignalExpected().getCombinations())+ " </br>");
+                content.add("<b>Result:</b> " + project.runTest(test) + "</br>");
+            }
+
+            content.add("</div>");
+            content.add("</div>");
+            content.add("</div>");
+
+            content.add("</body></html>");
+
+            Path file = Paths.get(project.getName() + ".html");
+            Files.write(file, content, Charset.forName("UTF-8"));
+        } catch (IOException ex) {
+            Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+        return true;
+    }
+
+    private static String printStringCombinationHtml(List<Combination> combinations){
+        String str = "";
+
+        for(Combination combination : combinations){
+
+            str +="<br>Combination:<br>";
+            //define inputs to module
+            Iterator it = combination.getValues().entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry pair = (Map.Entry)it.next();
+                str +=" " + (String)pair.getKey() +" - " + (boolean)pair.getValue() + "<br>";
+            }
+        }
+        return str;
     }
 }

@@ -3,11 +3,12 @@ package com.example.mainpackage.logic.project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class Test {
+public class Test implements Serializable {
     
     private Signal signalInput;
     private Signal signalExpected;
@@ -36,8 +37,7 @@ public class Test {
     public boolean getResult(Component module)
     {
         List<Combination> result = signalInput.runSimulation((ComponentModule) module);
-        
-        
+
         for(int i = 0; i< result.size(); i++)
         {
             Combination combinationInput = result.get(i);

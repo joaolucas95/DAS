@@ -3,13 +3,14 @@ package com.example.mainpackage.logic.project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class Signal {
+public class Signal implements Serializable {
     private List<Combination> combinations;
 
     public Signal(List<Combination> combinations) {
@@ -47,7 +48,8 @@ public class Signal {
 
     @Override
     public String toString() {
-        return "Signal{" + "combinations=" + combinations + '}';
+        return "Signal{" +
+                "combinations=" + combinations +
+                '}';
     }
-    
 }
