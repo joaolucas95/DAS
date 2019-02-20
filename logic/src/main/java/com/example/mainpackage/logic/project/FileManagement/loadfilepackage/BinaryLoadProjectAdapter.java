@@ -13,8 +13,8 @@ public class BinaryLoadProjectAdapter extends LoadProject{
     
     
     @Override
-    public Project loadProject(String fileName, User user) {
-        return binaryLoadProject.loadBinaryProject(fileName, user);
+    public Project loadProject(String filePathProject, User user) {
+        return binaryLoadProject.loadBinaryProject(filePathProject, user);
     }
     
 }

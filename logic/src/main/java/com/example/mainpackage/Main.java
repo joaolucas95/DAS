@@ -206,7 +206,7 @@ public class Main {
         
         return stateMachine.finishComponentEditor();
     }
-    
+
     private static Project printTestBWithStateMachine(User user) {
         String projectName = "modelGlobalTest";
         

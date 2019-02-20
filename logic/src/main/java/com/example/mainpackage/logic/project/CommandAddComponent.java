@@ -14,17 +14,17 @@ public class CommandAddComponent implements Command, Serializable{
     
     ComponentType type;
     String componentName; //after component is created this var is used (eg: need component name when doing undo)
-    String projectName; //used if add a module from another project
+    String filePathProject; //used if add a module from another project
     User user; //used if add a module from another project
 
     public CommandAddComponent(ComponentType type) {
         this.type = type;
-        this.projectName = new String();
+        this.filePathProject = new String();
     }
     
-    public CommandAddComponent(ComponentType type, String projectName, User user) {
+    public CommandAddComponent(ComponentType type, String filePathProject, User user) {
         this.type = type;
-        this.projectName = projectName;
+        this.filePathProject = filePathProject;
         this.user = user;
     }
     
@@ -32,11 +32,11 @@ public class CommandAddComponent implements Command, Serializable{
     public void doCommand(ComponentBuilder componentBuilder) {
 
         //if was added a module...
-        if(!projectName.isEmpty()){
+        if(!filePathProject.isEmpty()){
             ProjectFileManagement projectFileManagement = new ProjectFileManagement();
             ComponentModule module = null;
             try {
-                module = (ComponentModule) projectFileManagement.loadProject(projectName, user).getComponentModule();
+                module = (ComponentModule) projectFileManagement.loadProject(filePathProject, user).getComponentModule();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -57,7 +57,7 @@ public class CommandAddComponent implements Command, Serializable{
                 
             }
             componentBuilder.addComponentToData(module);
-            projectName="";
+            filePathProject="";
             user = null;
         }
         else

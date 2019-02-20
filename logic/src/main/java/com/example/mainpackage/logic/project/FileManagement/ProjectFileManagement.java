@@ -40,14 +40,14 @@ public class ProjectFileManagement {
         File.exportTestsToHtml("", project);
     }
 
-    public Project loadProject(String fileName, User user) throws Exception{
-        int type = getProjectType(fileName);
+    public Project loadProject(String filePathProject, User user) throws Exception{
+        int type = getProjectType(filePathProject);
         if(type == Config.FILE_TYPE_BINARY)
             this.loadProject = new BinaryLoadProjectAdapter();
         else if(type == Config.FILE_TYPE_BLIF)
             this.loadProject = new BlifLoadProjectAdapter();
 
-        return loadProject.loadProject(fileName, user);
+        return loadProject.loadProject(filePathProject, user);
     }
     
     

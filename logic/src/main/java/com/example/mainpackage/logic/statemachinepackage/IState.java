@@ -5,7 +5,7 @@ import com.example.mainpackage.logic.user.User;
 
 public interface IState {
         
-    IState addModule(String projectName, User user); //for GlobalModuleManagement
+    IState addModule(String filePathProject, User user); //for GlobalModuleManagement
     //for GlobalModuleManagement and ModuleManagement
     //when call this method in GlobalModuleManagement or ModuleManagement we are defining the first component
     //when we call this method in DefiningPreviousState we are defining  the second component... And define the connection between the selected components

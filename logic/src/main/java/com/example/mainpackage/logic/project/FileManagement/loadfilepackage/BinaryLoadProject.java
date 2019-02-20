@@ -6,7 +6,7 @@ import com.example.mainpackage.logic.user.User;
 
 public class BinaryLoadProject {
     
-    public Project loadBinaryProject(String fileName, User user) {
-        return File.loadProjectFromBinFile("", fileName, user);
+    public Project loadBinaryProject(String filePathProject, User user) {
+        return File.loadProjectFromBinFile(filePathProject, user);
     }
 }

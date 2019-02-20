@@ -5,7 +5,7 @@ import com.example.mainpackage.logic.user.User;
 
 public class LoadProject {
     
-    public Project loadProject(String fileName, User user){
+    public Project loadProject(String filePathProject, User user){
         return null;
     }
 }

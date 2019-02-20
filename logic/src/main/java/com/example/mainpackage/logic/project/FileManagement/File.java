@@ -123,8 +123,14 @@ public class File {
         return true;
     }
 
-    public static Project loadProjectFromBlifFile(String filePathString, String projectName, User user){
+    public static Project loadProjectFromBlifFile(String filePathString, User user){
+        /*
+
+
+
         Project project = new Project(user, projectName);
+
+        Component componentModuleTemp = new ComponentModule();
 
         String filePathStringWithProjectName = filePathString + projectName;
         try {
@@ -165,16 +171,13 @@ public class File {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return project;
+        */
+        return null;
     }
     
-    public static Project loadProjectFromBinFile(String filePathString, String projectName, User user) {
+    public static Project loadProjectFromBinFile(String filePathString, User user) {
         Project project = null;
-        
-        //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
-        
-        filePathString += projectName;
+
         java.io.File filePath = new java.io.File(filePathString);
 
 

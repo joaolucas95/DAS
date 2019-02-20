@@ -7,7 +7,7 @@ import com.example.mainpackage.logic.user.User;
 
 public class BlifLoadProject {
     
-    public Project loadBlifProject(String fileName, User user){
-        return File.loadProjectFromBlifFile("", fileName, user);
+    public Project loadBlifProject(String filePathProject, User user){
+        return File.loadProjectFromBlifFile(filePathProject, user);
     }
 }
