@@ -6,9 +6,12 @@ import com.example.mainpackage.logic.project.Test;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.project.component.ComponentModule;
+import com.example.mainpackage.logic.project.component.ComponentSimple;
+import com.example.mainpackage.logic.user.User;
 import com.example.mainpackage.logic.utils.Config;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,11 +32,11 @@ public class File {
     
     private java.io.File file;
 
-    public static boolean saveProjectAsBinFile(String filePathString, String projectName, Project project) {
+    public static boolean saveProjectAsBinFile(String filePathString, Project project) {
 
         //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
         
-        filePathString += projectName;
+        filePathString += project.getName() + ".bin";
 
         java.io.File filePath = new java.io.File(filePathString);
 
@@ -55,14 +59,13 @@ public class File {
         return true;
     }
     
-    public static boolean saveProjectAsBlifFile(String filePathString, String projectName, Project project) {
+    public static boolean saveProjectAsBlifFile(String filePathString, Project project) {
         
         try {
-            
             List<ComponentInput> inputTempTempList = new ArrayList();
             
             List<String> content = new ArrayList();
-            content.add(".content " + projectName);
+            content.add(".content " + project.getName());
             
             String inputsString = ".inputs";
             for(Component input : project.getInputs())
@@ -104,37 +107,13 @@ public class File {
                         connection += " " + previous.getName();
                     
                     connection += " " + component.getName() + "\n";
-                    
-                    
-                    // 1- criar uma lista de arrays dinamicamente com todas as posições possíveis; ex: 2 inputs; 0 0 ; 0 1 ; 1 0 ; 1 1
-                    // 2- obter o resultado do component para cada elemento do array anterior... e ver quando é que dá true
-                    //  2.a - se apenas houver um resultado true e' esse q e' escrito
-                    //  2.b - se houver mais que um true fazer a devida comparacao para preencher devidamente
-                    
-                    /*
-                    for(Component input : module.getInputList())
-                        module.setInput(input.getName(), false);
-                    
-                    for(int i = 0; i < module.getInputList().size(); i++)
-                    {
-                        connection += "Input list: ";
-                        for(Component caux : module.getInputList())
-                            connection += " " + ((ComponentInput)caux).getOutput(caux.getName());
-                        
-                        results = " ----" + component.getOutput(component.getName()) + "\n";
-                        String inputNameToChange = module.getInputList().get(i).getName();
-                        module.setInput(inputNameToChange, true);
-                        connection += results;
-                    }
-                    */
-                    
+                    connection += ((ComponentSimple)component).getLogicGates();
                 }
             }
-            
-            connection += "\n";
+
             content.add(connection);                      
             content.add(".end");
-            Path file = Paths.get(projectName + ".blif");
+            Path file = Paths.get(project.getName() + ".blif");
             Files.write(file, content, Charset.forName("UTF-8"));
         } catch (IOException ex) {
             Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
@@ -144,8 +123,53 @@ public class File {
         return true;
     }
 
+    public static Project loadProjectFromBlifFile(String filePathString, String projectName, User user){
+        Project project = new Project(user, projectName);
+
+        String filePathStringWithProjectName = filePathString + projectName;
+        try {
+            List<String> allLines = Files.readAllLines(Paths.get(filePathStringWithProjectName));
+
+            String projectnametmp = allLines.get(0).replace(".model ","");
+
+            allLines.remove(0);
+
+            String inputsTmp = allLines.get(0).replace(".inputs ","");
+
+            String[] inputNames = inputsTmp.split(" ");
+
+            for(int i = 0; i< inputNames.length; i++){
+                Component componentTmp;
+
+                String componentName = inputNames[i];
+                String typeOfComponent = inputNames[i].replaceAll("[0-9]", "");
+
+                switch (typeOfComponent)
+                {
+                    case "input":
+                        componentTmp = new ComponentInput(componentName);
+                        break;
+                }
+            }
+
+
+            for (String line : allLines) {
+
+                if(line.contains(".content"))
+                {
+
+                }
+
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return project;
+    }
     
-    public static Project loadProject(String filePathString, String projectName) {
+    public static Project loadProjectFromBinFile(String filePathString, String projectName, User user) {
         Project project = null;
         
         //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
@@ -163,10 +187,14 @@ public class File {
 
             is.close();
             fis.close();
+
+
+            if(project.getUser().getUsername() == user.getUsername())
+                throw new Exception("Invalid access: This file belongs from another user.");
+
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         return project;
     }
     
@@ -216,31 +244,6 @@ public class File {
         }
 
         return number;
-    }
-    
-    public static Component getModuleByName(String filePathString, String projectName) {
-        Project project = null;
-        
-        //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
-        
-        filePathString += projectName +".bin";
-        java.io.File filePath = new java.io.File(filePathString);
-
-
-        try {
-            FileInputStream fis = null;
-            fis = new FileInputStream(filePath);
-            ObjectInputStream is = new ObjectInputStream(fis);
-
-            project = (Project) is.readObject();
-
-            is.close();
-            fis.close();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        return project.getComponentModule();
     }
 
     public static boolean exportTestsToHtml(String filePath, Project project) {

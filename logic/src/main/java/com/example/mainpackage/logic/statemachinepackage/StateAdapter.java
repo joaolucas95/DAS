@@ -2,6 +2,7 @@ package com.example.mainpackage.logic.statemachinepackage;
 
 import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.user.User;
 
 public class StateAdapter implements IState{
 
@@ -16,7 +17,7 @@ public class StateAdapter implements IState{
     }
     
     @Override
-    public IState addModule(String projectName) {
+    public IState addModule(String projectName, User user) {
         return this;
     }
     

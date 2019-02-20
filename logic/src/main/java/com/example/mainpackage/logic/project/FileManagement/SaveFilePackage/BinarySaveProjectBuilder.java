@@ -7,13 +7,8 @@ public class BinarySaveProjectBuilder extends SaveProjectBuilder{
 
     @Override
     public boolean saveProject(String fileName, Project project) {
-        
-        fileName +=".bin";
-        
-        if(!saveDb(fileName))
-            return false;
-        
-        return File.saveProjectAsBinFile("", fileName, project);
+
+        return File.saveProjectAsBinFile("", project);
 
     }
 

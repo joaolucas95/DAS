@@ -2,6 +2,7 @@ package com.example.mainpackage.logic.project.FileManagement.loadfilepackage;
 
 
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.user.User;
 
 public class BlifLoadProjectAdapter extends LoadProject{
 
@@ -13,8 +14,8 @@ public class BlifLoadProjectAdapter extends LoadProject{
     
     
     @Override
-    public Project loadProject(String fileName) {
-        return flBlifLoadProject.loadBlifProject(fileName);
+    public Project loadProject(String fileName, User user) {
+        return flBlifLoadProject.loadBlifProject(fileName, user);
     }
     
 }

@@ -33,7 +33,6 @@ public class Main {
         //User for tests
         User.getInstance().setUsername("Joaquim");
 
-        //Project projectTestA = printTestAWithCommands(user); //testing the module TestA with commands and saving in binary file; also return the created project
         Project projectTestA = printTestAWithStateMachine(User.getInstance());
         printTestASimulations(projectTestA);
         printTestATests(projectTestA);
@@ -43,18 +42,17 @@ public class Main {
             System.out.println("Error saving the project: " + projectTestA);
 
 
-
-        //Project projectTestB = printTestBWithCommands(user); //testing the module TestB with commands and saving in binary file
         Project projectTestB = printTestBWithStateMachine(User.getInstance());
         printTestBSimulations(projectTestB);
         printTestBTests(projectTestB);
         if(saveProject(projectTestB, Config.FILE_TYPE_BINARY))
             System.out.println("Project saved with success.");
         else
-            System.out.println("Error saving the project: " + projectTestB);
+            System.out.println("Error saving the project: " + projectTestB);/*
+ */
 
 
-     //   printTestSavingProjectBinaryFile();
+        //   printTestSavingProjectBinaryFile();
     }
     
     private static Project printTestAWithCommands(User user) {
@@ -145,7 +143,6 @@ public class Main {
     }
     
     private static Project printTestAWithStateMachine(User user) {
-        boolean result;
         String projectName = "modelTest";
         
         Component model = createModelTestWithStateMachine();
@@ -181,8 +178,6 @@ public class Main {
         //test
         stateMachine.selectComponent("and4");
         stateMachine.selectComponent("and4");
-        //test
-        stateMachine.addModule("modalTest");
         
         stateMachine.selectComponent("input1");
         stateMachine.selectComponent("and4");
@@ -212,40 +207,10 @@ public class Main {
         return stateMachine.finishComponentEditor();
     }
     
-    private static Project printTestBWithCommands(User user) {
-        boolean result;
-        String projectName = "modelGlobalTest";
-        
-        Component model = createGlobalModuleTestWithCommands();
-        //model.setInput("a10", a);
-        //model.setInput("b11", b);
-        //model.setInput("c12", c);
-        //model.setInput("d13", d);
-        //System.out.println("Result Output f=" + model.getOutput("f30"));
-        
-        Project project = new Project(user,projectName);
-        project.setComponentModule(model);
-        
-        try {
-            ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            result = projectFileManagement.saveProject(project, Config.FILE_TYPE_BINARY);
-            
-            if(result)
-                System.out.println("Project saved with success.");
-            else
-                System.out.println("Error saving the project: " + project);
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return project;
-    }
-   
     private static Project printTestBWithStateMachine(User user) {
-        boolean result;
         String projectName = "modelGlobalTest";
         
-        Component model = createGlobalModuleTestWithStateMachine();
+        Component model = createGlobalModuleTestWithStateMachine(user);
         
         Project project = new Project(user,projectName);
         project.setComponentModule(model);
@@ -253,7 +218,7 @@ public class Main {
         return project;
     }
     
-    private static Component createGlobalModuleTestWithStateMachine(){
+    private static Component createGlobalModuleTestWithStateMachine(User user){
         ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.PROJECT);
         stateMachine.addSimpleComponent(ComponentType.INPUT);
         stateMachine.addSimpleComponent(ComponentType.INPUT);
@@ -263,7 +228,7 @@ public class Main {
         //test
         stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
    
-        stateMachine.addModule("modelTest");
+        stateMachine.addModule("modelTest.bin", user);
 
         stateMachine.selectComponent("input10");
         stateMachine.selectComponent("input14");
@@ -274,7 +239,7 @@ public class Main {
         stateMachine.selectComponent("input12");
         stateMachine.selectComponent("input16");
         
-        stateMachine.addModule("modelTest");
+        stateMachine.addModule("modelTest.bin", user);
         
         stateMachine.selectComponent("output21");
         stateMachine.selectComponent("input22");
@@ -291,60 +256,6 @@ public class Main {
         stateMachine.selectComponent("output30");
         
         return stateMachine.finishComponentEditor();
-    }
-    
-    private static Component createGlobalModuleTestWithCommands() {
-        CommandAddComponent cmAddComponent;
-        CommandConnectComponent cmConnectComponent;
-        
-        ComponentBuilder componentBuilder =new ComponentBuilder();
-        CommandManager commandManager = new CommandManager(componentBuilder);
-        
-        cmAddComponent = new CommandAddComponent(ComponentType.INPUT); //a10
-        commandManager.apply(cmAddComponent);
-
-        cmAddComponent = new CommandAddComponent(ComponentType.INPUT);
-        commandManager.apply(cmAddComponent);
-
-        cmAddComponent = new CommandAddComponent(ComponentType.INPUT);
-        commandManager.apply(cmAddComponent);
-        
-        cmAddComponent = new CommandAddComponent(ComponentType.INPUT);
-        commandManager.apply(cmAddComponent);
-        
-        cmAddComponent = new CommandAddComponent(ComponentType.MODULE, "modelTest"); //input A - a14; outputs: x20 and y21
-        commandManager.apply(cmAddComponent);
-        
-        cmConnectComponent = new CommandConnectComponent("input10", "input14");
-        commandManager.apply(cmConnectComponent);
-        
-        cmConnectComponent = new CommandConnectComponent("input11", "input15");
-        commandManager.apply(cmConnectComponent);
-        
-        cmConnectComponent = new CommandConnectComponent("input12", "input16");
-        commandManager.apply(cmConnectComponent);
-        
-        cmAddComponent = new CommandAddComponent(ComponentType.MODULE, "modelTest"); //input A - a22; outputs: x28 and y29
-        commandManager.apply(cmAddComponent);
-        
-        cmConnectComponent = new CommandConnectComponent("output21", "input22");
-        commandManager.apply(cmConnectComponent);
-        
-        cmConnectComponent = new CommandConnectComponent("input12", "input23");
-        commandManager.apply(cmConnectComponent);
-        
-        cmConnectComponent = new CommandConnectComponent("input13", "input24");
-        commandManager.apply(cmConnectComponent);
-        
-        
-        cmAddComponent = new CommandAddComponent(ComponentType.OUTPUT);
-        commandManager.apply(cmAddComponent);
-        
-        cmConnectComponent = new CommandConnectComponent("output29", "output30");
-        commandManager.apply(cmConnectComponent);
-        
-        return componentBuilder.build();
-
     }
 
     private static void printTestASimulations(Project project) {

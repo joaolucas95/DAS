@@ -44,6 +44,6 @@ public abstract class ComponentSimple extends Component {
         return previous;
     }
 
-    
+    public abstract String getLogicGates();
     
 }

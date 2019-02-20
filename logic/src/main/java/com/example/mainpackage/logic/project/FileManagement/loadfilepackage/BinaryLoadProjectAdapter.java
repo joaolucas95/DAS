@@ -1,6 +1,7 @@
 package com.example.mainpackage.logic.project.FileManagement.loadfilepackage;
 
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.user.User;
 
 public class BinaryLoadProjectAdapter extends LoadProject{
 
@@ -12,8 +13,8 @@ public class BinaryLoadProjectAdapter extends LoadProject{
     
     
     @Override
-    public Project loadProject(String fileName) {
-        return binaryLoadProject.loadBinaryProject(fileName);
+    public Project loadProject(String fileName, User user) {
+        return binaryLoadProject.loadBinaryProject(fileName, user);
     }
     
 }

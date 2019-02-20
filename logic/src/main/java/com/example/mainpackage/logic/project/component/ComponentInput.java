@@ -8,7 +8,12 @@ public class ComponentInput extends ComponentSimple {
         super(name);
         this.value = null;
     }
-    
+
+    @Override
+    public String getLogicGates() {
+        return ""; //wouldn't be used
+    }
+
     public ComponentInput(String name, ComponentSimple previous) {
         super(name);
         this.value = null;

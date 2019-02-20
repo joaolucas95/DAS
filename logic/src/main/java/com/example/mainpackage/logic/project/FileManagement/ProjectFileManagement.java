@@ -5,6 +5,7 @@ import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.Bina
 import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.BlifLoadProjectAdapter;
 import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.LoadProject;
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.user.User;
 import com.example.mainpackage.logic.utils.Config;
 
 import java.util.Arrays;
@@ -39,14 +40,14 @@ public class ProjectFileManagement {
         File.exportTestsToHtml("", project);
     }
 
-    public Project loadProject(String fileName) throws Exception{
+    public Project loadProject(String fileName, User user) throws Exception{
         int type = getProjectType(fileName);
         if(type == Config.FILE_TYPE_BINARY)
             this.loadProject = new BinaryLoadProjectAdapter();
         else if(type == Config.FILE_TYPE_BLIF)
             this.loadProject = new BlifLoadProjectAdapter();
 
-        return loadProject.loadProject(fileName);
+        return loadProject.loadProject(fileName, user);
     }
     
     

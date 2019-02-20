@@ -3,6 +3,7 @@ package com.example.mainpackage.logic.statemachinepackage;
 import com.example.mainpackage.logic.project.CommandAddComponent;
 import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.user.User;
 
 public class GlobalModuleManagementState extends StateAdapter{
 
@@ -23,8 +24,8 @@ public class GlobalModuleManagementState extends StateAdapter{
     }
 
     @Override
-    public IState addModule(String projectName) {
-        CommandAddComponent cmAddComponent = new CommandAddComponent(ComponentType.PROJECT, projectName);
+    public IState addModule(String projectName, User user) {
+        CommandAddComponent cmAddComponent = new CommandAddComponent(ComponentType.PROJECT, projectName, user);
         commandManager.apply(cmAddComponent);
         return this;
     }
