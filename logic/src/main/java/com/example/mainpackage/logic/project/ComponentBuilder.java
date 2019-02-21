@@ -28,7 +28,7 @@ public class ComponentBuilder {
     
     public Component build(){
         
-        Component finalComponent = Component.getComponent(ComponentType.PROJECT);
+        Component finalComponent = Component.getComponent(ComponentType.PROJECT, true);
         ((ComponentModule) finalComponent).addComponent(data);
         
         //set the output components as previous of component

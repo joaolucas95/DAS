@@ -62,7 +62,7 @@ public class CommandAddComponent implements Command, Serializable{
         }
         else
         {
-            Component componentTmp = Component.getComponent(type);
+            Component componentTmp = Component.getComponent(type, true);
             this.componentName = componentTmp.getName();
             componentBuilder.addComponentToData(componentTmp);
         }

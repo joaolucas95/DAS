@@ -7,6 +7,7 @@ import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentSimple;
+import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.user.User;
 import com.example.mainpackage.logic.utils.Config;
 
@@ -65,14 +66,14 @@ public class File {
             List<ComponentInput> inputTempTempList = new ArrayList();
             
             List<String> content = new ArrayList();
-            content.add(".content " + project.getName());
+            content.add(".model " + project.getName());
             
             String inputsString = ".inputs";
             for(Component input : project.getInputs())
                 inputsString += " " + input.getName();
             content.add(inputsString);
             
-            String outputsString = ".ouputs";
+            String outputsString = ".outputs";
             for(Component output : project.getOutputs())
                 outputsString += " " + output.getName();
             content.add(outputsString);
@@ -124,62 +125,135 @@ public class File {
     }
 
     public static Project loadProjectFromBlifFile(String filePathString, User user){
-        /*
+
+        Project project;
 
 
+        List<Component> data = new ArrayList<>();
+        List<Component> outputList = new ArrayList<>();
 
-        Project project = new Project(user, projectName);
 
-        Component componentModuleTemp = new ComponentModule();
-
-        String filePathStringWithProjectName = filePathString + projectName;
+        String filePathStringWithProjectName = filePathString;
         try {
             List<String> allLines = Files.readAllLines(Paths.get(filePathStringWithProjectName));
 
+            //get name of project
             String projectnametmp = allLines.get(0).replace(".model ","");
-
+            project = new Project(user, projectnametmp);
             allLines.remove(0);
 
+            //get inputs of project
             String inputsTmp = allLines.get(0).replace(".inputs ","");
-
             String[] inputNames = inputsTmp.split(" ");
-
-            for(int i = 0; i< inputNames.length; i++){
-                Component componentTmp;
-
-                String componentName = inputNames[i];
-                String typeOfComponent = inputNames[i].replaceAll("[0-9]", "");
-
-                switch (typeOfComponent)
-                {
-                    case "input":
-                        componentTmp = new ComponentInput(componentName);
-                        break;
-                }
+            for(int i = 0; i < inputNames.length; i++){
+                Component componentTmp = getComponentByName(inputNames[i]);
+                data.add(componentTmp);
             }
+            allLines.remove(0);
 
+            //get inputs of project
+            String ouputsTmp = allLines.get(0).replace(".outputs ","");
+            String[] ouputNames = ouputsTmp.split(" ");
+            for(int i = 0; i < ouputNames.length; i++){
+                Component componentTmp = getComponentByName(ouputNames[i]);
+                //data.add(componentTmp);
+                outputList.add(componentTmp);
+            }
+            allLines.remove(0);
 
+            //process all components and their connections
             for (String line : allLines) {
 
-                if(line.contains(".content"))
+                if(line.contains(".names"))
                 {
+                    String namesTmp = line.replace(".names ","");
+                    String[] componentNames = namesTmp.split(" ");
+                    List<Component> componentListTmp = new ArrayList<>();
+                    for(int i = 0; i < componentNames.length; i++){
+                        Component componentTmp = null;
 
+                        //if exists is returned the component
+                        componentTmp = verifyIfExistComponentWithThatName(data, componentNames[i]);
+
+                        //if does not exist a component with that name we need to create it and add to data
+                        if(componentTmp == null)
+                        {
+                            componentTmp = getComponentByName(componentNames[i]);
+                            data.add(componentTmp);
+                        }
+                        componentListTmp.add(componentTmp);
+                    }
+                    //remove and get last component
+                    Component lastComponent = componentListTmp.remove(componentListTmp.size()-1);
+                    //to the last component define the others as previous elements
+                    for(Component component : componentListTmp)
+                        lastComponent.setPrevious(component);
+                }
+                else if(line.contains(".end")){
+                    ComponentModule componentModuleTemp = (ComponentModule) Component.getComponent(ComponentType.PROJECT, false);
+                    componentModuleTemp.addComponent(data);
+                    for(Component component : outputList)
+                        componentModuleTemp.setPrevious(component);
+
+                    project.setComponentModule(componentModuleTemp);
+                    return project;
                 }
 
-
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        */
+
         return null;
+    }
+
+    private static Component verifyIfExistComponentWithThatName(List<Component> data, String componentName) {
+        Component temp = null;
+
+        for(Component component : data){
+            if(component.getName().equals(componentName))
+                return component;
+        }
+        return temp;
+    }
+
+    private static Component getComponentByName(String name) throws Exception {
+        Component componentTmp = null;
+        String componentName = name;
+        String typeOfComponent = name.replaceAll("[0-9]", "");
+
+        switch (typeOfComponent)
+        {
+            case "input":
+                componentTmp = Component.getComponent(ComponentType.INPUT, false);
+                break;
+            case "output":
+                componentTmp = Component.getComponent(ComponentType.OUTPUT, false);
+                break;
+            case "project":
+                componentTmp = Component.getComponent(ComponentType.PROJECT, false);
+                break;
+            case "and":
+                componentTmp = Component.getComponent(ComponentType.LOGIC_AND, false);
+                break;
+            case "or":
+                componentTmp = Component.getComponent(ComponentType.LOGIC_OR, false);
+                break;
+            case "module":
+                componentTmp = Component.getComponent(ComponentType.MODULE, false);
+                break;
+            default:
+                throw new Exception("Invalid type: " + typeOfComponent + ".");
+
+        }
+        componentTmp.setName(componentName);
+        return componentTmp;
     }
     
     public static Project loadProjectFromBinFile(String filePathString, User user) {
         Project project = null;
 
         java.io.File filePath = new java.io.File(filePathString);
-
 
         try {
             FileInputStream fis = null;

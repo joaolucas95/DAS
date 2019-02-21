@@ -36,7 +36,7 @@ public class Main {
         Project projectTestA = printTestAWithStateMachine(User.getInstance());
         printTestASimulations(projectTestA);
         printTestATests(projectTestA);
-        if(saveProject(projectTestA, Config.FILE_TYPE_BINARY))
+        if(saveProject(projectTestA, Config.FILE_TYPE_BLIF))
             System.out.println("Project saved with success.");
         else
             System.out.println("Error saving the project: " + projectTestA);
@@ -48,8 +48,8 @@ public class Main {
         if(saveProject(projectTestB, Config.FILE_TYPE_BINARY))
             System.out.println("Project saved with success.");
         else
-            System.out.println("Error saving the project: " + projectTestB);/*
- */
+            System.out.println("Error saving the project: " + projectTestB);
+
 
 
         //   printTestSavingProjectBinaryFile();
@@ -228,7 +228,7 @@ public class Main {
         //test
         stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
    
-        stateMachine.addModule("modelTest.bin", user);
+        stateMachine.addModule("modelTest.blif", user);
 
         stateMachine.selectComponent("input10");
         stateMachine.selectComponent("input14");
@@ -239,7 +239,7 @@ public class Main {
         stateMachine.selectComponent("input12");
         stateMachine.selectComponent("input16");
         
-        stateMachine.addModule("modelTest.bin", user);
+        stateMachine.addModule("modelTest.blif", user);
         
         stateMachine.selectComponent("output21");
         stateMachine.selectComponent("input22");
