@@ -30,12 +30,7 @@ public class ComponentBuilder {
         
         Component finalComponent = Component.getComponent(ComponentType.PROJECT, true);
         ((ComponentModule) finalComponent).addComponent(data);
-        
-        //set the output components as previous of component
-        for(Component component : data){
-            if(component instanceof ComponentOutput)
-                finalComponent.setPrevious(component);
-        }
+
         return finalComponent;
     }
     

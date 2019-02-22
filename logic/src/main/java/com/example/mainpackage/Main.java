@@ -45,14 +45,23 @@ public class Main {
         Project projectTestB = printTestBWithStateMachine(User.getInstance());
         printTestBSimulations(projectTestB);
         printTestBTests(projectTestB);
-        if(saveProject(projectTestB, Config.FILE_TYPE_BINARY))
+        if(saveProject(projectTestB, Config.FILE_TYPE_BLIF))
             System.out.println("Project saved with success.");
         else
             System.out.println("Error saving the project: " + projectTestB);
 
 
+        Project projectTestC = printTestCWithStateMachine(User.getInstance());
+        //printTestCSimulations(projectTestC);
+        //printTestCTests(projectTestC);
+        if(saveProject(projectTestC, Config.FILE_TYPE_BLIF))
+            System.out.println("Project saved with success.");
+        else
+            System.out.println("Error saving the project: " + projectTestC);
+
 
         //   printTestSavingProjectBinaryFile();
+
     }
     
     private static Project printTestAWithCommands(User user) {
@@ -242,18 +251,18 @@ public class Main {
         stateMachine.addModule("modelTest.blif", user);
         
         stateMachine.selectComponent("output21");
-        stateMachine.selectComponent("input22");
-        
-        stateMachine.selectComponent("input12");
         stateMachine.selectComponent("input23");
         
-        stateMachine.selectComponent("input13");
+        stateMachine.selectComponent("input12");
         stateMachine.selectComponent("input24");
+        
+        stateMachine.selectComponent("input13");
+        stateMachine.selectComponent("input25");
         
         stateMachine.addSimpleComponent(ComponentType.OUTPUT);
 
-        stateMachine.selectComponent("output29");
         stateMachine.selectComponent("output30");
+        stateMachine.selectComponent("output32");
         
         return stateMachine.finishComponentEditor();
     }
@@ -434,6 +443,66 @@ public class Main {
         System.out.println("\n\n");
     }
 
-    
 
+
+    private static Project printTestCWithStateMachine(User user) {
+        String projectName = "modelTestC";
+
+        Component model = createModelTestCWithStateMachine();
+
+        Project project = new Project(user, projectName);
+        project.setComponentModule(model);
+
+        return project;
+    }
+    private static Component createModelTestCWithStateMachine(){
+        ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.MODULE);
+        stateMachine.addSimpleComponent(ComponentType.INPUT); //input 34
+        stateMachine.addSimpleComponent(ComponentType.INPUT);
+        stateMachine.addSimpleComponent(ComponentType.INPUT);
+
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
+
+        stateMachine.selectComponent("input34");
+        stateMachine.selectComponent("and37");
+        stateMachine.selectComponent("input35");
+        stateMachine.selectComponent("and37");
+
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
+        stateMachine.selectComponent("input35");
+        stateMachine.selectComponent("and38");
+        stateMachine.selectComponent("input36");
+        stateMachine.selectComponent("and38");
+
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR);
+        stateMachine.selectComponent("and37");
+        stateMachine.selectComponent("or39");
+        stateMachine.selectComponent("and38");
+        stateMachine.selectComponent("or39");
+
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR);
+        stateMachine.selectComponent("or39");
+        stateMachine.selectComponent("or40");
+        stateMachine.selectComponent("and38");
+        stateMachine.selectComponent("or40");
+        stateMachine.selectComponent("and37");
+        stateMachine.selectComponent("or40");
+
+
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.selectComponent("and37");
+        stateMachine.selectComponent("output41");
+
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.selectComponent("or39");
+        stateMachine.selectComponent("output42");
+
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.selectComponent("or40");
+        stateMachine.selectComponent("output43");
+
+
+
+        return stateMachine.finishComponentEditor();
+    }
 }

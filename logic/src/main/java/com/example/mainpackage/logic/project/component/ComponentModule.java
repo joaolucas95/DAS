@@ -9,20 +9,11 @@ public class ComponentModule extends Component {
     private final boolean isProject;
     
     private List<Component> data;
-    private List<Component> outputs;
     
     public ComponentModule(String name, boolean isProject) {
         super(name);
         this.isProject = isProject;
         this.data = new ArrayList<>();
-        this.outputs = null;
-    }
-    
-    public ComponentModule(String name, List<Component> outputs, boolean isProject) {
-        super(name);
-        this.data = new ArrayList<>();
-        this.outputs = outputs;
-        this.isProject = isProject;
     }
 
     public void addComponent(Component component) {
@@ -43,25 +34,23 @@ public class ComponentModule extends Component {
     
     @Override
     public void setPrevious(Component... previous) {
-        if(this.outputs == null)
-            this.outputs = new ArrayList<>();
-            
-        this.outputs.addAll(Arrays.asList(previous));
+        //As this component is a Module... Will be add output components...
+        data.addAll(Arrays.asList(previous));
     }
     
     @Override
     public List<Component> getPrevious() {
-        return outputs;
+        return getOutputList();
     }
     
     @Override
     public void removePrevious(Component previous) {
-        
+        List<Component> outputs = getOutputList();
         for(Component component : outputs)
         {
             if(component.equals(previous))
             {
-                outputs.remove(component);
+                data.remove(component); //TODO: need to be tested
                 return;
             }
         }
@@ -79,7 +68,13 @@ public class ComponentModule extends Component {
     }
     
     public List<Component> getOutputList() {
-        return this.outputs;
+        List<Component> outputList = new ArrayList();
+        for(Component component : data)
+        {
+            if(component instanceof ComponentOutput)
+                outputList.add(component);
+        }
+        return outputList;
     }
     public List<Component> getInputList(){
         List<Component> inputList = new ArrayList();
@@ -93,6 +88,7 @@ public class ComponentModule extends Component {
     
     @Override
     public boolean getOutput(String outputName) {
+        List<Component> outputs = getOutputList();
         for (Component output : outputs) {
             if (output.getName().equals(outputName)) {
                 return output.getOutput(outputName);
@@ -112,7 +108,7 @@ public class ComponentModule extends Component {
     
     @Override
     public String toString() {
-        return "ComponentModule{" + "isProject=" + isProject + ", data=" + data + ", outputs=" + outputs + '}';
+        return "ComponentModule{" + "isProject=" + isProject + ", data=" + data + '}';
     }
 
     
