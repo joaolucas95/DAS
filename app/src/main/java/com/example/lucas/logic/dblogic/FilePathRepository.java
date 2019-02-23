@@ -21,8 +21,8 @@ public class FilePathRepository {
         return mFilePathDao.findAllFilesPathOfUser(user_id);
     }
 
-    public FilePath findFilePathEntityByFilePath(String filePath) {
-        return mFilePathDao.findFilePathEntityByFilePath(filePath);
+    public FilePath findFilePathEntityByProjectName(String projectName) {
+        return mFilePathDao.findFilePathEntityByProjectName(projectName);
     }
 
     public LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id) { return mFilePathDao.getAllFilesPathOfUser(user_id); }

@@ -30,5 +30,5 @@ public class FileHistoryViewModel extends AndroidViewModel {
     public List<FilePath> findAllFilesPathOfUser(int user_id) { return mFilePathRepository.findAllFilesPathOfUser(user_id);}
     public LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id) { return mFilePathRepository.getAllFilesPathOfUser(user_id); }
     public void deleteFilePath(FilePath filePath) { mFilePathRepository.delete(filePath);}
-    public FilePath findFilePathEntityByFilePath(String filePath) { return mFilePathRepository.findFilePathEntityByFilePath(filePath);}
+    public FilePath findFilePathEntityByProjectName(String projectName) { return mFilePathRepository.findFilePathEntityByProjectName(projectName);}
 }

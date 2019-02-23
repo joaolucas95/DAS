@@ -470,8 +470,6 @@ public class Main {
         System.out.println("\n\n");
     }
 
-
-
     private static Project printTestCWithStateMachine(User user) {
         String projectName = "modelTestC";
 
@@ -482,6 +480,7 @@ public class Main {
 
         return project;
     }
+
     private static Component createModelTestCWithStateMachine(){
         ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.MODULE);
         stateMachine.addSimpleComponent(ComponentType.INPUT); //input 34
