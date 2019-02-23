@@ -104,7 +104,33 @@ public class EditView extends AppCompatImageView {
         paint.setColor(color);
 
         mCanvas.drawRect(getRectangle(component.getPosition()), paint);
+        drawConnections(component);
         setImageBitmap(mBitmap);
+    }
+
+    private void drawConnections(Component component) {
+        int[] pos = component.getPosition();
+        int stopX = pos[0] - EditUtils.COMPONENT_RADIUS;
+        int stopY = pos[1];
+
+        List<Component> previousList = component.getPrevious();
+        if (previousList == null || previousList.isEmpty()) {
+            return;
+        }
+
+        for (Component previous : component.getPrevious()) {
+            drawConnection(stopX, stopY, previous);
+        }
+    }
+
+    private void drawConnection(int stopX, int stopY, Component previous) {
+        int[] pos = previous.getPosition();
+        int startX = pos[0] + EditUtils.COMPONENT_RADIUS;
+        int startY = pos[1];
+
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStrokeWidth(EditUtils.LINE_THICKNESS);
+        mCanvas.drawLine(startX, startY, stopX, stopY, paint);
     }
 
     private int getColor(ComponentType type) {

@@ -4,6 +4,7 @@ import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
 import com.example.mainpackage.logic.project.Command;
 import com.example.mainpackage.logic.project.CommandAddComponent;
+import com.example.mainpackage.logic.project.CommandConnectComponent;
 import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.ComponentBuilder;
 import com.example.mainpackage.logic.project.component.Component;
@@ -172,7 +173,11 @@ public class EditActivity extends AppCompatActivity {
         }
 
         if (!EditUtils.isSameComponent(component, mSelectedComponent)) {
-            Toast.makeText(this, "connection made!", Toast.LENGTH_SHORT).show();
+            String previous = mSelectedComponent.getName();
+            String next = component.getName();
+
+            Command cmd = new CommandConnectComponent(previous, next);
+            mCmdManager.apply(cmd);
         }
 
         mSelectedComponent = null;

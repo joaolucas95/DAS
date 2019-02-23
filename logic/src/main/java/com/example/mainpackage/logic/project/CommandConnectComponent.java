@@ -6,7 +6,8 @@ import java.io.Serializable;
 
 public class CommandConnectComponent implements Command, Serializable{
 
-    String componentName1, componentName2;
+    private String componentName1;
+    private String componentName2;
     
     public CommandConnectComponent(String componentName1, String componentName2) {
         this.componentName1 = componentName1;

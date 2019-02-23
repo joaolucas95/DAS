@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class EditUtils {
 
     static final int COMPONENT_RADIUS = 50;
+    static final float LINE_THICKNESS = 10f;
 
     static boolean isSameComponent(Component comp1, Component comp2) {
         //noinspection SimplifiableIfStatement
