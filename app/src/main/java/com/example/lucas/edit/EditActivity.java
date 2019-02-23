@@ -7,6 +7,7 @@ import com.example.mainpackage.logic.project.CommandAddComponent;
 import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.ComponentBuilder;
 import com.example.mainpackage.logic.project.component.Component;
+import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import android.content.DialogInterface;
@@ -121,16 +122,22 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void handleActionSave() {
+        // TODO
     }
 
-    public ComponentType getSelectedType() {
+    private ComponentType getSelectedType() {
         return mSelectedType;
     }
 
     /* Draw handling */
 
-    void addComponent(int[] position) {
-        Command cmd = new CommandAddComponent(getSelectedType(), position);
+    void handleTap(int[] tapPos) {
+        if (intersects(tapPos)) {
+            Toast.makeText(this, "intersects", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Command cmd = new CommandAddComponent(getSelectedType(), tapPos);
         mCmdManager.apply(cmd);
 
         doDraw();
@@ -139,5 +146,30 @@ public class EditActivity extends AppCompatActivity {
     private void doDraw() {
         Component module = mCmdManager.finishComponentEditor();
         mEditView.drawProject(module);
+    }
+
+    private boolean intersects(int[] tapPos) {
+        Component component = mCmdManager.finishComponentEditor();
+        ComponentModule module = (ComponentModule) component;
+
+        for (Component cmp : module.getData()) {
+            if (intersects(tapPos, cmp)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean intersects(int[] tapPos, Component component) {
+        int[] pos = component.getPosition();
+        int left = pos[0] - EditValues.COMPONENT_RADIUS;
+        int top = pos[1] - EditValues.COMPONENT_RADIUS;
+        int right = pos[0] + EditValues.COMPONENT_RADIUS;
+        int bottom = pos[1] + EditValues.COMPONENT_RADIUS;
+
+        return tapPos[0] >= left && tapPos[0] <= right &&
+                tapPos[1] >= top && tapPos[1] <= bottom;
+
     }
 }

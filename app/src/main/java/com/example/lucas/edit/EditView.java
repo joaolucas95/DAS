@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.support.v7.widget.AppCompatImageView;
@@ -53,9 +52,10 @@ public class EditView extends AppCompatImageView {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                Point point = new Point((int) event.getX(), (int) event.getY());
-                int[] position = new int[]{point.x, point.y};
-                getActivity().addComponent(position);
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                int[] position = new int[]{x, y};
+                getActivity().handleTap(position);
                 break;
 
             default:
@@ -77,11 +77,6 @@ public class EditView extends AppCompatImageView {
         }
 
         throw new IllegalStateException();
-    }
-
-    private ComponentType getSelectedType() {
-        //noinspection ConstantConditions
-        return getActivity().getSelectedType();
     }
 
     /* Draw methods */
@@ -131,10 +126,10 @@ public class EditView extends AppCompatImageView {
     }
 
     private Rect getRectangle(int[] position) {
-        int left = position[0] - 50;
-        int right = position[0] + 50;
-        int top = position[1] - 50;
-        int bottom = position[1] + 50;
+        int left = position[0] - EditValues.COMPONENT_RADIUS;
+        int right = position[0] + EditValues.COMPONENT_RADIUS;
+        int top = position[1] - EditValues.COMPONENT_RADIUS;
+        int bottom = position[1] + EditValues.COMPONENT_RADIUS;
 
         return new Rect(left, top, right, bottom);
     }

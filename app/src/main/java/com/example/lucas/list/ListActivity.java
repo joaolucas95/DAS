@@ -103,7 +103,7 @@ public class ListActivity extends AppCompatActivity {
                 FilePath filePath = new FilePath(projectName, filePathString , user.id);
                 mFileHistoryViewModel.insertFilePath(filePath);
 
-                //startActivity(new Intent(ListActivity.this, EditActivity.class));
+                startActivity(new Intent(ListActivity.this, EditActivity.class));
             }
         });
     }
