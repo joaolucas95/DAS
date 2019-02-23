@@ -81,7 +81,7 @@ public class EditView extends AppCompatImageView {
 
     /* Draw methods */
 
-    void drawProject(Component component) {
+    void drawProject(Component component, Component selectedComponent) {
         mCanvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR);
         ComponentModule module = (ComponentModule) component;
         List<Component> components = module.getData();
@@ -92,13 +92,17 @@ public class EditView extends AppCompatImageView {
         }
 
         for (Component cmp : components) {
-            drawDataComponent(cmp);
+            boolean isSelected = EditUtils.isSameComponent(cmp, selectedComponent);
+            drawDataComponent(cmp, isSelected);
         }
     }
 
-    private void drawDataComponent(Component component) {
+    private void drawDataComponent(Component component, boolean isSelected) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(getColor(component.getType()));
+
+        int color = isSelected ? Color.BLACK : getColor(component.getType());
+        paint.setColor(color);
+
         mCanvas.drawRect(getRectangle(component.getPosition()), paint);
         setImageBitmap(mBitmap);
     }
@@ -126,10 +130,10 @@ public class EditView extends AppCompatImageView {
     }
 
     private Rect getRectangle(int[] position) {
-        int left = position[0] - EditValues.COMPONENT_RADIUS;
-        int right = position[0] + EditValues.COMPONENT_RADIUS;
-        int top = position[1] - EditValues.COMPONENT_RADIUS;
-        int bottom = position[1] + EditValues.COMPONENT_RADIUS;
+        int left = position[0] - EditUtils.COMPONENT_RADIUS;
+        int right = position[0] + EditUtils.COMPONENT_RADIUS;
+        int top = position[1] - EditUtils.COMPONENT_RADIUS;
+        int bottom = position[1] + EditUtils.COMPONENT_RADIUS;
 
         return new Rect(left, top, right, bottom);
     }

@@ -28,6 +28,7 @@ public class EditActivity extends AppCompatActivity {
 
     private ComponentType mSelectedType;
     private List<ComponentType> mTypes;
+    private Component mSelectedComponent;
 
     private ComponentBuilder mBuilder = new ComponentBuilder();
     private CommandManager mCmdManager = new CommandManager(mBuilder);
@@ -132,8 +133,7 @@ public class EditActivity extends AppCompatActivity {
     /* Draw handling */
 
     void handleTap(int[] tapPos) {
-        if (intersects(tapPos)) {
-            Toast.makeText(this, "intersects", Toast.LENGTH_SHORT).show();
+        if (handleConnection(tapPos)) {
             return;
         }
 
@@ -143,30 +143,67 @@ public class EditActivity extends AppCompatActivity {
         doDraw();
     }
 
-    private void doDraw() {
-        Component module = mCmdManager.finishComponentEditor();
-        mEditView.drawProject(module);
+    private boolean handleConnection(int[] tapPos) {
+        Component component = intersects(tapPos);
+        if (component == null) {
+            return handleNoIntersection();
+        }
+
+        return handleIntersection(component);
     }
 
-    private boolean intersects(int[] tapPos) {
+    private boolean handleNoIntersection() {
+        if (mSelectedComponent == null) {
+            return false;
+        }
+
+        mSelectedComponent = null;
+        doDraw();
+        return true;
+    }
+
+    private boolean handleIntersection(Component component) {
+        if (mSelectedComponent == null) {
+            mSelectedComponent = component;
+            Toast.makeText(this, R.string.selected_component, Toast.LENGTH_SHORT).show();
+
+            doDraw();
+            return true;
+        }
+
+        if (!EditUtils.isSameComponent(component, mSelectedComponent)) {
+            Toast.makeText(this, "connection made!", Toast.LENGTH_SHORT).show();
+        }
+
+        mSelectedComponent = null;
+        doDraw();
+        return true;
+    }
+
+    private void doDraw() {
+        Component module = mCmdManager.finishComponentEditor();
+        mEditView.drawProject(module, mSelectedComponent);
+    }
+
+    private Component intersects(int[] tapPos) {
         Component component = mCmdManager.finishComponentEditor();
         ComponentModule module = (ComponentModule) component;
 
         for (Component cmp : module.getData()) {
             if (intersects(tapPos, cmp)) {
-                return true;
+                return cmp;
             }
         }
 
-        return false;
+        return null;
     }
 
     private boolean intersects(int[] tapPos, Component component) {
         int[] pos = component.getPosition();
-        int left = pos[0] - EditValues.COMPONENT_RADIUS;
-        int top = pos[1] - EditValues.COMPONENT_RADIUS;
-        int right = pos[0] + EditValues.COMPONENT_RADIUS;
-        int bottom = pos[1] + EditValues.COMPONENT_RADIUS;
+        int left = pos[0] - EditUtils.COMPONENT_RADIUS;
+        int top = pos[1] - EditUtils.COMPONENT_RADIUS;
+        int right = pos[0] + EditUtils.COMPONENT_RADIUS;
+        int bottom = pos[1] + EditUtils.COMPONENT_RADIUS;
 
         return tapPos[0] >= left && tapPos[0] <= right &&
                 tapPos[1] >= top && tapPos[1] <= bottom;
