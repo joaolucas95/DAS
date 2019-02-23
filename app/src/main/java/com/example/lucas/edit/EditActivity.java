@@ -1,14 +1,7 @@
 package com.example.lucas.edit;
 
-import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
-import com.example.mainpackage.logic.project.Command;
-import com.example.mainpackage.logic.project.CommandAddComponent;
-import com.example.mainpackage.logic.project.CommandConnectComponent;
-import com.example.mainpackage.logic.project.CommandManager;
-import com.example.mainpackage.logic.project.ComponentBuilder;
 import com.example.mainpackage.logic.project.component.Component;
-import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import android.content.DialogInterface;
@@ -27,21 +20,15 @@ public class EditActivity extends AppCompatActivity {
 
     private EditView mEditView;
 
-    private ComponentType mSelectedType;
-    private List<ComponentType> mTypes;
-    private Component mSelectedComponent;
-
-    private ComponentBuilder mBuilder = new ComponentBuilder();
-    private CommandManager mCmdManager = new CommandManager(mBuilder);
+    private EditController mController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        mTypes = LogicController.getInstance().getFacade().getComponentsTypes();
-        mSelectedType = mTypes.get(0);
         mEditView = findViewById(R.id.edit_view);
+        mController = new EditController();
     }
 
     @Override
@@ -79,8 +66,8 @@ public class EditActivity extends AppCompatActivity {
         builder.setTitle(R.string.choose_component);
 
         List<String> componentNames = new ArrayList<>();
-        for (ComponentType type : mTypes) {
-            componentNames.add(LogicController.getInstance().getFacade().getComponentsTypeName(type));
+        for (ComponentType type : mController.getTypes()) {
+            componentNames.add(mController.getComponentTypeName(type));
         }
 
         if (componentNames.isEmpty()) {
@@ -103,7 +90,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                mSelectedType = mTypes.get(pos);
+                mController.setSelectedType(mController.getTypes().get(pos));
             }
         });
 
@@ -114,12 +101,12 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void handleActionUndo() {
-        mCmdManager.undo();
+        mController.doUndo();
         doDraw();
     }
 
     private void handleActionRedo() {
-        mCmdManager.redo();
+        mController.doRedo();
         doDraw();
     }
 
@@ -127,91 +114,18 @@ public class EditActivity extends AppCompatActivity {
         // TODO
     }
 
-    private ComponentType getSelectedType() {
-        return mSelectedType;
-    }
-
     /* Draw handling */
 
     void handleTap(int[] tapPos) {
-        if (handleConnection(tapPos)) {
-            return;
+        if (!mController.handleConnection(tapPos)) {
+            mController.doAdd(tapPos);
         }
-
-        Command cmd = new CommandAddComponent(getSelectedType(), tapPos);
-        mCmdManager.apply(cmd);
 
         doDraw();
-    }
-
-    private boolean handleConnection(int[] tapPos) {
-        Component component = intersects(tapPos);
-        if (component == null) {
-            return handleNoIntersection();
-        }
-
-        return handleIntersection(component);
-    }
-
-    private boolean handleNoIntersection() {
-        if (mSelectedComponent == null) {
-            return false;
-        }
-
-        mSelectedComponent = null;
-        doDraw();
-        return true;
-    }
-
-    private boolean handleIntersection(Component component) {
-        if (mSelectedComponent == null) {
-            mSelectedComponent = component;
-            Toast.makeText(this, R.string.selected_component, Toast.LENGTH_SHORT).show();
-
-            doDraw();
-            return true;
-        }
-
-        if (!EditUtils.isSameComponent(component, mSelectedComponent)) {
-            String previous = mSelectedComponent.getName();
-            String next = component.getName();
-
-            Command cmd = new CommandConnectComponent(previous, next);
-            mCmdManager.apply(cmd);
-        }
-
-        mSelectedComponent = null;
-        doDraw();
-        return true;
     }
 
     private void doDraw() {
-        Component module = mCmdManager.finishComponentEditor();
-        mEditView.drawProject(module, mSelectedComponent);
-    }
-
-    private Component intersects(int[] tapPos) {
-        Component component = mCmdManager.finishComponentEditor();
-        ComponentModule module = (ComponentModule) component;
-
-        for (Component cmp : module.getData()) {
-            if (intersects(tapPos, cmp)) {
-                return cmp;
-            }
-        }
-
-        return null;
-    }
-
-    private boolean intersects(int[] tapPos, Component component) {
-        int[] pos = component.getPosition();
-        int left = pos[0] - EditUtils.COMPONENT_RADIUS;
-        int top = pos[1] - EditUtils.COMPONENT_RADIUS;
-        int right = pos[0] + EditUtils.COMPONENT_RADIUS;
-        int bottom = pos[1] + EditUtils.COMPONENT_RADIUS;
-
-        return tapPos[0] >= left && tapPos[0] <= right &&
-                tapPos[1] >= top && tapPos[1] <= bottom;
-
+        Component module = mController.getProject();
+        mEditView.drawProject(module, mController.getSelectedComponent());
     }
 }

@@ -2,25 +2,22 @@ package com.example.lucas.list;
 
 import com.example.lucas.edit.EditActivity;
 import com.example.lucas.logic.LogicController;
+import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 import com.example.lucas.logic.dblogic.FilePath;
 import com.example.lucas.logic.dblogic.User;
-import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 import com.example.lucas.main.R;
-import com.example.mainpackage.logic.project.Project;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -60,12 +57,11 @@ public class ListActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<User> users) {
 
                 Log.d("test", "------ All users");
-                for(User user : users)
-                {
+                for (User user : users) {
                     Log.d("test", String.valueOf(user));
                     Log.d("test", "FilePath list of user:\n");
 
-                    for(FilePath filePath : mFileHistoryViewModel.findAllFilesPathOfUser(user.id))
+                    for (FilePath filePath : mFileHistoryViewModel.findAllFilesPathOfUser(user.id))
                         Log.d("test", String.valueOf(filePath));
                 }
                 Log.d("test", "---------");
@@ -96,11 +92,11 @@ public class ListActivity extends AppCompatActivity {
                 String username = LogicController.getInstance().getFacade().getCurrentUsername();
                 User user = mFileHistoryViewModel.findUserByUsername(username);
 
-                Random randomno = new Random();
-                String projectName = "project" + randomno.nextInt();
+                Random random = new Random();
+                String projectName = "project" + random.nextInt();
                 String filePathString = "/" + projectName + ".bin";
 
-                FilePath filePath = new FilePath(projectName, filePathString , user.id);
+                FilePath filePath = new FilePath(projectName, filePathString, user.id);
                 mFileHistoryViewModel.insertFilePath(filePath);
 
                 startActivity(new Intent(ListActivity.this, EditActivity.class));
@@ -113,8 +109,7 @@ public class ListActivity extends AppCompatActivity {
         String username = LogicController.getInstance().getFacade().getCurrentUsername();
         User user = mFileHistoryViewModel.findUserByUsername(username);
 
-        if(user != null)
-        {
+        if (user != null) {
             mFileHistoryViewModel.getAllFilesPathOfUser(user.id).observe(this, new Observer<List<FilePath>>() {
                 @Override
                 public void onChanged(@Nullable List<FilePath> filePaths) {
