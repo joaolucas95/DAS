@@ -121,20 +121,20 @@ public class Main {
         ComponentBuilder componentBuilder =new ComponentBuilder();
         CommandManager commandManager = new CommandManager(componentBuilder);
         
-        cmAddComponent = new CommandAddComponent(ComponentType.INPUT);
+        cmAddComponent = new CommandAddComponent(ComponentType.INPUT, new int[]{0, 0});
         commandManager.apply(cmAddComponent);
 
-        cmAddComponent = new CommandAddComponent(ComponentType.INPUT);
+        cmAddComponent = new CommandAddComponent(ComponentType.INPUT, new int[]{0, 0});
         commandManager.apply(cmAddComponent);
 
-        cmAddComponent = new CommandAddComponent(ComponentType.INPUT);
+        cmAddComponent = new CommandAddComponent(ComponentType.INPUT, new int[]{0, 0});
         commandManager.apply(cmAddComponent);
 
         //commandManager.undo();
         //commandManager.redo();
 
 
-        cmAddComponent = new CommandAddComponent(ComponentType.LOGIC_AND);
+        cmAddComponent = new CommandAddComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
         commandManager.apply(cmAddComponent);
         
         cmConnectComponent = new CommandConnectComponent("input1", "and4");
@@ -143,7 +143,7 @@ public class Main {
         commandManager.apply(cmConnectComponent);
         
 
-        cmAddComponent = new CommandAddComponent(ComponentType.LOGIC_AND);
+        cmAddComponent = new CommandAddComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
         commandManager.apply(cmAddComponent);
         
         cmConnectComponent = new CommandConnectComponent("input2", "and5");
@@ -151,7 +151,7 @@ public class Main {
         cmConnectComponent = new CommandConnectComponent("input3", "and5");
         commandManager.apply(cmConnectComponent);
         
-        cmAddComponent = new CommandAddComponent(ComponentType.LOGIC_OR);
+        cmAddComponent = new CommandAddComponent(ComponentType.LOGIC_OR, new int[]{0, 0});
         commandManager.apply(cmAddComponent);
         cmConnectComponent = new CommandConnectComponent("and4", "or6");
         commandManager.apply(cmConnectComponent);
@@ -159,13 +159,13 @@ public class Main {
         commandManager.apply(cmConnectComponent);
         
         
-        cmAddComponent = new CommandAddComponent(ComponentType.OUTPUT);
+        cmAddComponent = new CommandAddComponent(ComponentType.OUTPUT, new int[]{0, 0});
         commandManager.apply(cmAddComponent);
         
         cmConnectComponent = new CommandConnectComponent("and4", "output7");
         commandManager.apply(cmConnectComponent);
         
-        cmAddComponent = new CommandAddComponent(ComponentType.OUTPUT);
+        cmAddComponent = new CommandAddComponent(ComponentType.OUTPUT, new int[]{0, 0});
         commandManager.apply(cmAddComponent);
         
         cmConnectComponent = new CommandConnectComponent("or6", "output8");
@@ -205,11 +205,11 @@ public class Main {
     
     private static Component createModelTestWithStateMachine(){
         ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.MODULE);
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
         
-        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
         
         //test
         stateMachine.selectComponent("and4");
@@ -220,23 +220,23 @@ public class Main {
         stateMachine.selectComponent("input2");
         stateMachine.selectComponent("and4");
         
-        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
         stateMachine.selectComponent("input2");
         stateMachine.selectComponent("and5");
         stateMachine.selectComponent("input3");
         stateMachine.selectComponent("and5");
         
-        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR);
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR, new int[]{0, 0});
         stateMachine.selectComponent("and4");
         stateMachine.selectComponent("or6");
         stateMachine.selectComponent("and5");
         stateMachine.selectComponent("or6");
         
-        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
         stateMachine.selectComponent("and4");
         stateMachine.selectComponent("output7");
         
-        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
         stateMachine.selectComponent("or6");
         stateMachine.selectComponent("output8");
         
@@ -256,13 +256,13 @@ public class Main {
     
     private static Component createGlobalModuleTestWithStateMachine(User user){
         ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.PROJECT);
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
 
         //test
-        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
    
         stateMachine.addModule("modelTest.blif", user);
 
@@ -286,7 +286,7 @@ public class Main {
         stateMachine.selectComponent("input13");
         stateMachine.selectComponent("input25");
         
-        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
 
         stateMachine.selectComponent("output30");
         stateMachine.selectComponent("output32");
@@ -483,30 +483,30 @@ public class Main {
 
     private static Component createModelTestCWithStateMachine(){
         ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.MODULE);
-        stateMachine.addSimpleComponent(ComponentType.INPUT); //input 34
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
-        stateMachine.addSimpleComponent(ComponentType.INPUT);
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0}); //input 34
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
 
-        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
 
         stateMachine.selectComponent("input34");
         stateMachine.selectComponent("and37");
         stateMachine.selectComponent("input35");
         stateMachine.selectComponent("and37");
 
-        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND);
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
         stateMachine.selectComponent("input35");
         stateMachine.selectComponent("and38");
         stateMachine.selectComponent("input36");
         stateMachine.selectComponent("and38");
 
-        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR);
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR, new int[]{0, 0});
         stateMachine.selectComponent("and37");
         stateMachine.selectComponent("or39");
         stateMachine.selectComponent("and38");
         stateMachine.selectComponent("or39");
 
-        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR);
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR, new int[]{0, 0});
         stateMachine.selectComponent("or39");
         stateMachine.selectComponent("or40");
         stateMachine.selectComponent("and38");
@@ -515,15 +515,15 @@ public class Main {
         stateMachine.selectComponent("or40");
 
 
-        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
         stateMachine.selectComponent("and37");
         stateMachine.selectComponent("output41");
 
-        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
         stateMachine.selectComponent("or39");
         stateMachine.selectComponent("output42");
 
-        stateMachine.addSimpleComponent(ComponentType.OUTPUT);
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
         stateMachine.selectComponent("or40");
         stateMachine.selectComponent("output43");
 

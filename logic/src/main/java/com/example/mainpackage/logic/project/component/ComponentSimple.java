@@ -8,8 +8,8 @@ public abstract class ComponentSimple extends Component {
     
     protected List<Component> previous;
     
-    public ComponentSimple(String name) {
-        super(name);
+    ComponentSimple(String name, int[] position) {
+        super(name, position);
     }    
     
     @Override

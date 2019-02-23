@@ -27,7 +27,7 @@ public class StateAdapter implements IState{
     }
 
     @Override
-    public IState addSimpleComponent(ComponentType type) {
+    public IState addSimpleComponent(ComponentType type, int[] position) {
         return this;
     }
 

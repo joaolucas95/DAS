@@ -12,13 +12,13 @@ public class GlobalModuleManagementState extends StateAdapter{
     }
     
     @Override
-    public IState addSimpleComponent(ComponentType type) {
+    public IState addSimpleComponent(ComponentType type, int[] position) {
         
         //if type isnt a input or a output do not had new simple component
         if(!(type.equals(ComponentType.INPUT) || type.equals(ComponentType.OUTPUT)))
             return this;
         
-        CommandAddComponent cmAddComponent = new CommandAddComponent(type);
+        CommandAddComponent cmAddComponent = new CommandAddComponent(type, position);
         commandManager.apply(cmAddComponent);
         return this;
     }

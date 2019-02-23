@@ -8,9 +8,11 @@ import java.util.List;
 public abstract class Component implements Serializable{
 
     private String name;
+    private int[] position;
     
-    public Component(String name) {
+    public Component(String name, int[] position) {
         this.name = name;
+        this.position = position;
     }
 
     public String getName() {
@@ -19,9 +21,15 @@ public abstract class Component implements Serializable{
     public void setName(String name){
         this.name = name;
     }
+
+    public int[] getPosition() {
+        return position;
+    }
     
     public abstract boolean getOutput(String output);
-    
+
+    public abstract ComponentType getType();
+
     // TODO change this to package-private
     public abstract void setPrevious(Component... previous);
     public abstract void removePrevious(Component previous);
@@ -32,7 +40,7 @@ public abstract class Component implements Serializable{
     // TODO change this to package-private
     public abstract void setInput(String name, boolean value);
     
-    public static Component getComponent(ComponentType type, boolean defineUniqueNumber) {
+    public static Component getComponent(ComponentType type, boolean defineUniqueNumber, int[] position) {
         
         //DEFINE UNIQUE NUMBER FOR COMPONENT!!
         String name = defineComponentName(type);
@@ -42,22 +50,22 @@ public abstract class Component implements Serializable{
         
         switch (type) {
             case PROJECT:
-                return new ComponentModule(name, true);
+                return new ComponentModule(name, true, position);
                 
             case MODULE:
-                return new ComponentModule(name, false);
+                return new ComponentModule(name, false, position);
                 
             case INPUT:
-                return new ComponentInput(name);
+                return new ComponentInput(name, position);
                 
             case OUTPUT:
-                return new ComponentOutput(name, null);
+                return new ComponentOutput(name, null, position);
                 
             case LOGIC_AND:
-                return new ComponentLogicAnd(name, null);
+                return new ComponentLogicAnd(name, null, position);
                 
             case LOGIC_OR:
-                return new ComponentLogicOr(name, null);
+                return new ComponentLogicOr(name, null, position);
                 
             default:
                 throw new IllegalStateException("invalid type:" + type);

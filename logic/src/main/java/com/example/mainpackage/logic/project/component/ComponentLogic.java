@@ -2,10 +2,10 @@ package com.example.mainpackage.logic.project.component;
 
 import java.util.List;
 
-public abstract class ComponentLogic extends ComponentSimple {
+abstract class ComponentLogic extends ComponentSimple {
     
-    public ComponentLogic(String name, List<Component> previous) {
-        super(name);
+    ComponentLogic(String name, List<Component> previous, int[] position) {
+        super(name, position);
         this.previous = previous;
     }
 }

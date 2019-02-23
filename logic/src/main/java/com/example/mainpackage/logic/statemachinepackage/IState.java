@@ -11,7 +11,7 @@ public interface IState {
     //when we call this method in DefiningPreviousState we are defining  the second component... And define the connection between the selected components
     IState selectComponent(String componentName);
     IState cancelDefiningPrevious(); //for DefiningPreviousState
-    IState addSimpleComponent(ComponentType type); //for ModulesManagementState
+    IState addSimpleComponent(ComponentType type, int[] position); //for ModulesManagementState
 
 
     

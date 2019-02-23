@@ -48,7 +48,7 @@ public class Test implements Serializable {
                 Map.Entry pair = (Map.Entry)it.next();
                 
                 Boolean resultInput = combinationInput.getValues().get((String)pair.getKey());
-                Boolean resultExpected = combinationExpected.getValues().get((String)pair.getKey());
+                    Boolean resultExpected = combinationExpected.getValues().get((String)pair.getKey());
                 
                 if(!resultInput.equals(resultExpected))
                     return false;

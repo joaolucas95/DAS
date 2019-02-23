@@ -5,8 +5,8 @@ import java.util.List;
 
 public class ComponentLogicOr extends ComponentLogic {
 
-    public ComponentLogicOr(String name, List<Component> previous) {
-        super(name, previous);
+    ComponentLogicOr(String name, List<Component> previous, int[] position) {
+        super(name, previous, position);
     }
     
     @Override
@@ -21,16 +21,21 @@ public class ComponentLogicOr extends ComponentLogic {
 
     @Override
     public String getLogicGates() {
-        String str = "";
-        String tmp ="";
+        StringBuilder str = new StringBuilder();
 
         for(int i = 0 ; i < previous.size(); i++){
             char[] chars = new char[previous.size()];
             Arrays.fill(chars, '-');
             StringBuilder myName = new StringBuilder(new String(chars));
             myName.setCharAt(i, '1');
-            str += myName.toString() + " 1 \n";
+            str.append(myName.toString()).append(" 1 \n");
         }
-        return str;
+
+        return str.toString();
+    }
+
+    @Override
+    public ComponentType getType() {
+        return ComponentType.LOGIC_OR;
     }
 }

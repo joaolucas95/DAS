@@ -5,8 +5,8 @@ import java.util.List;
 
 public class ComponentOutput extends ComponentSimple {
 
-    public ComponentOutput(String name, List<Component> previous) {
-        super(name);
+    ComponentOutput(String name, List<Component> previous, int[] position) {
+        super(name, position);
     }
 
     @Override
@@ -23,7 +23,11 @@ public class ComponentOutput extends ComponentSimple {
         char[] chars = new char[previous.size()];
         Arrays.fill(chars, '1');
 
-        String str = new String(chars) + " 1 \n";
-        return str;
+        return new String(chars) + " 1 \n";
+    }
+
+    @Override
+    public ComponentType getType() {
+        return ComponentType.OUTPUT;
     }
 }

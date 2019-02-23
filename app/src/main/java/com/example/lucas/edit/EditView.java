@@ -1,5 +1,11 @@
 package com.example.lucas.edit;
 
+import com.example.mainpackage.logic.project.Command;
+import com.example.mainpackage.logic.project.CommandAddComponent;
+import com.example.mainpackage.logic.project.CommandManager;
+import com.example.mainpackage.logic.project.ComponentBuilder;
+import com.example.mainpackage.logic.project.component.Component;
+import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import android.content.Context;
@@ -14,10 +20,15 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import java.util.List;
+
 public class EditView extends AppCompatImageView {
 
     private Bitmap mBitmap;
     private Canvas mCanvas;
+
+    private ComponentBuilder mBuilder = new ComponentBuilder();
+    private CommandManager mCmdManager = new CommandManager(mBuilder);
 
     public EditView(Context context) {
         super(context);
@@ -47,14 +58,14 @@ public class EditView extends AppCompatImageView {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 Point point = new Point((int) event.getX(), (int) event.getY());
-                drawComponent(point);
+                int[] position = new int[]{point.x, point.y};
+                addComponent(position);
                 break;
 
             default:
                 break;
 
         }
-
 
         return true;
     }
@@ -77,12 +88,29 @@ public class EditView extends AppCompatImageView {
         return getActivity().getSelectedType();
     }
 
+    private void addComponent(int[] position) {
+        Command cmd = new CommandAddComponent(getSelectedType(), position);
+        mCmdManager.apply(cmd);
+
+        Component module = mCmdManager.finishComponentEditor();
+        drawProject(module);
+    }
+
     /* Draw methods */
 
-    private void drawComponent(Point point) {
+    private void drawProject(Component component) {
+        ComponentModule module = (ComponentModule) component;
+        List<Component> components = module.getData();
+
+        for (Component cmp : components) {
+            drawDataComponent(cmp);
+        }
+    }
+
+    private void drawDataComponent(Component component) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(getColor(getSelectedType()));
-        mCanvas.drawRect(getRectangle(point), paint);
+        paint.setColor(getColor(component.getType()));
+        mCanvas.drawRect(getRectangle(component.getPosition()), paint);
         setImageBitmap(mBitmap);
     }
 
@@ -108,11 +136,11 @@ public class EditView extends AppCompatImageView {
         }
     }
 
-    private Rect getRectangle(Point point) {
-        int left = point.x - 50;
-        int right = point.x + 50;
-        int top = point.y - 50;
-        int bottom = point.y + 50;
+    private Rect getRectangle(int[] position) {
+        int left = position[0] - 50;
+        int right = position[0] + 50;
+        int top = position[1] - 50;
+        int bottom = position[1] + 50;
 
         return new Rect(left, top, right, bottom);
     }

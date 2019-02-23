@@ -94,7 +94,7 @@ public class BlifLoadProject {
                 for (Component component : componentListTmp)
                     lastComponent.setPrevious(component);
             } else if (line.contains(".end")) {
-                ComponentModule componentModuleTemp = (ComponentModule) Component.getComponent(ComponentType.PROJECT, false);
+                ComponentModule componentModuleTemp = (ComponentModule) Component.getComponent(ComponentType.PROJECT, false, new int[]{0, 0});
                 componentModuleTemp.addComponent(data);
                 return componentModuleTemp;
             }
@@ -172,22 +172,22 @@ public class BlifLoadProject {
         switch (typeOfComponent)
         {
             case "input":
-                componentTmp = Component.getComponent(ComponentType.INPUT, false);
+                componentTmp = Component.getComponent(ComponentType.INPUT, false, new int[]{0, 0});
                 break;
             case "output":
-                componentTmp = Component.getComponent(ComponentType.OUTPUT, false);
+                componentTmp = Component.getComponent(ComponentType.OUTPUT, false, new int[]{0, 0});
                 break;
             case "project":
-                componentTmp = Component.getComponent(ComponentType.PROJECT, false);
+                componentTmp = Component.getComponent(ComponentType.PROJECT, false, new int[]{0, 0});
                 break;
             case "and":
-                componentTmp = Component.getComponent(ComponentType.LOGIC_AND, false);
+                componentTmp = Component.getComponent(ComponentType.LOGIC_AND, false, new int[]{0, 0});
                 break;
             case "or":
-                componentTmp = Component.getComponent(ComponentType.LOGIC_OR, false);
+                componentTmp = Component.getComponent(ComponentType.LOGIC_OR, false, new int[]{0, 0});
                 break;
             case "module":
-                componentTmp = Component.getComponent(ComponentType.MODULE, false);
+                componentTmp = Component.getComponent(ComponentType.MODULE, false, new int[]{0, 0});
                 break;
             default:
                 throw new Exception("Invalid type: " + typeOfComponent + ".");

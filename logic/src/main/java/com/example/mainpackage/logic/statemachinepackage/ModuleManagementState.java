@@ -12,8 +12,8 @@ public class ModuleManagementState extends StateAdapter{
     }
 
     @Override
-    public IState addSimpleComponent(ComponentType type) {
-        CommandAddComponent cmAddComponent = new CommandAddComponent(type);
+    public IState addSimpleComponent(ComponentType type, int[] position) {
+        CommandAddComponent cmAddComponent = new CommandAddComponent(type, position);
         commandManager.apply(cmAddComponent);
         return this;
     }

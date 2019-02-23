@@ -36,8 +36,8 @@ public class ComponentEditorStateMachine {
         setState(state.cancelDefiningPrevious());
     }
     
-    public void addSimpleComponent(ComponentType type) {
-        setState(state.addSimpleComponent(type));
+    public void addSimpleComponent(ComponentType type, int[] position) {
+        setState(state.addSimpleComponent(type, position));
     }
     
     public void selectComponent(String componentName){

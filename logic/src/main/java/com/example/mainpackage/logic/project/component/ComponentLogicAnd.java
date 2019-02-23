@@ -5,8 +5,8 @@ import java.util.List;
 
 public class ComponentLogicAnd extends ComponentLogic {
 
-    public ComponentLogicAnd(String name, List<Component> previous) {
-        super(name, previous);
+    ComponentLogicAnd(String name, List<Component> previous, int[] position) {
+        super(name, previous, position);
     }
 
     @Override
@@ -24,7 +24,11 @@ public class ComponentLogicAnd extends ComponentLogic {
         char[] chars = new char[previous.size()];
         Arrays.fill(chars, '1');
 
-        String str = new String(chars) + " 1 \n";
-        return str;
+        return new String(chars) + " 1 \n";
+    }
+
+    @Override
+    public ComponentType getType() {
+        return ComponentType.LOGIC_AND;
     }
 }

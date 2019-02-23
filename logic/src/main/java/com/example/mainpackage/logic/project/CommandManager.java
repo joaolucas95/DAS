@@ -6,15 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CommandManager {
-    List<Command> undoList;
-    List<Command> redoList;
+
+    private List<Command> undoList;
+    private List<Command> redoList;
     
-    protected ComponentBuilder componentBuilder;
+    private ComponentBuilder componentBuilder;
 
     public CommandManager(ComponentBuilder componentBuilder) {
         this.componentBuilder = componentBuilder;
-        this.undoList = new ArrayList();
-        this.redoList = new ArrayList();
+        this.undoList = new ArrayList<>();
+        this.redoList = new ArrayList<>();
     }
 
     public void apply(Command c){

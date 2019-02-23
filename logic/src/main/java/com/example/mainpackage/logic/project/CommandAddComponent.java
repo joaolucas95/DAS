@@ -1,6 +1,5 @@
 package com.example.mainpackage.logic.project;
 
-import com.example.mainpackage.logic.project.FileManagement.File;
 import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;
@@ -12,14 +11,16 @@ import java.io.Serializable;
 
 public class CommandAddComponent implements Command, Serializable{
     
-    ComponentType type;
-    String componentName; //after component is created this var is used (eg: need component name when doing undo)
-    String filePathProject; //used if add a module from another project
-    User user; //used if add a module from another project
+    private ComponentType type;
+    private String componentName; //after component is created this var is used (eg: need component name when doing undo)
+    private String filePathProject; //used if add a module from another project
+    private User user; //used if add a module from another project
+    private int[] position;
 
-    public CommandAddComponent(ComponentType type) {
+    public CommandAddComponent(ComponentType type, int[] position) {
         this.type = type;
-        this.filePathProject = new String();
+        this.filePathProject = "";
+        this.position = position;
     }
     
     public CommandAddComponent(ComponentType type, String filePathProject, User user) {
@@ -70,7 +71,7 @@ public class CommandAddComponent implements Command, Serializable{
         }
         else
         {
-            Component componentTmp = Component.getComponent(type, true);
+            Component componentTmp = Component.getComponent(type, true, position);
             this.componentName = componentTmp.getName();
             componentBuilder.addComponentToData(componentTmp);
         }

@@ -4,8 +4,8 @@ public class ComponentInput extends ComponentSimple {
     
     private Boolean value;
     
-    public ComponentInput(String name) {
-        super(name);
+    ComponentInput(String name, int[] position) {
+        super(name, position);
         this.value = null;
     }
 
@@ -14,13 +14,13 @@ public class ComponentInput extends ComponentSimple {
         return ""; //wouldn't be used
     }
 
-    public ComponentInput(String name, ComponentSimple previous) {
-        super(name);
+    public ComponentInput(String name, ComponentSimple previous, int[] position) {
+        super(name, position);
         this.value = null;
     }
     
-    public ComponentInput(String name, Boolean value) {
-        super(name);
+    public ComponentInput(String name, Boolean value, int[] position) {
+        super(name, position);
         this.value = value;
     }
     
@@ -31,7 +31,12 @@ public class ComponentInput extends ComponentSimple {
         }     
         return value;
     }
-    
+
+    @Override
+    public ComponentType getType() {
+        return ComponentType.INPUT;
+    }
+
     public void setValue(Boolean value) {
         this.value = value;
     }

@@ -2,7 +2,6 @@ package com.example.mainpackage.logic.project;
 
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
-import com.example.mainpackage.logic.project.component.ComponentOutput;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class ComponentBuilder {
     private List<Component> data;
 
     public ComponentBuilder() {
-        this.data = new ArrayList();
+        this.data = new ArrayList<>();
     }
     
     public void addNewComponent(Component component)
@@ -27,8 +26,7 @@ public class ComponentBuilder {
     }
     
     public Component build(){
-        
-        Component finalComponent = Component.getComponent(ComponentType.PROJECT, true);
+        Component finalComponent = Component.getComponent(ComponentType.PROJECT, true, new int[]{0, 0});
         ((ComponentModule) finalComponent).addComponent(data);
 
         return finalComponent;

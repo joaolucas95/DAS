@@ -10,8 +10,8 @@ public class ComponentModule extends Component {
     
     private List<Component> data;
     
-    public ComponentModule(String name, boolean isProject) {
-        super(name);
+    public ComponentModule(String name, boolean isProject, int[] position) {
+        super(name, position);
         this.isProject = isProject;
         this.data = new ArrayList<>();
     }
@@ -68,7 +68,7 @@ public class ComponentModule extends Component {
     }
     
     public List<Component> getOutputList() {
-        List<Component> outputList = new ArrayList();
+        List<Component> outputList = new ArrayList<>();
         for(Component component : data)
         {
             if(component instanceof ComponentOutput)
@@ -77,7 +77,7 @@ public class ComponentModule extends Component {
         return outputList;
     }
     public List<Component> getInputList(){
-        List<Component> inputList = new ArrayList();
+        List<Component> inputList = new ArrayList<>();
         for(Component component : data)
         {
             if(component instanceof ComponentInput)
@@ -96,6 +96,11 @@ public class ComponentModule extends Component {
         }
         
         throw new IllegalStateException("no output found");
+    }
+
+    @Override
+    public ComponentType getType() {
+        return isProject ? ComponentType.PROJECT : ComponentType.MODULE;
     }
 
     public List<Component> getData() {
