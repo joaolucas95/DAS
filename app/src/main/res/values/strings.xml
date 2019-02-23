@@ -8,7 +8,8 @@
 	<string name="edit_undo">Undo</string>
 	<string name="edit_redo">Redo</string>
 	<string name="choose_component">Choose component</string>
-	<string name="hello_message">Hello %1$s</string>
+    <string name="choose_file">Choose file type to be saved</string>
+    <string name="hello_message">Hello %1$s</string>
 	<string name="invalid_username">Invalid username</string>
 
 	<string name="dialog_not_found">No components found</string>

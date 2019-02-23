@@ -1,6 +1,7 @@
 package com.example.lucas.edit;
 
 import com.example.lucas.main.R;
+import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
@@ -66,7 +67,7 @@ public class EditActivity extends AppCompatActivity {
         builder.setTitle(R.string.choose_component);
 
         List<String> componentNames = new ArrayList<>();
-        for (ComponentType type : mController.getTypes()) {
+        for (ComponentType type : mController.getComponentTypes()) {
             componentNames.add(mController.getComponentTypeName(type));
         }
 
@@ -90,7 +91,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                mController.setSelectedType(mController.getTypes().get(pos));
+                mController.setSelectedType(mController.getComponentTypes().get(pos));
             }
         });
 
@@ -111,7 +112,42 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void handleActionSave() {
-        // TODO
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.choose_file);
+
+        List<String> fileTypesNames = new ArrayList<>();
+        for (FileType type : mController.getFileTypes()) {
+            fileTypesNames.add(mController.getFileTypeName(type));
+        }
+
+        if (fileTypesNames.isEmpty()) {
+            Toast.makeText(this, R.string.dialog_not_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String[] fileTypes = new String[fileTypesNames.size()];
+        fileTypes = fileTypesNames.toArray(fileTypes);
+
+        int checkedItem = 0;
+        builder.setSingleChoiceItems(fileTypes, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing.
+            }
+        });
+
+        builder.setPositiveButton(R.string.edit_save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                mController.doSave(mController.getFileTypes().get(pos));
+            }
+        });
+
+        builder.setNegativeButton(R.string.dialog_cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /* Draw handling */

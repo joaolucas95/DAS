@@ -1,5 +1,6 @@
 package com.example.mainpackage;
 
+import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import java.util.List;
@@ -12,5 +13,9 @@ public interface ILogicFacade {
 
     List<ComponentType> getComponentsTypes();
 
-    String getComponentsTypeName(ComponentType type);
+    String getComponentTypeName(ComponentType type);
+
+    List<FileType> getFileTypes();
+
+    String getFileTypeName(FileType type);
 }

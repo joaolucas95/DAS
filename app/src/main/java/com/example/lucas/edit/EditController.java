@@ -6,6 +6,7 @@ import com.example.mainpackage.logic.project.CommandAddComponent;
 import com.example.mainpackage.logic.project.CommandConnectComponent;
 import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.ComponentBuilder;
+import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
@@ -13,8 +14,6 @@ import com.example.mainpackage.logic.project.component.ComponentType;
 import java.util.List;
 
 public class EditController {
-
-    private List<ComponentType> mTypes;
 
     private ComponentType mSelectedType;
     private Component mSelectedComponent;
@@ -26,16 +25,24 @@ public class EditController {
         mBuilder = new ComponentBuilder();
         mCmdManager = new CommandManager(mBuilder);
 
-        mTypes = LogicController.getInstance().getFacade().getComponentsTypes();
-        mSelectedType = mTypes.get(0);
+        List<ComponentType> types = getComponentTypes();
+        mSelectedType = types.get(0);
     }
 
-    List<ComponentType> getTypes() {
-        return mTypes;
+    List<ComponentType> getComponentTypes() {
+        return LogicController.getInstance().getFacade().getComponentsTypes();
     }
 
     String getComponentTypeName(ComponentType type) {
-        return LogicController.getInstance().getFacade().getComponentsTypeName(type);
+        return LogicController.getInstance().getFacade().getComponentTypeName(type);
+    }
+
+    List<FileType> getFileTypes() {
+        return LogicController.getInstance().getFacade().getFileTypes();
+    }
+
+    String getFileTypeName(FileType type) {
+        return LogicController.getInstance().getFacade().getFileTypeName(type);
     }
 
     void setSelectedType(ComponentType selectedType) {
@@ -101,6 +108,10 @@ public class EditController {
 
     void doRedo() {
         mCmdManager.redo();
+    }
+
+    void doSave(FileType fileType) {
+        // TODO save according file type
     }
 
     private void doConnection(String previous, String next) {
