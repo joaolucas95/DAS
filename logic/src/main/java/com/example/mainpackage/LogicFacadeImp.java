@@ -1,5 +1,7 @@
 package com.example.mainpackage;
 
+import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
+import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.project.component.ComponentUtils;
 import com.example.mainpackage.logic.user.User;
@@ -26,5 +28,16 @@ public class LogicFacadeImp implements ILogicFacade {
     @Override
     public String getComponentsTypeName(ComponentType type) {
         return ComponentUtils.getComponentName(type);
+    }
+
+    @Override
+    public Project getProject(String filePath) {
+        try {
+            ProjectFileManagement projectFileManagement = new ProjectFileManagement();
+            Project project = projectFileManagement.loadProject(filePath, User.getInstance());
+            return project;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

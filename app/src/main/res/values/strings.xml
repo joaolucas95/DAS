@@ -13,4 +13,7 @@
 
 	<string name="dialog_not_found">No components found</string>
 	<string name="dialog_cancel">Cancel</string>
+    <string name="options">Options</string>
+    <string name="title_activity_simulation">SimulationActivity</string>
+	<string name="simulationOfProject">Simulation of Project</string>
 </resources>

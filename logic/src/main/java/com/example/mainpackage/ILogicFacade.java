@@ -1,5 +1,6 @@
 package com.example.mainpackage;
 
+import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface ILogicFacade {
     List<ComponentType> getComponentsTypes();
 
     String getComponentsTypeName(ComponentType type);
+
+    Project getProject(String filePath);
 }

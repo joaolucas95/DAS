@@ -1,26 +1,20 @@
 package com.example.lucas.list;
 
-import com.example.lucas.edit.EditActivity;
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.logic.dblogic.FilePath;
 import com.example.lucas.logic.dblogic.User;
 import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 import com.example.lucas.main.R;
-import com.example.mainpackage.logic.project.Project;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -96,9 +90,10 @@ public class ListActivity extends AppCompatActivity {
                 String username = LogicController.getInstance().getFacade().getCurrentUsername();
                 User user = mFileHistoryViewModel.findUserByUsername(username);
 
-                Random randomno = new Random();
-                String projectName = "project" + randomno.nextInt();
-                String filePathString = "/" + projectName + ".bin";
+                //Random randomno = new Random();
+                //String projectName = "project" + randomno.nextInt();
+                String projectName = "modelTest";
+                String filePathString = projectName + ".blif";
 
                 FilePath filePath = new FilePath(projectName, filePathString , user.id);
                 mFileHistoryViewModel.insertFilePath(filePath);
@@ -136,7 +131,7 @@ public class ListActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
 
                     // specify an adapter (see also next example)
-                    mAdapter = new ProjectsListAdapter(filePaths);
+                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext());
                     recyclerView.setAdapter(mAdapter);
                 }
             });

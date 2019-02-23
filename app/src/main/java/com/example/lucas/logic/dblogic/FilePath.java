@@ -5,10 +5,12 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "filepath_table", foreignKeys = @ForeignKey(entity = User.class,
         parentColumns = "id",
         childColumns = "user_id"))
-public class FilePath {
+public class FilePath implements Serializable {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
