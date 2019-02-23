@@ -11,6 +11,12 @@
     <string name="choose_file">Choose file type to be saved</string>
     <string name="hello_message">Hello %1$s</string>
 	<string name="invalid_username">Invalid username</string>
+    <string name="simple_project">Simple</string>
+    <string name="complex_project">Complex</string>
+    <string name="choose_project_type">Choose project type</string>
+    <string name="title_simple_project">Simple project</string>
+    <string name="title_complex_project">Complex project</string>
+    <string name="action_create">Create</string>
 
 	<string name="dialog_not_found">No components found</string>
 	<string name="dialog_cancel">Cancel</string>

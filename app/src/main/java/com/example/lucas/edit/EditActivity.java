@@ -23,6 +23,8 @@ public class EditActivity extends AppCompatActivity {
 
     private EditController mController;
 
+    private boolean mIsSimpleProject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,18 @@ public class EditActivity extends AppCompatActivity {
 
         mEditView = findViewById(R.id.edit_view);
         mController = new EditController();
+
+        mIsSimpleProject = getIntent().getBooleanExtra(EditUtils.IS_SIMPLE_EXTRA, true);
+        setupToolbar();
+    }
+
+    private void setupToolbar() {
+        String title = mIsSimpleProject ?
+                getString(R.string.title_simple_project) :
+                getString(R.string.title_complex_project);
+
+        //noinspection ConstantConditions
+        getSupportActionBar().setTitle(title);
     }
 
     @Override
