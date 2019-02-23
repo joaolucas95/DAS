@@ -22,17 +22,15 @@ public class ProjectFileManagement {
     
     public boolean saveProject(Project project, int fileType) throws Exception{
         boolean result;
-        String fileName = project.getName();
+        String filePath = "";
         saveProjectBuilder = SaveProjectBuilder.getBuilder(fileType);
-        result = saveProjectBuilder.saveProject(fileName, project);
+        result = saveProjectBuilder.saveProject(filePath, project);
 
         exportTestsToHtml(project);
         /*
         if(result)
             File.saveLastComponentNumber(project.getComponentModule().getUniqueNumber());
         */
-        
-  
         return result;
     }
 

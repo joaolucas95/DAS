@@ -41,6 +41,7 @@ public class Main {
         else
             System.out.println("Error saving the project: " + projectTestA);
 
+        System.out.println("--------------------");
 
         Project projectTestB = printTestBWithStateMachine(User.getInstance());
         printTestBSimulations(projectTestB);
@@ -50,6 +51,16 @@ public class Main {
         else
             System.out.println("Error saving the project: " + projectTestB);
 
+
+        String filePathProject = "modelGlobalTest.blif"; //just in this case... Android will be different
+        Project projectTestB2 = loadProjectWithGlobalModuleTestFromBlifFile(filePathProject);
+
+        System.out.println("Expected Project loaded: " + projectTestB);
+        System.out.println("Real Project loaded: " + projectTestB2);
+        printTestBSimulations(projectTestB2);
+        printTestBTests(projectTestB2);
+
+        System.out.println("--------------------");
 
         Project projectTestC = printTestCWithStateMachine(User.getInstance());
         //printTestCSimulations(projectTestC);
@@ -63,7 +74,23 @@ public class Main {
         //   printTestSavingProjectBinaryFile();
 
     }
-    
+
+    private static Project loadProjectWithGlobalModuleTestFromBlifFile(String filePathProject) {
+        boolean result;
+        try {
+            User user = User.getInstance();
+
+            ProjectFileManagement projectFileManagement = new ProjectFileManagement();
+            Project project = projectFileManagement.loadProject(filePathProject, user);
+
+            return project;
+
+        } catch (Exception ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
     private static Project printTestAWithCommands(User user) {
         boolean result;
         String projectName = "modelTest";
