@@ -1,13 +1,10 @@
 package com.example.lucas.edit;
 
-import com.example.mainpackage.logic.project.Command;
-import com.example.mainpackage.logic.project.CommandAddComponent;
-import com.example.mainpackage.logic.project.CommandManager;
-import com.example.mainpackage.logic.project.ComponentBuilder;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
@@ -15,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -26,9 +24,6 @@ public class EditView extends AppCompatImageView {
 
     private Bitmap mBitmap;
     private Canvas mCanvas;
-
-    private ComponentBuilder mBuilder = new ComponentBuilder();
-    private CommandManager mCmdManager = new CommandManager(mBuilder);
 
     public EditView(Context context) {
         super(context);
@@ -47,6 +42,7 @@ public class EditView extends AppCompatImageView {
         mCanvas = new Canvas(mBitmap);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         final int action = event.getActionMasked();
@@ -59,7 +55,7 @@ public class EditView extends AppCompatImageView {
             case MotionEvent.ACTION_DOWN:
                 Point point = new Point((int) event.getX(), (int) event.getY());
                 int[] position = new int[]{point.x, point.y};
-                addComponent(position);
+                getActivity().addComponent(position);
                 break;
 
             default:
@@ -80,7 +76,7 @@ public class EditView extends AppCompatImageView {
             context = ((ContextWrapper) context).getBaseContext();
         }
 
-        return null;
+        throw new IllegalStateException();
     }
 
     private ComponentType getSelectedType() {
@@ -88,19 +84,17 @@ public class EditView extends AppCompatImageView {
         return getActivity().getSelectedType();
     }
 
-    private void addComponent(int[] position) {
-        Command cmd = new CommandAddComponent(getSelectedType(), position);
-        mCmdManager.apply(cmd);
-
-        Component module = mCmdManager.finishComponentEditor();
-        drawProject(module);
-    }
-
     /* Draw methods */
 
-    private void drawProject(Component component) {
+    void drawProject(Component component) {
+        mCanvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR);
         ComponentModule module = (ComponentModule) component;
         List<Component> components = module.getData();
+
+        if (components.isEmpty()) {
+            setImageBitmap(mBitmap);
+            return;
+        }
 
         for (Component cmp : components) {
             drawDataComponent(cmp);

@@ -5,6 +5,7 @@ import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ComponentBuilder {
@@ -39,7 +40,9 @@ public class ComponentBuilder {
     
     public void removeComponentFromData(String componentToRemove){
         //remove the component...
-        for(Component component : data){
+        List<Component> tmpData = new ArrayList<>(data);
+        Collections.reverse(tmpData);
+        for(Component component : tmpData){
             if(component.getName().equals(componentToRemove))
             {
                 data.remove(component);

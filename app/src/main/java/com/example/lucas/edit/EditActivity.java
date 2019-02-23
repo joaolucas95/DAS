@@ -2,6 +2,11 @@ package com.example.lucas.edit;
 
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
+import com.example.mainpackage.logic.project.Command;
+import com.example.mainpackage.logic.project.CommandAddComponent;
+import com.example.mainpackage.logic.project.CommandManager;
+import com.example.mainpackage.logic.project.ComponentBuilder;
+import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import android.content.DialogInterface;
@@ -18,8 +23,13 @@ import java.util.List;
 
 public class EditActivity extends AppCompatActivity {
 
+    private EditView mEditView;
+
     private ComponentType mSelectedType;
     private List<ComponentType> mTypes;
+
+    private ComponentBuilder mBuilder = new ComponentBuilder();
+    private CommandManager mCmdManager = new CommandManager(mBuilder);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +38,7 @@ public class EditActivity extends AppCompatActivity {
 
         mTypes = LogicController.getInstance().getFacade().getComponentsTypes();
         mSelectedType = mTypes.get(0);
+        mEditView = findViewById(R.id.edit_view);
     }
 
     @Override
@@ -41,29 +52,26 @@ public class EditActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                showAddDialog();
+                handleActionAdd();
                 break;
 
             case R.id.action_undo:
-                //TODO
-                Toast.makeText(this, "undo", Toast.LENGTH_SHORT).show();
+                handleActionUndo();
                 break;
 
             case R.id.action_redo:
-                //TODO
-                Toast.makeText(this, "redo", Toast.LENGTH_SHORT).show();
+                handleActionRedo();
                 break;
 
             case R.id.action_save:
-                //TODO
-                Toast.makeText(this, "save", Toast.LENGTH_SHORT).show();
+                handleActionSave();
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void showAddDialog() {
+    private void handleActionAdd() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.choose_component);
 
@@ -102,7 +110,34 @@ public class EditActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    private void handleActionUndo() {
+        mCmdManager.undo();
+        doDraw();
+    }
+
+    private void handleActionRedo() {
+        mCmdManager.redo();
+        doDraw();
+    }
+
+    private void handleActionSave() {
+    }
+
     public ComponentType getSelectedType() {
         return mSelectedType;
+    }
+
+    /* Draw handling */
+
+    void addComponent(int[] position) {
+        Command cmd = new CommandAddComponent(getSelectedType(), position);
+        mCmdManager.apply(cmd);
+
+        doDraw();
+    }
+
+    private void doDraw() {
+        Component module = mCmdManager.finishComponentEditor();
+        mEditView.drawProject(module);
     }
 }
