@@ -31,6 +31,6 @@ public interface FilePathDao {
     @Query("DELETE FROM filepath_table where id = :filepath_id")
     void deleteById(int filepath_id);
 
-    @Query("SELECT * from filepath_table where filePath = :filePath")
-    FilePath findFilePathEntityByFilePath(String filePath);
+    @Query("SELECT * from filepath_table where projectName = :projectName")
+    FilePath findFilePathEntityByProjectName(String projectName);
 }

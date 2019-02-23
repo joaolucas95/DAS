@@ -32,12 +32,13 @@ public abstract class Component implements Serializable{
     // TODO change this to package-private
     public abstract void setInput(String name, boolean value);
     
-    public static Component getComponent(ComponentType type) {
+    public static Component getComponent(ComponentType type, boolean defineUniqueNumber) {
         
         //DEFINE UNIQUE NUMBER FOR COMPONENT!!
         String name = defineComponentName(type);
-        
-        name = defineComponentUniqueNumber(name);
+
+        if(defineUniqueNumber)
+            name = defineComponentUniqueNumber(name);
         
         switch (type) {
             case PROJECT:

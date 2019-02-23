@@ -12,12 +12,14 @@ public class FilePath {
     @PrimaryKey(autoGenerate = true)
     public int id;
 
+    public String projectName;
     public String filePath;
 
     @ColumnInfo(name = "user_id")
     public int userId;
 
-    public FilePath(String filePath, int userId) {
+    public FilePath(String projectName, String filePath, int userId) {
+        this.projectName = projectName;
         this.filePath = filePath;
         this.userId = userId;
     }
@@ -28,6 +30,14 @@ public class FilePath {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
     public String getFilePath() {
@@ -50,6 +60,7 @@ public class FilePath {
     public String toString() {
         return "FilePath{" +
                 "id=" + id +
+                ", projectName='" + projectName + '\'' +
                 ", filePath='" + filePath + '\'' +
                 ", userId=" + userId +
                 '}';

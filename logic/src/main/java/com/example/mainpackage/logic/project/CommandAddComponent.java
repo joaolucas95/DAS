@@ -33,6 +33,7 @@ public class CommandAddComponent implements Command, Serializable{
 
         //if was added a module...
         if(!filePathProject.isEmpty()){
+            String newName;
             ProjectFileManagement projectFileManagement = new ProjectFileManagement();
             ComponentModule module = null;
             try {
@@ -44,8 +45,7 @@ public class CommandAddComponent implements Command, Serializable{
             //copy component and define new names
             for(Component component : module.getData())
             {
-                String newName;
-                
+
                 newName = component.getName().replaceAll("[0-9]", "");
 
                 newName = Component.defineComponentUniqueNumber(newName); 
@@ -56,13 +56,21 @@ public class CommandAddComponent implements Command, Serializable{
                     ((ComponentInput)component).setValue(null);
                 
             }
+
+
+            //define new name of the module
+            newName = module.getName().replaceAll("[0-9]", "");
+            newName = Component.defineComponentUniqueNumber(newName);
+            module.setName(newName);
+
+
             componentBuilder.addComponentToData(module);
             filePathProject="";
             user = null;
         }
         else
         {
-            Component componentTmp = Component.getComponent(type);
+            Component componentTmp = Component.getComponent(type, true);
             this.componentName = componentTmp.getName();
             componentBuilder.addComponentToData(componentTmp);
         }
