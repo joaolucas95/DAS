@@ -6,8 +6,8 @@ import com.example.mainpackage.logic.project.CommandManager;
 public class DefiningPreviousState extends StateAdapter
 {
 
-    String componentName1, componentName2;
-    IState previousState;
+    private String componentName1, componentName2;
+    private IState previousState;
     
     public DefiningPreviousState(CommandManager commandManager, String componentName1, IState previousState) {
         super(commandManager);

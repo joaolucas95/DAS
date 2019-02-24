@@ -95,11 +95,8 @@ public class ListActivity extends AppCompatActivity {
         findViewById(R.id.btn_new).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 //just for test
                 createModelTestBin();
-
 
                 handleNewProject();
             }
