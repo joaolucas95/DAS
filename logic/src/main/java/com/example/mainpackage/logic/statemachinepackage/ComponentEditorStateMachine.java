@@ -4,7 +4,10 @@ import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.ComponentBuilder;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.project.component.ComponentUtils;
 import com.example.mainpackage.logic.user.User;
+
+import java.util.List;
 
 public class ComponentEditorStateMachine {
     private IState state;
@@ -54,6 +57,14 @@ public class ComponentEditorStateMachine {
     
     public Component finishComponentEditor(){
         return commandManager.finishComponentEditor();
+    }
+
+    public List<ComponentType> getComponentTypes() {
+        if (state instanceof GlobalModuleManagementState) {
+            return ComponentUtils.getComponentsTypes(ComponentType.PROJECT);
+        }
+
+        return ComponentUtils.getComponentsTypes(ComponentType.MODULE);
     }
     
     @Override

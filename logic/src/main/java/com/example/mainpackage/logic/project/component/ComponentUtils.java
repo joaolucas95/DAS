@@ -9,16 +9,14 @@ public class ComponentUtils {
         // Do nothing.
     }
 
-    public static List<ComponentType> getComponentsTypes() {
+    public static List<ComponentType> getComponentsTypes(ComponentType selectedType) {
         ComponentType[] components = ComponentType.values();
 
         List<ComponentType> aux = new ArrayList<>();
         for (ComponentType type: components) {
-            if (type == ComponentType.PROJECT) {
-                continue;
+            if (isAllowedType(selectedType, type)) {
+                aux.add(type);
             }
-
-            aux.add(type);
         }
 
         return aux;
@@ -47,5 +45,21 @@ public class ComponentUtils {
             default:
                 throw new IllegalStateException("illegal type:" + type);
         }
+    }
+
+    private static boolean isAllowedType(ComponentType selectedType, ComponentType type) {
+        if (type == ComponentType.PROJECT) {
+            return false;
+        }
+
+        if (type == ComponentType.INPUT || type == ComponentType.OUTPUT) {
+            return true;
+        }
+
+        if (selectedType == ComponentType.MODULE) {
+            return type == ComponentType.LOGIC_AND || type == ComponentType.LOGIC_OR;
+        }
+
+        return type == ComponentType.MODULE;
     }
 }

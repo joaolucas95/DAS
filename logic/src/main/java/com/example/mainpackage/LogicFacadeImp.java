@@ -28,7 +28,7 @@ public class LogicFacadeImp implements ILogicFacade {
 
     @Override
     public List<ComponentType> getComponentsTypes() {
-        return ComponentUtils.getComponentsTypes();
+        return mEditorStateMachine.getComponentTypes();
     }
 
     @Override

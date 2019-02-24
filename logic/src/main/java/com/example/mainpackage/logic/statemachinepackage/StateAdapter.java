@@ -12,10 +12,6 @@ public class StateAdapter implements IState {
         this.commandManager = commandManager;
     }
 
-    public CommandManager getCommandManager() {
-        return commandManager;
-    }
-
     @Override
     public IState addModule(String filePathProject, User user) {
         return this;
