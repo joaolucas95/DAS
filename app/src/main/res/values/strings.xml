@@ -28,4 +28,5 @@
     <string name="add_new_combination">Add New Combination</string>
     <string name="run_simulation">Run Simulation</string>
     <string name="close_and_save_simulation">Close and Save Simulation</string>
+    <string name="delete_last_combination">Delete Last Combination</string>
 </resources>

@@ -23,7 +23,8 @@ public class BlifLoadProject {
             List<String> allLines = Files.readAllLines(Paths.get(filePathString));
 
             //TODO: need to improve this for android... need to know how is defined the filePath to get the project name...
-            String projectName = filePathString.replace(".blif", ""); project = new Project(user, projectName);
+            String projectName = filePathString.replace(".blif", "");
+            project = new Project(user, projectName);
 
             ComponentModule module = getModuleFromLines(allLines, user);
 

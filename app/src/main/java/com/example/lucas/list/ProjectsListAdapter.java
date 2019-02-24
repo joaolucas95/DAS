@@ -65,18 +65,18 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                         .setItems(items, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
-                                switch (which){
-                                    case 0:
-                                        Intent intent = new Intent(context, SimulationActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        intent.putExtra("filePath", filePath);
-                                        context.startActivity(intent);
-                                        break;
-                                    case 1:
-                                        break;
-                                    case 2:
-                                        break;
-                                }
+                            switch (which){
+                                case 0:
+                                    Intent intent = new Intent(context, SimulationActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.putExtra("filePath", filePath);
+                                    context.startActivity(intent);
+                                    break;
+                                case 1:
+                                    break;
+                                case 2:
+                                    break;
+                            }
                             }
                         });
 

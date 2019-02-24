@@ -92,7 +92,6 @@ public class SimulationActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-
                     if(filePath.filePath.contains(".bin"))
                         LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
                     else
