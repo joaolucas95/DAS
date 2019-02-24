@@ -1,15 +1,11 @@
 package com.example.lucas.edit;
 
 import com.example.lucas.logic.LogicController;
-import com.example.mainpackage.logic.project.Command;
-import com.example.mainpackage.logic.project.CommandAddComponent;
-import com.example.mainpackage.logic.project.CommandConnectComponent;
-import com.example.mainpackage.logic.project.CommandManager;
-import com.example.mainpackage.logic.project.ComponentBuilder;
 import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 
 import java.util.List;
 
@@ -18,12 +14,11 @@ public class EditController {
     private ComponentType mSelectedType;
     private Component mSelectedComponent;
 
-    private ComponentBuilder mBuilder;
-    private CommandManager mCmdManager;
+    private ComponentEditorStateMachine mEditorStateMachine;
 
-    EditController() {
-        mBuilder = new ComponentBuilder();
-        mCmdManager = new CommandManager(mBuilder);
+    EditController(boolean isSimpleProject) {
+        ComponentType type = isSimpleProject ? ComponentType.MODULE : ComponentType.PROJECT;
+        mEditorStateMachine = new ComponentEditorStateMachine(type);
 
         List<ComponentType> types = getComponentTypes();
         mSelectedType = types.get(0);
@@ -54,7 +49,7 @@ public class EditController {
     }
 
     Component getProject() {
-        return mCmdManager.finishComponentEditor();
+        return mEditorStateMachine.finishComponentEditor();
     }
 
     /* Connection logic*/
@@ -69,6 +64,7 @@ public class EditController {
     }
 
     private boolean handleNoIntersection() {
+        mEditorStateMachine.cancelDefiningPrevious();
         if (mSelectedComponent == null) {
             return false;
         }
@@ -78,17 +74,11 @@ public class EditController {
     }
 
     private boolean handleIntersection(Component component) {
+        mEditorStateMachine.selectComponent(component.getName());
         Component selected = mSelectedComponent;
         if (selected == null) {
             mSelectedComponent = component;
             return true;
-        }
-
-        if (!EditUtils.isSameComponent(component, selected)) {
-            String previous = selected.getName();
-            String next = component.getName();
-
-            doConnection(previous, next);
         }
 
         mSelectedComponent = null;
@@ -98,25 +88,19 @@ public class EditController {
     /* Actions */
 
     void doAdd(int[] pos) {
-        Command cmd = new CommandAddComponent(mSelectedType, pos);
-        mCmdManager.apply(cmd);
+        mEditorStateMachine.addSimpleComponent(mSelectedType, pos);
     }
 
     void doUndo() {
-        mCmdManager.undo();
+        mEditorStateMachine.undoOperation();
     }
 
     void doRedo() {
-        mCmdManager.redo();
+        mEditorStateMachine.redoOperation();
     }
 
     void doSave(FileType fileType) {
         // TODO save according file type
-    }
-
-    private void doConnection(String previous, String next) {
-        Command cmd = new CommandConnectComponent(previous, next);
-        mCmdManager.apply(cmd);
     }
 
     /* Intersection logic */

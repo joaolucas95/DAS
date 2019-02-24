@@ -31,9 +31,10 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         mEditView = findViewById(R.id.edit_view);
-        mController = new EditController();
-
         mIsSimpleProject = getIntent().getBooleanExtra(EditUtils.IS_SIMPLE_EXTRA, true);
+
+        mController = new EditController(mIsSimpleProject);
+
         setupToolbar();
     }
 

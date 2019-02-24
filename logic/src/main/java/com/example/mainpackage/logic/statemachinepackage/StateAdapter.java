@@ -4,23 +4,23 @@ import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.user.User;
 
-public class StateAdapter implements IState{
+public class StateAdapter implements IState {
 
-    protected CommandManager commandManager;
+    CommandManager commandManager;
 
-    public StateAdapter(CommandManager commandManager) {
+    StateAdapter(CommandManager commandManager) {
         this.commandManager = commandManager;
     }
 
     public CommandManager getCommandManager() {
         return commandManager;
     }
-    
+
     @Override
     public IState addModule(String filePathProject, User user) {
         return this;
     }
-    
+
     @Override
     public IState cancelDefiningPrevious() {
         return this;
@@ -35,5 +35,17 @@ public class StateAdapter implements IState{
     public IState selectComponent(String componentName) {
         return this;
     }
-    
+
+    @Override
+    public IState undoOperation() {
+        commandManager.undo();
+        return this;
+    }
+
+    @Override
+    public IState redoOperation() {
+        commandManager.redo();
+        return this;
+    }
+
 }

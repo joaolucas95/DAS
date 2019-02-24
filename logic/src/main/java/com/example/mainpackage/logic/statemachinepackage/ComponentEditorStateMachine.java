@@ -17,14 +17,14 @@ public class ComponentEditorStateMachine {
         else if(type.equals(ComponentType.MODULE))
             this.state = new ModuleManagementState(commandManager);
         else
-            throw new IllegalStateException("Only can initilize an component editor with components of type projects or modules.");
+            throw new IllegalStateException("Only can initialize an component editor with components of type projects or modules.");
     }
 
     public IState getState() {
         return state;
     }
 
-    public void setState(IState state) {
+    private void setState(IState state) {
         this.state = state;
     }
     
@@ -42,6 +42,14 @@ public class ComponentEditorStateMachine {
     
     public void selectComponent(String componentName){
         setState(state.selectComponent(componentName));
+    }
+
+    public void undoOperation() {
+        setState(state.undoOperation());
+    }
+
+    public void redoOperation() {
+        setState(state.redoOperation());
     }
     
     public Component finishComponentEditor(){
