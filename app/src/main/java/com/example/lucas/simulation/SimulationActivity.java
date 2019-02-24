@@ -54,7 +54,6 @@ public class SimulationActivity extends AppCompatActivity {
             }
             this.project = LogicController.getInstance().getFacade().getProject(filePath.filePath);
             Log.d("test", "Project loaded:" + project);
-            addCombinations(project);
             setUiComponents();
 
         } catch (Exception e) {
@@ -62,47 +61,30 @@ public class SimulationActivity extends AppCompatActivity {
         }
     }
 
-    private void addCombinations(Project project) {
-        List<Combination> combinations = new ArrayList();
-        Map<String, Boolean> testtmp = new HashMap<>();
-
-        testtmp.put("input1", false);
-        testtmp.put("input2", false);
-        testtmp.put("input3", false);
-        combinations.add(new Combination(testtmp));
-
-        testtmp = new HashMap<>();
-        testtmp.put("input1", true);
-        testtmp.put("input2", true);
-        testtmp.put("input3", false);
-        combinations.add(new Combination(testtmp));
-        Signal signal = new Signal(combinations);
-        project.setSignalForSimulation(signal);
-    }
-
-
-    private static Project loadProjectWithGlobalModuleTestFromBlifFile(String filePathProject) {
-        boolean result;
-        try {
-            User user = User.getInstance();
-
-            ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            Project project = projectFileManagement.loadProject(filePathProject, user);
-
-            return project;
-
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
-
     private void setUiComponents() {
         setupToolbar();
         setupCloseAndSaveButton();
         setupNewCombinationButton();
+        setupDeleteCombinationButton();
         setupRunCombinationsButton();
         setupInputs();
+    }
+
+    private void setupDeleteCombinationButton() {
+        Button button = findViewById(R.id.button_delete_combination);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                if(project.getSignalForSimulation() == null || project.getSignalForSimulation().getCombinations().isEmpty())
+                    return;
+
+                project.getSignalForSimulation().getCombinations().remove(project.getSignalForSimulation().getCombinations().size()-1);
+
+                LinearLayout combinationsListLinearLayout= findViewById(R.id.combination_list);
+                View viewtmp = combinationsListLinearLayout.getChildAt(combinationsListLinearLayout.getChildCount()-1);
+                combinationsListLinearLayout.removeView(viewtmp);
+            }
+        });
     }
 
     private void setupCloseAndSaveButton() {
@@ -110,6 +92,7 @@ public class SimulationActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
+
                     if(filePath.filePath.contains(".bin"))
                         LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
                     else
@@ -157,6 +140,13 @@ public class SimulationActivity extends AppCompatActivity {
 
                 //clear the linear layout
                 resultsLinearLayour.removeAllViews();
+
+                if(project.getSignalForSimulation().getCombinations().isEmpty())
+                {
+                    TextView tv = new TextView(getApplicationContext());
+                    tv.setText("Need to define combinations first.");
+                    resultsLinearLayour.addView(tv);
+                }
 
                 for(int i = 0; i< project.getSignalForSimulation().getCombinations().size(); i++)
                 {
