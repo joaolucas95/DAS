@@ -46,10 +46,6 @@ public class EditView extends AppCompatImageView {
     public boolean onTouchEvent(MotionEvent event) {
         final int action = event.getActionMasked();
 
-        if (mBitmap == null) {
-            init();
-        }
-
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 int x = (int) event.getX();
@@ -82,6 +78,10 @@ public class EditView extends AppCompatImageView {
     /* Draw methods */
 
     void drawProject(Component component, Component selectedComponent) {
+        if (mBitmap == null) {
+            init();
+        }
+
         mCanvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR);
         ComponentModule module = (ComponentModule) component;
         List<Component> components = module.getData();
