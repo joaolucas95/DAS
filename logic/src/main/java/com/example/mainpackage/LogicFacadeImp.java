@@ -9,8 +9,6 @@ import com.example.mainpackage.logic.project.component.ComponentUtils;
 import com.example.mainpackage.logic.user.User;
 
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class LogicFacadeImp implements ILogicFacade {
 
@@ -45,7 +43,6 @@ public class LogicFacadeImp implements ILogicFacade {
     }
 
 
-
     @Override
     public Project getProject(String filePath) throws Exception {
         ProjectFileManagement projectFileManagement = new ProjectFileManagement();
@@ -63,6 +60,6 @@ public class LogicFacadeImp implements ILogicFacade {
 
     @Override
     public String getComponentTypeName(ComponentType type) {
-        return null;
+        return ComponentUtils.getComponentName(type);
     }
 }
