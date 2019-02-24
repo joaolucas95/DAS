@@ -16,8 +16,8 @@ public class BinarySaveProjectBuilder extends SaveProjectBuilder{
 
         java.io.File filePath = new java.io.File(filePathString);
 
-        FileOutputStream fos = null;
-        ObjectOutputStream os = null;
+        FileOutputStream fos;
+        ObjectOutputStream os;
 
         try {
             fos = new FileOutputStream(filePath);

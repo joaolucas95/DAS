@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.support.v7.widget.AppCompatImageView;
@@ -53,9 +52,10 @@ public class EditView extends AppCompatImageView {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                Point point = new Point((int) event.getX(), (int) event.getY());
-                int[] position = new int[]{point.x, point.y};
-                getActivity().addComponent(position);
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                int[] position = new int[]{x, y};
+                getActivity().handleTap(position);
                 break;
 
             default:
@@ -79,14 +79,9 @@ public class EditView extends AppCompatImageView {
         throw new IllegalStateException();
     }
 
-    private ComponentType getSelectedType() {
-        //noinspection ConstantConditions
-        return getActivity().getSelectedType();
-    }
-
     /* Draw methods */
 
-    void drawProject(Component component) {
+    void drawProject(Component component, Component selectedComponent) {
         mCanvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR);
         ComponentModule module = (ComponentModule) component;
         List<Component> components = module.getData();
@@ -97,15 +92,45 @@ public class EditView extends AppCompatImageView {
         }
 
         for (Component cmp : components) {
-            drawDataComponent(cmp);
+            boolean isSelected = EditUtils.isSameComponent(cmp, selectedComponent);
+            drawDataComponent(cmp, isSelected);
         }
     }
 
-    private void drawDataComponent(Component component) {
+    private void drawDataComponent(Component component, boolean isSelected) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(getColor(component.getType()));
+
+        int color = isSelected ? Color.BLACK : getColor(component.getType());
+        paint.setColor(color);
+
         mCanvas.drawRect(getRectangle(component.getPosition()), paint);
+        drawConnections(component);
         setImageBitmap(mBitmap);
+    }
+
+    private void drawConnections(Component component) {
+        int[] pos = component.getPosition();
+        int stopX = pos[0] - EditUtils.COMPONENT_RADIUS;
+        int stopY = pos[1];
+
+        List<Component> previousList = component.getPrevious();
+        if (previousList == null || previousList.isEmpty()) {
+            return;
+        }
+
+        for (Component previous : component.getPrevious()) {
+            drawConnection(stopX, stopY, previous);
+        }
+    }
+
+    private void drawConnection(int stopX, int stopY, Component previous) {
+        int[] pos = previous.getPosition();
+        int startX = pos[0] + EditUtils.COMPONENT_RADIUS;
+        int startY = pos[1];
+
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStrokeWidth(EditUtils.LINE_THICKNESS);
+        mCanvas.drawLine(startX, startY, stopX, stopY, paint);
     }
 
     private int getColor(ComponentType type) {
@@ -131,10 +156,10 @@ public class EditView extends AppCompatImageView {
     }
 
     private Rect getRectangle(int[] position) {
-        int left = position[0] - 50;
-        int right = position[0] + 50;
-        int top = position[1] - 50;
-        int bottom = position[1] + 50;
+        int left = position[0] - EditUtils.COMPONENT_RADIUS;
+        int right = position[0] + EditUtils.COMPONENT_RADIUS;
+        int top = position[1] - EditUtils.COMPONENT_RADIUS;
+        int bottom = position[1] + EditUtils.COMPONENT_RADIUS;
 
         return new Rect(left, top, right, bottom);
     }

@@ -13,14 +13,14 @@ import java.util.List;
 
 public class ProjectFileManagement {
     
-    SaveProjectBuilder saveProjectBuilder;
-    LoadProject loadProject;
+    private SaveProjectBuilder saveProjectBuilder;
+    private LoadProject loadProject;
     
     public ProjectFileManagement() {
-        
+        // Do nothing
     }
     
-    public boolean saveProject(Project project, int fileType) throws Exception{
+    public boolean saveProject(Project project, FileType fileType) throws Exception{
         boolean result;
         String filePath = "";
         saveProjectBuilder = SaveProjectBuilder.getBuilder(fileType);
@@ -39,18 +39,18 @@ public class ProjectFileManagement {
     }
 
     public Project loadProject(String filePathProject, User user) throws Exception{
-        int type = getProjectType(filePathProject);
-        if(type == Config.FILE_TYPE_BINARY)
+        FileType type = getProjectType(filePathProject);
+        if(type == FileType.BINARY)
             this.loadProject = new BinaryLoadProjectAdapter();
-        else if(type == Config.FILE_TYPE_BLIF)
+        else if(type == FileType.BLIF)
             this.loadProject = new BlifLoadProjectAdapter();
 
         return loadProject.loadProject(filePathProject, user);
     }
     
     
-    private int getProjectType(String fileName) throws Exception{
-        List<String> items = null;
+    private FileType getProjectType(String fileName) throws Exception{
+        List<String> items;
         
         try{
             
@@ -58,9 +58,9 @@ public class ProjectFileManagement {
             String lastString = items.get(items.size()-1);
             
             if(lastString.equals("blif"))
-                return Config.FILE_TYPE_BLIF;
+                return FileType.BLIF;
             else if(lastString.equals("bin"))
-                return Config.FILE_TYPE_BINARY;
+                return FileType.BINARY;
             else
                 throw new Exception(Config.ERROR_MSG_FILETYPE);
 

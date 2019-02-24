@@ -1,20 +1,26 @@
 package com.example.lucas.list;
 
+import com.example.lucas.edit.EditActivity;
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.logic.dblogic.FilePath;
 import com.example.lucas.logic.dblogic.User;
 import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 import com.example.lucas.main.R;
+import com.example.mainpackage.logic.project.Project;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -90,10 +96,9 @@ public class ListActivity extends AppCompatActivity {
                 String username = LogicController.getInstance().getFacade().getCurrentUsername();
                 User user = mFileHistoryViewModel.findUserByUsername(username);
 
-                //Random randomno = new Random();
-                //String projectName = "project" + randomno.nextInt();
-                String projectName = "modelTest";
-                String filePathString = projectName + ".blif";
+                Random random = new Random();
+                String projectName = "project" + random.nextInt();
+                String filePathString = "/" + projectName + ".bin";
 
                 FilePath filePath = new FilePath(projectName, filePathString , user.id);
                 mFileHistoryViewModel.insertFilePath(filePath);
@@ -131,10 +136,44 @@ public class ListActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
 
                     // specify an adapter (see also next example)
-                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext());
+                    mAdapter = new ProjectsListAdapter(filePaths);
                     recyclerView.setAdapter(mAdapter);
                 }
             });
         }
+    }
+
+    private void handleNewProject() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.choose_project_type);
+
+        String normalProject = getString(R.string.simple_project);
+        String complexProject = getString(R.string.complex_project);
+        String[] options = new String[]{normalProject, complexProject};
+
+        int checkedItem = 0;
+        builder.setSingleChoiceItems(options, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing.
+            }
+        });
+
+        builder.setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+
+                Intent intent = new Intent(ListActivity.this, EditActivity.class);
+                intent.putExtra(EditUtils.IS_SIMPLE_EXTRA, pos == 0);
+
+                startActivity(intent);
+            }
+        });
+
+        builder.setNegativeButton(R.string.dialog_cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

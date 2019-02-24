@@ -1,11 +1,7 @@
 package com.example.lucas.edit;
 
-import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
-import com.example.mainpackage.logic.project.Command;
-import com.example.mainpackage.logic.project.CommandAddComponent;
-import com.example.mainpackage.logic.project.CommandManager;
-import com.example.mainpackage.logic.project.ComponentBuilder;
+import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
@@ -25,20 +21,29 @@ public class EditActivity extends AppCompatActivity {
 
     private EditView mEditView;
 
-    private ComponentType mSelectedType;
-    private List<ComponentType> mTypes;
+    private EditController mController;
 
-    private ComponentBuilder mBuilder = new ComponentBuilder();
-    private CommandManager mCmdManager = new CommandManager(mBuilder);
+    private boolean mIsSimpleProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
-        mTypes = LogicController.getInstance().getFacade().getComponentsTypes();
-        mSelectedType = mTypes.get(0);
         mEditView = findViewById(R.id.edit_view);
+        mController = new EditController();
+
+        mIsSimpleProject = getIntent().getBooleanExtra(EditUtils.IS_SIMPLE_EXTRA, true);
+        setupToolbar();
+    }
+
+    private void setupToolbar() {
+        String title = mIsSimpleProject ?
+                getString(R.string.title_simple_project) :
+                getString(R.string.title_complex_project);
+
+        //noinspection ConstantConditions
+        getSupportActionBar().setTitle(title);
     }
 
     @Override
@@ -76,8 +81,8 @@ public class EditActivity extends AppCompatActivity {
         builder.setTitle(R.string.choose_component);
 
         List<String> componentNames = new ArrayList<>();
-        for (ComponentType type : mTypes) {
-            componentNames.add(LogicController.getInstance().getFacade().getComponentsTypeName(type));
+        for (ComponentType type : mController.getComponentTypes()) {
+            componentNames.add(mController.getComponentTypeName(type));
         }
 
         if (componentNames.isEmpty()) {
@@ -100,7 +105,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                mSelectedType = mTypes.get(pos);
+                mController.setSelectedType(mController.getComponentTypes().get(pos));
             }
         });
 
@@ -111,33 +116,66 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void handleActionUndo() {
-        mCmdManager.undo();
+        mController.doUndo();
         doDraw();
     }
 
     private void handleActionRedo() {
-        mCmdManager.redo();
+        mController.doRedo();
         doDraw();
     }
 
     private void handleActionSave() {
-    }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.choose_file);
 
-    public ComponentType getSelectedType() {
-        return mSelectedType;
+        List<String> fileTypesNames = new ArrayList<>();
+        for (FileType type : mController.getFileTypes()) {
+            fileTypesNames.add(mController.getFileTypeName(type));
+        }
+
+        if (fileTypesNames.isEmpty()) {
+            Toast.makeText(this, R.string.dialog_not_found, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String[] fileTypes = new String[fileTypesNames.size()];
+        fileTypes = fileTypesNames.toArray(fileTypes);
+
+        int checkedItem = 0;
+        builder.setSingleChoiceItems(fileTypes, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing.
+            }
+        });
+
+        builder.setPositiveButton(R.string.edit_save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                mController.doSave(mController.getFileTypes().get(pos));
+            }
+        });
+
+        builder.setNegativeButton(R.string.dialog_cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /* Draw handling */
 
-    void addComponent(int[] position) {
-        Command cmd = new CommandAddComponent(getSelectedType(), position);
-        mCmdManager.apply(cmd);
+    void handleTap(int[] tapPos) {
+        if (!mController.handleConnection(tapPos)) {
+            mController.doAdd(tapPos);
+        }
 
         doDraw();
     }
 
     private void doDraw() {
-        Component module = mCmdManager.finishComponentEditor();
-        mEditView.drawProject(module);
+        Component module = mController.getProject();
+        mEditView.drawProject(module, mController.getSelectedComponent());
     }
 }

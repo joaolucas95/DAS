@@ -5,6 +5,7 @@ import com.example.mainpackage.logic.project.CommandAddComponent;
 import com.example.mainpackage.logic.project.CommandConnectComponent;
 import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.ComponentBuilder;
+import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.Signal;
@@ -13,7 +14,6 @@ import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 import com.example.mainpackage.logic.user.User;
-import com.example.mainpackage.logic.utils.Config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class Main {
         Project projectTestA = printTestAWithStateMachine(User.getInstance());
         printTestASimulations(projectTestA);
         printTestATests(projectTestA);
-        if(saveProject(projectTestA, Config.FILE_TYPE_BLIF))
+        if(saveProject(projectTestA, FileType.BLIF))
             System.out.println("Project saved with success.");
         else
             System.out.println("Error saving the project: " + projectTestA);
@@ -46,7 +46,7 @@ public class Main {
         Project projectTestB = printTestBWithStateMachine(User.getInstance());
         printTestBSimulations(projectTestB);
         printTestBTests(projectTestB);
-        if(saveProject(projectTestB, Config.FILE_TYPE_BLIF))
+        if(saveProject(projectTestB, FileType.BLIF))
             System.out.println("Project saved with success.");
         else
             System.out.println("Error saving the project: " + projectTestB);
@@ -65,7 +65,7 @@ public class Main {
         Project projectTestC = printTestCWithStateMachine(User.getInstance());
         //printTestCSimulations(projectTestC);
         //printTestCTests(projectTestC);
-        if(saveProject(projectTestC, Config.FILE_TYPE_BLIF))
+        if(saveProject(projectTestC, FileType.BLIF))
             System.out.println("Project saved with success.");
         else
             System.out.println("Error saving the project: " + projectTestC);
@@ -102,7 +102,7 @@ public class Main {
         
         try {
             ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            result = projectFileManagement.saveProject(project, Config.FILE_TYPE_BINARY);
+            result = projectFileManagement.saveProject(project, FileType.BINARY);
             
             if(result)
                 System.out.println("Project saved with success.");
@@ -189,7 +189,7 @@ public class Main {
         return project;
     }
 
-    private static boolean saveProject(Project project, int fileType){
+    private static boolean saveProject(Project project, FileType fileType){
         boolean result;
         try {
             ProjectFileManagement projectFileManagement = new ProjectFileManagement();

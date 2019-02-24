@@ -1,7 +1,7 @@
 package com.example.mainpackage.logic.project.FileManagement.SaveFilePackage;
 
+import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.Project;
-import com.example.mainpackage.logic.utils.Config;
 
 public abstract class SaveProjectBuilder {
     
@@ -13,12 +13,12 @@ public abstract class SaveProjectBuilder {
         
         return true;
     }
-    public static SaveProjectBuilder getBuilder(int type){
-        if(type == Config.FILE_TYPE_BINARY)
+    public static SaveProjectBuilder getBuilder(FileType type){
+        if(type == FileType.BINARY)
             return new BinarySaveProjectBuilder();
-        else if(type == Config.FILE_TYPE_BLIF)
+        else if(type == FileType.BLIF)
             return new BlifSaveProjectBuilder();
         
-        return null;
+        throw new IllegalStateException("Invalid type:" + type);
     }
 }
