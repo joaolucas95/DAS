@@ -42,9 +42,9 @@ public abstract class Component implements Serializable{
     
     public static Component getComponent(ComponentType type, boolean defineUniqueNumber, int[] position) {
         
-        //DEFINE UNIQUE NUMBER FOR COMPONENT!!
         String name = defineComponentName(type);
 
+        //DEFINE UNIQUE NUMBER FOR COMPONENT!!
         if(defineUniqueNumber)
             name = defineComponentUniqueNumber(name);
         

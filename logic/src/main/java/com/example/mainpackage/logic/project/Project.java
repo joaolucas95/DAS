@@ -20,6 +20,7 @@ public class Project implements Serializable{
     public Project(User user, String name) {
         this.user = user;
         this.name = name;
+        this.signalForSimulation = new Signal();
         this.tests = new ArrayList();
     }
 

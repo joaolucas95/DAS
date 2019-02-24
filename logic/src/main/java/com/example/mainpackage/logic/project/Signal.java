@@ -13,6 +13,10 @@ import java.util.Map;
 public class Signal implements Serializable {
     private List<Combination> combinations;
 
+    public Signal() {
+        this.combinations = new ArrayList<>();
+    }
+
     public Signal(List<Combination> combinations) {
         this.combinations = combinations;
     }

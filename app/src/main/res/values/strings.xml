@@ -23,4 +23,9 @@
     <string name="title_activity_simulation">SimulationActivity</string>
 	<string name="simulationOfProject">Simulation of Project</string>
     <string name="selected_component">Component selected</string>
+    <string name="choose_file">Choose File</string>
+    <string name="on">ON</string>
+    <string name="add_new_combination">Add New Combination</string>
+    <string name="run_simulation">Run Simulation</string>
+    <string name="close_and_save_simulation">Close and Save Simulation</string>
 </resources>

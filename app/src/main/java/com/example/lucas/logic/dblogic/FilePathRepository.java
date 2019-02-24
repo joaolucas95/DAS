@@ -43,6 +43,10 @@ public class FilePathRepository {
         @Override
         protected Void doInBackground(final FilePath... params) {
 
+            //verify if does not exist a project with that project name
+            if(mAsyncTaskDao.findFilePathEntityByProjectName(params[0].projectName) != null)
+                return null;
+
             mAsyncTaskDao.insert(params[0]);
             return null;
         }

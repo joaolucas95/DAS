@@ -1,15 +1,22 @@
 package com.example.lucas.list;
 
 import com.example.lucas.edit.EditActivity;
+import com.example.lucas.edit.EditUtils;
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.logic.dblogic.FilePath;
 import com.example.lucas.logic.dblogic.User;
 import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 import com.example.lucas.main.R;
+import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.project.component.Component;
+import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 
+import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -93,19 +100,85 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String username = LogicController.getInstance().getFacade().getCurrentUsername();
-                User user = mFileHistoryViewModel.findUserByUsername(username);
 
-                Random random = new Random();
-                String projectName = "project" + random.nextInt();
-                String filePathString = "/" + projectName + ".bin";
 
-                FilePath filePath = new FilePath(projectName, filePathString , user.id);
-                mFileHistoryViewModel.insertFilePath(filePath);
+                //just for test
+                createModelTestBin();
+
 
                 //startActivity(new Intent(ListActivity.this, EditActivity.class));
             }
         });
+    }
+
+    private void createModelTestBin(){
+        String username = LogicController.getInstance().getFacade().getCurrentUsername();
+        User user = mFileHistoryViewModel.findUserByUsername(username);
+
+        String projectName = "modelTest";
+        String filePathString = getApplicationContext().getFilesDir().getPath().toString() + "/" + projectName + ".bin"; //shoud be setted when save project... should be something like: getApplicationContext().getFilesDir().getPath().toString() + "/" + projectName + ".bin"
+
+        FilePath filePath = new FilePath(projectName, filePathString , user.id);
+        mFileHistoryViewModel.insertFilePath(filePath);
+
+
+        try{
+            Component model = createModelTestWithStateMachine();
+            Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(), projectName);
+            project.setComponentModule(model);
+
+            Log.d("test", "Project created:" + project);
+
+            LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
+
+        }catch (Exception ex)
+        {
+            Log.d("test", "Project already created");
+
+        }
+
+
+
+
+    }
+    private static Component createModelTestWithStateMachine(){
+        ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.MODULE);
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+        stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
+
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
+
+        //test
+        stateMachine.selectComponent("and4");
+        stateMachine.selectComponent("and4");
+
+        stateMachine.selectComponent("input1");
+        stateMachine.selectComponent("and4");
+        stateMachine.selectComponent("input2");
+        stateMachine.selectComponent("and4");
+
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
+        stateMachine.selectComponent("input2");
+        stateMachine.selectComponent("and5");
+        stateMachine.selectComponent("input3");
+        stateMachine.selectComponent("and5");
+
+        stateMachine.addSimpleComponent(ComponentType.LOGIC_OR, new int[]{0, 0});
+        stateMachine.selectComponent("and4");
+        stateMachine.selectComponent("or6");
+        stateMachine.selectComponent("and5");
+        stateMachine.selectComponent("or6");
+
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
+        stateMachine.selectComponent("and4");
+        stateMachine.selectComponent("output7");
+
+        stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
+        stateMachine.selectComponent("or6");
+        stateMachine.selectComponent("output8");
+
+        return stateMachine.finishComponentEditor();
     }
 
     private void setRecyclerView() {
@@ -136,7 +209,7 @@ public class ListActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
 
                     // specify an adapter (see also next example)
-                    mAdapter = new ProjectsListAdapter(filePaths);
+                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext());
                     recyclerView.setAdapter(mAdapter);
                 }
             });

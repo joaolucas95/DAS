@@ -1,10 +1,16 @@
 package com.example.mainpackage;
 
+import com.example.mainpackage.logic.project.FileManagement.FileType;
+import com.example.mainpackage.logic.project.FileManagement.FileUtils;
+import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
+import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.project.component.ComponentUtils;
 import com.example.mainpackage.logic.user.User;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LogicFacadeImp implements ILogicFacade {
 
@@ -41,13 +47,22 @@ public class LogicFacadeImp implements ILogicFacade {
 
 
     @Override
-    public Project getProject(String filePath) {
-        try {
-            ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            Project project = projectFileManagement.loadProject(filePath, User.getInstance());
-            return project;
-        } catch (Exception e) {
-            return null;
-        }
+    public Project getProject(String filePath) throws Exception {
+        ProjectFileManagement projectFileManagement = new ProjectFileManagement();
+        Project project = projectFileManagement.loadProject(filePath, User.getInstance());
+        return project;
+    }
+
+    @Override
+    public boolean saveProject(Project project, String filePath, FileType fileType) throws Exception {
+        boolean result;
+        ProjectFileManagement projectFileManagement = new ProjectFileManagement();
+        result = projectFileManagement.saveProject(project, filePath, fileType);
+        return result;
+    }
+
+    @Override
+    public String getComponentTypeName(ComponentType type) {
+        return null;
     }
 }

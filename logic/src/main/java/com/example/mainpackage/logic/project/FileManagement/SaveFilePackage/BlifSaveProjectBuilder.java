@@ -33,7 +33,7 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
                 content.addAll(printModuleBlifFormat((ComponentModule) component, modulesToPrint));
             }
 
-            Path file = Paths.get(filePathString + "" + project.getName() + ".blif");
+            Path file = Paths.get(filePathString + "/" + project.getName() + ".blif");
             Files.write(file, content, Charset.forName("UTF-8"));
         } catch (IOException ex) {
             Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);

@@ -20,13 +20,13 @@ public class ProjectFileManagement {
         // Do nothing
     }
     
-    public boolean saveProject(Project project, FileType fileType) throws Exception{
+    public boolean saveProject(Project project, String filePath, FileType fileType) throws Exception{
         boolean result;
-        String filePath = "";
         saveProjectBuilder = SaveProjectBuilder.getBuilder(fileType);
         result = saveProjectBuilder.saveProject(filePath, project);
 
-        exportTestsToHtml(project);
+        //TODO: when export project to html?
+        //exportTestsToHtml(project);
         /*
         if(result)
             File.saveLastComponentNumber(project.getComponentModule().getUniqueNumber());

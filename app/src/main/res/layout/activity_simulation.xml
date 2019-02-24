@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/rl_simulation"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_enter_name"
+    <Button
+        android:id="@+id/button_close_save_simulation"
+        android:text="@string/close_and_save_simulation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enter_name"/>
 
+    />
+
+    <Button
+        android:id="@+id/button_new_combination"
+        android:text="@string/add_new_combination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_close_save_simulation"
+    />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/combination_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/button_new_combination"
+    />
+
+    <Button
+        android:id="@+id/button_run_combinations"
+        android:text="@string/run_simulation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/combination_list"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/result_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/button_run_combinations">
+    </LinearLayout>
 
 </RelativeLayout>

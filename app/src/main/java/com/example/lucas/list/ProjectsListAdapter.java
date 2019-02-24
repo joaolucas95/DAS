@@ -58,7 +58,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
             public void onClick(View v) {
                 Log.d("test", "" + filePath.toString());
 
-                String[] items = {"Edit Project", "Simulation", "Tests", "Remove Project"};
+                String[] items = {"Simulation", "Tests", "Remove Project"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(holder.itemView.getContext());
                 builder.setTitle(R.string.options)
@@ -67,15 +67,14 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
                                 switch (which){
                                     case 0:
-                                        break;
-                                    case 1:
                                         Intent intent = new Intent(context, SimulationActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                         intent.putExtra("filePath", filePath);
                                         context.startActivity(intent);
                                         break;
-                                    case 2:
+                                    case 1:
                                         break;
-                                    case 3:
+                                    case 2:
                                         break;
                                 }
                             }

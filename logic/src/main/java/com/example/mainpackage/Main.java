@@ -102,7 +102,7 @@ public class Main {
         
         try {
             ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            result = projectFileManagement.saveProject(project, FileType.BINARY);
+            result = projectFileManagement.saveProject(project, "", FileType.BINARY);
             
             if(result)
                 System.out.println("Project saved with success.");
@@ -193,7 +193,7 @@ public class Main {
         boolean result;
         try {
             ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-            result = projectFileManagement.saveProject(project, fileType);
+            result = projectFileManagement.saveProject(project, "", fileType);
 
             return result;
 

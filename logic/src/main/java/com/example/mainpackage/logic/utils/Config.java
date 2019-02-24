@@ -8,7 +8,7 @@ public class Config {
     public static String ERROR_MSG_FILETYPE = "Can't save/load project as that file type.";
 
     // TODO this should not be here
-    public static String LAST_COMPONENT_NUMBER_FILENAME = "/storage/emulated/0/lastcomponentnumber.bin";
+    public static String LAST_COMPONENT_NUMBER_FILENAME = "/data/user/0/com.example.lucas.das/files/lastcomponentnumber.bin";
     public static String ERROR_MSG_FILE_LAST_COMPONENT_NUMBER = "Can't save/load the last component number.";
 
     

@@ -12,7 +12,7 @@ public class BinarySaveProjectBuilder extends SaveProjectBuilder{
 
         //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
 
-        filePathString += project.getName() + ".bin";
+        filePathString += "/" + project.getName() + ".bin";
 
         java.io.File filePath = new java.io.File(filePathString);
 
@@ -25,8 +25,6 @@ public class BinarySaveProjectBuilder extends SaveProjectBuilder{
             os.writeObject(project);
             os.close();
             fos.close();
-
-            //System.out.println("Project saved.");
         } catch (Exception e) {
             e.printStackTrace();
             return false;
