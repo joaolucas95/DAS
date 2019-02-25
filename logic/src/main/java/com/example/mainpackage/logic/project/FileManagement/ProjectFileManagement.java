@@ -20,7 +20,7 @@ public class ProjectFileManagement {
         // Do nothing
     }
     
-    public boolean saveProject(Project project, String filePath, FileType fileType) throws Exception{
+    public boolean saveProject(Project project, String filePath, FileType fileType) {
         boolean result;
         saveProjectBuilder = SaveProjectBuilder.getBuilder(fileType);
         result = saveProjectBuilder.saveProject(filePath, project);

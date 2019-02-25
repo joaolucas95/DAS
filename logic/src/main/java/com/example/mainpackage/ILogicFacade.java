@@ -23,7 +23,7 @@ public interface ILogicFacade {
 
     Project getProject(String filePath) throws Exception;
 
-    boolean saveProject(Project project, String filePath, FileType fileType) throws Exception;
+    boolean saveProject(Project project, String filePath, FileType fileType);
 
     /* Edit actions */
 

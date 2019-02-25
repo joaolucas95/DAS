@@ -54,7 +54,7 @@ public class LogicFacadeImp implements ILogicFacade {
     }
 
     @Override
-    public boolean saveProject(Project project, String filePath, FileType fileType) throws Exception {
+    public boolean saveProject(Project project, String filePath, FileType fileType) {
         boolean result;
         ProjectFileManagement projectFileManagement = new ProjectFileManagement();
         result = projectFileManagement.saveProject(project, filePath, fileType);

@@ -2,6 +2,7 @@ package com.example.lucas.edit;
 
 import com.example.lucas.logic.LogicController;
 import com.example.mainpackage.logic.project.FileManagement.FileType;
+import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
@@ -95,8 +96,10 @@ public class EditController {
         LogicController.getInstance().getFacade().redoOperation();
     }
 
-    void doSave(FileType fileType) {
-        // TODO save according file type
+    void doSave(String filePath, FileType fileType) {
+        String projectName = "modelTest";
+        Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(), projectName);
+        LogicController.getInstance().getFacade().saveProject(project, filePath, fileType);
     }
 
     /* Intersection logic */

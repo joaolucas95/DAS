@@ -155,7 +155,8 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                mController.doSave(mController.getFileTypes().get(pos));
+                String filePath =  getApplicationContext().getFilesDir().getPath().toString();
+                mController.doSave(filePath, mController.getFileTypes().get(pos));
             }
         });
 
