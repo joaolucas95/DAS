@@ -5,7 +5,6 @@ import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
-import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 
 import java.util.List;
 
@@ -14,11 +13,8 @@ public class EditController {
     private ComponentType mSelectedType;
     private Component mSelectedComponent;
 
-    private ComponentEditorStateMachine mEditorStateMachine;
-
     EditController(boolean isSimpleProject) {
-        ComponentType type = isSimpleProject ? ComponentType.MODULE : ComponentType.PROJECT;
-        mEditorStateMachine = new ComponentEditorStateMachine(type);
+        LogicController.getInstance().getFacade().newEdition(isSimpleProject);
 
         List<ComponentType> types = getComponentTypes();
         mSelectedType = types.get(0);
@@ -49,7 +45,7 @@ public class EditController {
     }
 
     Component getProject() {
-        return mEditorStateMachine.finishComponentEditor();
+        return LogicController.getInstance().getFacade().getProjectInEdition();
     }
 
     /* Connection logic*/
@@ -64,7 +60,7 @@ public class EditController {
     }
 
     private boolean handleNoIntersection() {
-        mEditorStateMachine.cancelDefiningPrevious();
+        LogicController.getInstance().getFacade().cancelConnection();
         if (mSelectedComponent == null) {
             return false;
         }
@@ -74,7 +70,7 @@ public class EditController {
     }
 
     private boolean handleIntersection(Component component) {
-        mEditorStateMachine.selectComponent(component.getName());
+        LogicController.getInstance().getFacade().selectComponent(component.getName());
         Component selected = mSelectedComponent;
         if (selected == null) {
             mSelectedComponent = component;
@@ -88,15 +84,15 @@ public class EditController {
     /* Actions */
 
     void doAdd(int[] pos) {
-        mEditorStateMachine.addSimpleComponent(mSelectedType, pos);
+        LogicController.getInstance().getFacade().addComponent(mSelectedType, pos);
     }
 
     void doUndo() {
-        mEditorStateMachine.undoOperation();
+        LogicController.getInstance().getFacade().undoOperation();
     }
 
     void doRedo() {
-        mEditorStateMachine.redoOperation();
+        LogicController.getInstance().getFacade().redoOperation();
     }
 
     void doSave(FileType fileType) {
@@ -127,6 +123,5 @@ public class EditController {
 
         return tapPos[0] >= left && tapPos[0] <= right &&
                 tapPos[1] >= top && tapPos[1] <= bottom;
-
     }
 }

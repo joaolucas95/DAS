@@ -4,13 +4,17 @@ import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.FileManagement.FileUtils;
 import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.project.component.ComponentUtils;
+import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 import com.example.mainpackage.logic.user.User;
 
 import java.util.List;
 
 public class LogicFacadeImp implements ILogicFacade {
+
+    private ComponentEditorStateMachine mEditorStateMachine;
 
     @Override
     public void setCurrentUsername(String username) {
@@ -24,11 +28,11 @@ public class LogicFacadeImp implements ILogicFacade {
 
     @Override
     public List<ComponentType> getComponentsTypes() {
-        return ComponentUtils.getComponentsTypes();
+        return mEditorStateMachine.getComponentTypes();
     }
 
     @Override
-    public String getComponentsTypeName(ComponentType type) {
+    public String getComponentTypeName(ComponentType type) {
         return ComponentUtils.getComponentName(type);
     }
 
@@ -46,8 +50,7 @@ public class LogicFacadeImp implements ILogicFacade {
     @Override
     public Project getProject(String filePath) throws Exception {
         ProjectFileManagement projectFileManagement = new ProjectFileManagement();
-        Project project = projectFileManagement.loadProject(filePath, User.getInstance());
-        return project;
+        return projectFileManagement.loadProject(filePath, User.getInstance());
     }
 
     @Override
@@ -58,8 +61,41 @@ public class LogicFacadeImp implements ILogicFacade {
         return result;
     }
 
+    /* Edition actions */
+
     @Override
-    public String getComponentTypeName(ComponentType type) {
-        return ComponentUtils.getComponentName(type);
+    public void newEdition(boolean isSimpleProject) {
+        ComponentType type = isSimpleProject ? ComponentType.MODULE : ComponentType.PROJECT;
+        mEditorStateMachine = new ComponentEditorStateMachine(type);
+    }
+
+    @Override
+    public Component getProjectInEdition() {
+        return mEditorStateMachine.finishComponentEditor();
+    }
+
+    @Override
+    public void cancelConnection() {
+        mEditorStateMachine.cancelDefiningPrevious();
+    }
+
+    @Override
+    public void selectComponent(String name) {
+        mEditorStateMachine.selectComponent(name);
+    }
+
+    @Override
+    public void addComponent(ComponentType type, int[] pos) {
+        mEditorStateMachine.addSimpleComponent(type, pos);
+    }
+
+    @Override
+    public void undoOperation() {
+        mEditorStateMachine.undoOperation();
+    }
+
+    @Override
+    public void redoOperation() {
+        mEditorStateMachine.redoOperation();
     }
 }
