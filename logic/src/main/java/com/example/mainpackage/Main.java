@@ -253,7 +253,7 @@ public class Main {
 
         return project;
     }
-    
+
     private static Component createGlobalModuleTestWithStateMachine(User user){
         ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.PROJECT);
         stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{0, 0});
@@ -263,34 +263,34 @@ public class Main {
 
         //test
         stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
-   
-        stateMachine.addModule("modelTest.blif", user);
+
+        stateMachine.addModule("modelTest.blif", user, new int[]{0, 0});
 
         stateMachine.selectComponent("input10");
         stateMachine.selectComponent("input14");
-        
+
         stateMachine.selectComponent("input11");
         stateMachine.selectComponent("input15");
-        
+
         stateMachine.selectComponent("input12");
         stateMachine.selectComponent("input16");
-        
-        stateMachine.addModule("modelTest.blif", user);
-        
+
+        stateMachine.addModule("modelTest.blif", user, new int[]{0, 0});
+
         stateMachine.selectComponent("output21");
         stateMachine.selectComponent("input23");
-        
+
         stateMachine.selectComponent("input12");
         stateMachine.selectComponent("input24");
-        
+
         stateMachine.selectComponent("input13");
         stateMachine.selectComponent("input25");
-        
+
         stateMachine.addSimpleComponent(ComponentType.OUTPUT, new int[]{0, 0});
 
         stateMachine.selectComponent("output30");
         stateMachine.selectComponent("output32");
-        
+
         return stateMachine.finishComponentEditor();
     }
 

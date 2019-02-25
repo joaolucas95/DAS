@@ -22,10 +22,14 @@ public class BlifLoadProject {
         try {
             List<String> allLines = Files.readAllLines(Paths.get(filePathString));
 
-            String projectName = new String(allLines.get(0));
-            projectName = projectName.replace(".model ","");
+            String projectName="";
+            String moduleLine = allLines.get(0).replace(".model ","");
+            //modulestr[0] - is the name of the module ; modulestr[1] - are the coords of the component module
+            String[] modulestr = moduleLine.split("-");
+            projectName = modulestr[0];
+            ComponentModule module = getModuleFromLines(allLines);
+
             project = new Project(user, projectName);
-            ComponentModule module = getModuleFromLines(allLines, user);
             project.setComponentModule(module);
             return project;
         } catch (Exception e) {
@@ -35,33 +39,47 @@ public class BlifLoadProject {
         return null;
     }
 
-    private ComponentModule getModuleFromLines(List<String> allLines, User user) throws Exception {
+    private ComponentModule getModuleFromLines(List<String> allLines) throws Exception {
 
         List<Component> data = new ArrayList<>();
-        List<Component> outputList = new ArrayList<>();
-        Project project;
 
-        //get name of project
-        String projectnametmp = allLines.get(0).replace(".model ","");
-        project = new Project(user, projectnametmp);
+        //get information of the MODULE
+
+        //get the line which has the name and positions of the component module
+        String moduleLine = allLines.get(0).replace(".model ","");
+        //modulestr[0] - is the name of the module ; modulestr[1] - are the coords of the component module
+        String[] modulestr = moduleLine.split("-");
+        //define coords
+        String[] coordsTmp= modulestr[1].split(";");
+        int[] positionsOfModule = new int[]{Integer.parseInt(coordsTmp[0]), Integer.parseInt(coordsTmp[1])};
+        String moduleName = modulestr[0];
+
+        //--------------- module defined (project name will be used to define the projects name
+        // now get content to the module
+        //...
+
         allLines.remove(0);
 
-        //get inputs of project
+        //get inputs of the module
         String inputsTmp = allLines.get(0).replace(".inputs ","");
         String[] inputNames = inputsTmp.split(" ");
         for(int i = 0; i < inputNames.length; i++){
-            Component componentTmp = getComponentByName(inputNames[i]);
+            //input[0] - is the name of the input ; input[1] - are the coords of the component input
+            String[] input = inputNames[i].split("-");
+
+            //define coords
+            String[] coords= input[1].split(";");
+            int[] position = new int[]{Integer.parseInt(coords[0]), Integer.parseInt(coords[1])};
+
+            //define the component with the name and the coords
+            Component componentTmp = getComponentByName(input[0], position);
+
             data.add(componentTmp);
         }
+
         allLines.remove(0);
 
-        //get inputs of project
-        String ouputsTmp = allLines.get(0).replace(".outputs ","");
-        String[] ouputNames = ouputsTmp.split(" ");
-        for(int i = 0; i < ouputNames.length; i++){
-            Component componentTmp = getComponentByName(ouputNames[i]);
-            outputList.add(componentTmp);
-        }
+        //remove the line which defines the outputs... The outputs will be added
         allLines.remove(0);
 
         //process all components and their connections
@@ -74,12 +92,23 @@ public class BlifLoadProject {
                 for (int i = 0; i < componentNames.length; i++) {
                     Component componentTmp = null;
 
+                    //strComponent[0] - is the name of the output ; strComponent[1] - are the coords of the component output
+                    String[] strComponent = componentNames[i].split("-");
+
+                    //define coords
+                    String[] coords= strComponent[1].split(";");
+                    int[] position = new int[]{Integer.parseInt(coords[0]), Integer.parseInt(coords[1])};
+
+
                     //if exists is returned the component
-                    componentTmp = verifyIfExistComponentWithThatName(data, componentNames[i]);
+                    componentTmp = verifyIfExistComponentWithThatName(data, strComponent[0]);
 
                     //if does not exist a component with that name we need to create it and add to data
                     if (componentTmp == null) {
-                        componentTmp = getComponentByName(componentNames[i]);
+
+                        //define the component with the name and the coords
+                        componentTmp = getComponentByName(strComponent[0], position);
+
                         data.add(componentTmp);
                     }
                     componentListTmp.add(componentTmp);
@@ -90,8 +119,9 @@ public class BlifLoadProject {
                 for (Component component : componentListTmp)
                     lastComponent.setPrevious(component);
             } else if (line.contains(".end")) {
-                ComponentModule componentModuleTemp = (ComponentModule) Component.getComponent(ComponentType.PROJECT, false, new int[]{0, 0});
+                ComponentModule componentModuleTemp = (ComponentModule) Component.getComponent(ComponentType.PROJECT, false, positionsOfModule);
                 componentModuleTemp.addComponent(data);
+                componentModuleTemp.setName(moduleName);
                 return componentModuleTemp;
             }
             else if(line.contains(".subckt")) {
@@ -99,9 +129,13 @@ public class BlifLoadProject {
                 String namesTmp = line.replace(".subckt ", "");
                 String[] components = namesTmp.split(" "); //omponentName1 is the name of the module... the others are components connections
 
-
                 //LOAD THE COMPONENT
-                String tempModuleName = components[0];
+
+                //strComponent[0] - is the name of the module ; strComponent[1] - are the coords of the component module
+                String[] strComponent = components[0].split("-");
+
+                String tempModuleName = strComponent[0];
+
                 List<String> linesOfTempModule = new ArrayList();
                 //create the temp module
                 boolean read = false;
@@ -117,7 +151,7 @@ public class BlifLoadProject {
 
                     if (allLines.get(i).contains(".end") && read) //if the line contains ".end" and was reading (getting lines of a module)...
                     {
-                        ComponentModule tmpModule = getModuleFromLines(linesOfTempModule, user);
+                        ComponentModule tmpModule = getModuleFromLines(linesOfTempModule); //new String because it's not relevant... We used this var to get the name of the mainModule... used to define the project name
                         listModulesTmp.add(tmpModule);
                         data.add(tmpModule);
                         break;
@@ -160,7 +194,7 @@ public class BlifLoadProject {
         return null;
     }
 
-    private static Component getComponentByName(String name) throws Exception {
+    private static Component getComponentByName(String name, int[] position) throws Exception {
         Component componentTmp = null;
         String componentName = name;
         String typeOfComponent = name.replaceAll("[0-9]", "");
@@ -168,22 +202,22 @@ public class BlifLoadProject {
         switch (typeOfComponent)
         {
             case "input":
-                componentTmp = Component.getComponent(ComponentType.INPUT, false, new int[]{0, 0});
+                componentTmp = Component.getComponent(ComponentType.INPUT, false, position);
                 break;
             case "output":
-                componentTmp = Component.getComponent(ComponentType.OUTPUT, false, new int[]{0, 0});
+                componentTmp = Component.getComponent(ComponentType.OUTPUT, false, position);
                 break;
             case "project":
-                componentTmp = Component.getComponent(ComponentType.PROJECT, false, new int[]{0, 0});
+                componentTmp = Component.getComponent(ComponentType.PROJECT, false, position);
                 break;
             case "and":
-                componentTmp = Component.getComponent(ComponentType.LOGIC_AND, false, new int[]{0, 0});
+                componentTmp = Component.getComponent(ComponentType.LOGIC_AND, false, position);
                 break;
             case "or":
-                componentTmp = Component.getComponent(ComponentType.LOGIC_OR, false, new int[]{0, 0});
+                componentTmp = Component.getComponent(ComponentType.LOGIC_OR, false, position);
                 break;
             case "module":
-                componentTmp = Component.getComponent(ComponentType.MODULE, false, new int[]{0, 0});
+                componentTmp = Component.getComponent(ComponentType.MODULE, false, position);
                 break;
             default:
                 throw new Exception("Invalid type: " + typeOfComponent + ".");

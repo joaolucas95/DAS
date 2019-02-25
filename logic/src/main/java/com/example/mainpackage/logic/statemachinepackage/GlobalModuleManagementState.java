@@ -24,8 +24,8 @@ public class GlobalModuleManagementState extends StateAdapter{
     }
 
     @Override
-    public IState addModule(String filePathProject, User user) {
-        CommandAddComponent cmAddComponent = new CommandAddComponent(ComponentType.PROJECT, filePathProject, user);
+    public IState addModule(String filePathProject, User user, int[] position) {
+        CommandAddComponent cmAddComponent = new CommandAddComponent(ComponentType.PROJECT, filePathProject, user, position);
         commandManager.apply(cmAddComponent);
         return this;
     }

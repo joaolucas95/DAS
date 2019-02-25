@@ -25,7 +25,11 @@ public abstract class Component implements Serializable{
     public int[] getPosition() {
         return position;
     }
-    
+
+    public void setPosition(int[] position) {
+        this.position = position;
+    }
+
     public abstract boolean getOutput(String output);
 
     public abstract ComponentType getType();

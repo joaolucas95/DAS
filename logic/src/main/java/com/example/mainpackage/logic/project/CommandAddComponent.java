@@ -23,10 +23,11 @@ public class CommandAddComponent implements Command, Serializable{
         this.position = position;
     }
     
-    public CommandAddComponent(ComponentType type, String filePathProject, User user) {
+    public CommandAddComponent(ComponentType type, String filePathProject, User user, int[] position) {
         this.type = type;
         this.filePathProject = filePathProject;
         this.user = user;
+        this.position = position;
     }
     
     @Override
@@ -39,6 +40,8 @@ public class CommandAddComponent implements Command, Serializable{
             ComponentModule module = null;
             try {
                 module = (ComponentModule) projectFileManagement.loadProject(filePathProject, user).getComponentModule();
+                module.setPosition(position);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

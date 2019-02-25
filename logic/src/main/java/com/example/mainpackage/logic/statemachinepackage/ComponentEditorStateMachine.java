@@ -31,8 +31,8 @@ public class ComponentEditorStateMachine {
         this.state = state;
     }
     
-    public void addModule(String filePathProject, User user){
-        setState(state.addModule(filePathProject, user));
+    public void addModule(String filePathProject, User user, int[] position){
+        setState(state.addModule(filePathProject, user, position));
     }
     
     public void cancelDefiningPrevious(){

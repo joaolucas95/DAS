@@ -45,16 +45,16 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
     private static List<String> printModuleBlifFormat(ComponentModule module, List<Component> modulesToPrint) {
         List<String> content = new ArrayList();
 
-        content.add(".model " + module.getName());
+        content.add(".model " + module.getName() + "-" + module.getPosition()[0] + ";" + module.getPosition()[1]);
 
         String inputsString = ".inputs";
         for(Component input : module.getInputList())
-            inputsString += " " + input.getName();
+            inputsString += " " + input.getName() + "-" + input.getPosition()[0] + ";" + input.getPosition()[1];
         content.add(inputsString);
 
         String outputsString = ".outputs";
         for(Component output : module.getOutputList())
-            outputsString += " " + output.getName();
+            outputsString += " " + output.getName() + "-" + output.getPosition()[0] + ";" + output.getPosition()[1];
         content.add(outputsString);
 
         String connection ="\n";
@@ -68,7 +68,7 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
 
                 ComponentModule moduleTmp = (ComponentModule) component;
                 //add annotation
-                connection += ".subckt " + moduleTmp.getName();
+                connection += ".subckt " + moduleTmp.getName() + "-" + moduleTmp.getPosition()[0] + ";" + moduleTmp.getPosition()[1];
 
                 //for all module inputs will print its name and its previous components names
                 for(Component inputOfModule : moduleTmp.getInputList())
@@ -126,9 +126,9 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
                     previousList = component.getPrevious();
                 }
                 for(Component previous : previousList)
-                    connection += " " + previous.getName();
+                    connection += " " + previous.getName() + "-" + previous.getPosition()[0] + ";" + previous.getPosition()[1];
 
-                connection += " " + component.getName() + "\n";
+                connection += " " + component.getName() + "-" + component.getPosition()[0] + ";" + component.getPosition()[1] + "\n";
                 connection += ((ComponentSimple)component).getLogicGates();
             }
         }
