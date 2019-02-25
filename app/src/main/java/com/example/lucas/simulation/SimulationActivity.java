@@ -15,26 +15,17 @@ import android.widget.ToggleButton;
 
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.logic.dblogic.FilePath;
-import com.example.lucas.main.MainActivity;
 import com.example.lucas.main.R;
-import com.example.mainpackage.Main;
 import com.example.mainpackage.logic.project.Combination;
 import com.example.mainpackage.logic.project.FileManagement.FileType;
-import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.Signal;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
-import com.example.mainpackage.logic.user.User;
-
-import java.security.acl.Group;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class SimulationActivity extends AppCompatActivity {
 
@@ -100,8 +91,8 @@ public class SimulationActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                Log.d("test", "filePath:" + filePath.filePath );
-                Log.d("test", "Project path:" + getApplicationContext().getFilesDir().getPath().toString() + "/" + project.getName() + ".bin");
+                //Log.d("test", "filePath:" + filePath.filePath );
+                //Log.d("test", "Project path:" + getApplicationContext().getFilesDir().getPath().toString() + "/" + project.getName() + ".blif");
                 finish();
             }
         });

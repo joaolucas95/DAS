@@ -118,17 +118,12 @@ public class ListActivity extends AppCompatActivity {
             Component model = createModelTestWithStateMachine();
             Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(), projectName);
             project.setComponentModule(model);
-
-            Log.d("test", "Project created:" + project);
-
+            //Log.d("test", "Project created:" + project);
             LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
 
         } catch (Exception ex) {
             Log.d("test", "Project already created");
-
         }
-
-
     }
 
     private static Component createModelTestWithStateMachine() {
