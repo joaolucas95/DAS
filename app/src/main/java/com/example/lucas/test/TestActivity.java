@@ -279,6 +279,7 @@ public class TestActivity extends AppCompatActivity {
 
     private LinearLayout createCombination(Combination combinationTmp){
         LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         Iterator it = combinationTmp.getValues().entrySet().iterator();
         while (it.hasNext()) {

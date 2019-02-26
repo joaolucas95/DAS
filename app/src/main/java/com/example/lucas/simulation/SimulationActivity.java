@@ -177,6 +177,7 @@ public class SimulationActivity extends AppCompatActivity {
 
     private LinearLayout createCombination(Combination combinationTmp){
         LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         Iterator it = combinationTmp.getValues().entrySet().iterator();
         while (it.hasNext()) {
@@ -198,7 +199,6 @@ public class SimulationActivity extends AppCompatActivity {
             toggleButton.setChecked((Boolean) pair.getValue());
             linearLayout.addView(toggleButton);
         }
-
 
         return linearLayout;
     }
