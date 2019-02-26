@@ -1,5 +1,6 @@
 package com.example.lucas.simulation;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -124,35 +125,38 @@ public class SimulationActivity extends AppCompatActivity {
         Button button = findViewById(R.id.button_run_combinations);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                List<Combination> results = project.runSimulation();
-                LinearLayout resultsLinearLayour = findViewById(R.id.result_list);
+            List<Combination> results = project.runSimulation();
+            LinearLayout resultsLinearLayour = findViewById(R.id.result_list);
 
-                //clear the linear layout
-                resultsLinearLayour.removeAllViews();
+            //clear the linear layout
+            resultsLinearLayour.removeAllViews();
 
-                if(project.getSignalForSimulation().getCombinations().isEmpty())
-                {
-                    TextView tv = new TextView(getApplicationContext());
-                    tv.setText("Need to define combinations first.");
+            if(project.getSignalForSimulation().getCombinations().isEmpty())
+            {
+                TextView tv = new TextView(getApplicationContext());
+                tv.setText("Need to define combinations first.");
+                tv.setTextColor(Color.parseColor("#000000"));
+                resultsLinearLayour.addView(tv);
+            }
+
+            for(int i = 0; i< project.getSignalForSimulation().getCombinations().size(); i++)
+            {
+                Combination result = results.get(i);
+
+                TextView tv = new TextView(getApplicationContext());
+                tv.setText("Result");
+                tv.setTextColor(Color.parseColor("#000000"));
+                resultsLinearLayour.addView(tv);
+
+                Iterator it = result.getValues().entrySet().iterator();
+                while (it.hasNext()) {
+                    Map.Entry pair = (Map.Entry)it.next();
+                    tv = new TextView(getApplicationContext());
+                    tv.setTextColor(Color.parseColor("#000000"));
+                    tv.setText("" + (String) pair.getKey() + ": " + pair.getValue());
                     resultsLinearLayour.addView(tv);
                 }
-
-                for(int i = 0; i< project.getSignalForSimulation().getCombinations().size(); i++)
-                {
-                    Combination result = results.get(i);
-
-                    TextView tv = new TextView(getApplicationContext());
-                    tv.setText("Result");
-                    resultsLinearLayour.addView(tv);
-
-                    Iterator it = result.getValues().entrySet().iterator();
-                    while (it.hasNext()) {
-                        Map.Entry pair = (Map.Entry)it.next();
-                        tv = new TextView(getApplicationContext());
-                        tv.setText("" + (String) pair.getKey() + ": " + pair.getValue());
-                        resultsLinearLayour.addView(tv);
-                    }
-                }
+            }
             }
         });
     }
@@ -179,7 +183,7 @@ public class SimulationActivity extends AppCompatActivity {
             final Map.Entry pair = (Map.Entry)it.next();
 
             TextView tv = new TextView(getApplicationContext());
-
+            tv.setTextColor(Color.parseColor("#000000"));
             tv.setText((String) pair.getKey());
             linearLayout.addView(tv);
 

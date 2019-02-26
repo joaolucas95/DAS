@@ -3,7 +3,8 @@
     android:id="@+id/rl_simulation"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <Button
         android:id="@+id/button_close_save_simulation"
@@ -35,6 +36,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_below="@+id/button_delete_combination"
+        android:textColor="@android:color/black"
     />
 
     <Button
@@ -49,7 +51,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_below="@+id/button_run_combinations">
-    </LinearLayout>
+        android:layout_below="@+id/button_run_combinations"
+        android:textColor="@android:color/black"
+    />
 
 </RelativeLayout>
