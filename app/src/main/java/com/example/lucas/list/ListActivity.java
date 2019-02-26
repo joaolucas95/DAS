@@ -99,7 +99,7 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //just for test
-                createModelTestBin();
+                //createModelTestBin();
 
                 handleNewProject();
             }

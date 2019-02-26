@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class EditUtils {
 
     static final int COMPONENT_RADIUS = 50;
-    static final float LINE_THICKNESS = 10f;
+    public static final float LINE_THICKNESS = 10f;
 
     public static final String IS_SIMPLE_EXTRA = "IS_SIMPLE_EXTRA";
 

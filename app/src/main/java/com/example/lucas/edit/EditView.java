@@ -1,5 +1,7 @@
 package com.example.lucas.edit;
 
+import com.example.lucas.edit.draw.DirectDraw;
+import com.example.lucas.edit.draw.IDrawStrategy;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
@@ -23,6 +25,7 @@ public class EditView extends AppCompatImageView {
 
     private Bitmap mBitmap;
     private Canvas mCanvas;
+    private IDrawStrategy mDrawStrategy;
 
     public EditView(Context context) {
         super(context);
@@ -39,6 +42,7 @@ public class EditView extends AppCompatImageView {
     private void init() {
         mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
+        mDrawStrategy = new DirectDraw();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -128,9 +132,7 @@ public class EditView extends AppCompatImageView {
         int startX = pos[0] + EditUtils.COMPONENT_RADIUS;
         int startY = pos[1];
 
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setStrokeWidth(EditUtils.LINE_THICKNESS);
-        mCanvas.drawLine(startX, startY, stopX, stopY, paint);
+        mDrawStrategy.drawLine(startX, startY, stopX, stopY, mCanvas);
     }
 
     private int getColor(ComponentType type) {
