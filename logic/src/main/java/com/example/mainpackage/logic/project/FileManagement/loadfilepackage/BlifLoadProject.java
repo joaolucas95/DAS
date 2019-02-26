@@ -1,13 +1,15 @@
 package com.example.mainpackage.logic.project.FileManagement.loadfilepackage;
 
 
-import com.example.mainpackage.logic.project.FileManagement.File;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.user.User;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -20,7 +22,14 @@ public class BlifLoadProject {
         Project project;
 
         try {
-            List<String> allLines = Files.readAllLines(Paths.get(filePathString));
+            List<String> allLines  = new ArrayList<>(); //= Files.readAllLines(Paths.get(filePathString));
+
+            java.io.File file = new File(filePathString);
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                allLines.add(line);
+            }
 
             String projectName="";
             String moduleLine = allLines.get(0).replace(".model ","");

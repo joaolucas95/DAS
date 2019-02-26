@@ -1,17 +1,15 @@
 package com.example.mainpackage.logic.project.FileManagement.SaveFilePackage;
 
-import com.example.mainpackage.logic.project.FileManagement.File;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentSimple;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -32,15 +30,38 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
             for(Component component : modulesToPrint){
                 content.addAll(printModuleBlifFormat((ComponentModule) component, modulesToPrint));
             }
-            Path file = Paths.get(filePathString + "/" + project.getName() + ".blif");
-            Files.write(file, content, Charset.forName("UTF-8"));
-        } catch (IOException ex) {
+            //Path file = Paths.get(filePathString + "/" + project.getName() + ".blif");
+            //Files.write(file, content, Charset.forName("UTF-8"));
+
+
+            String strContent="";
+            for(String str : content){
+                strContent+= str +"\n";
+            }
+
+            String path = filePathString + "/" + project.getName() + ".blif";
+            File file = new File(path);
+            FileOutputStream fos;
+            try {
+                file.getParentFile().mkdirs();
+
+                fos = new FileOutputStream(file);
+                fos.write(strContent.getBytes());
+                fos.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        } catch (Exception ex) {
             Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
 
         return true;
     }
+
 
     private static List<String> printModuleBlifFormat(ComponentModule module, List<Component> modulesToPrint) {
         List<String> content = new ArrayList();
