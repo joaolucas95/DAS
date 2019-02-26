@@ -15,6 +15,7 @@ import com.example.lucas.edit.EditActivity;
 import com.example.lucas.logic.dblogic.FilePath;
 import com.example.lucas.main.R;
 import com.example.lucas.simulation.SimulationActivity;
+import com.example.lucas.test.TestActivity;
 import com.example.mainpackage.logic.project.Project;
 
 import java.util.List;
@@ -64,15 +65,19 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                 builder.setTitle(R.string.options)
                         .setItems(items, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-
+                            Intent intent = null;
                             switch (which){
                                 case 0:
-                                    Intent intent = new Intent(context, SimulationActivity.class);
+                                    intent = new Intent(context, SimulationActivity.class);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.putExtra("filePath", filePath);
                                     context.startActivity(intent);
                                     break;
                                 case 1:
+                                    intent = new Intent(context, TestActivity.class);
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    intent.putExtra("filePath", filePath);
+                                    context.startActivity(intent);
                                     break;
                                 case 2:
                                     break;

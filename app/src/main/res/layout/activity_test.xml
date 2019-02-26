@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_close_save_tests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/close_save_tests"/>
+
+    <Button
+        android:id="@+id/btn_new_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_test"
+        android:layout_below="@+id/btn_close_save_tests"/>
+
+    <Button
+        android:id="@+id/btn_remove_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_last_test"
+        android:layout_below="@+id/btn_new_test"/>
+
+    <ScrollView
+        android:id="@+id/scroll_view_tests"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btn_remove_test">
+
+        <LinearLayout
+            android:id="@+id/ll_tests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+    </ScrollView>
+
+</RelativeLayout>

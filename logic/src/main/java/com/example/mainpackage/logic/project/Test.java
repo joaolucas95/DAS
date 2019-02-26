@@ -18,6 +18,9 @@ public class Test implements Serializable {
         this.signalExpected = signalExpected;
     }
 
+    public Test() {
+    }
+
     public Signal getSignalInput() {
         return signalInput;
     }

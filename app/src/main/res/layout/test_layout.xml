@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_test"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="40dp"
+    android:background="@android:color/darker_gray">
+
+    <Button
+        android:id="@+id/btn_new_input_combination_test"
+        android:text="@string/add_input_combination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/btn_delete_input_combination_test"
+        android:text="@string/delete_last_input_combination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_new_input_combination_test"
+        />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/input_combination_list_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/btn_delete_input_combination_test"
+    />
+
+    <Button
+        android:id="@+id/btn_new_expected_combination_test"
+        android:text="@string/add_expected_combination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_combination_list_test"
+        />
+
+    <Button
+        android:id="@+id/btn_delete_expected_combination_test"
+        android:text="@string/delete_last_expected_combination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_new_expected_combination_test"
+        />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/expected_combination_list_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/btn_delete_expected_combination_test"
+        />
+
+    <Button
+        android:id="@+id/button_run_test"
+        android:text="@string/run_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/expected_combination_list_test"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/result_list_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/button_run_test">
+    </LinearLayout>
+
+</RelativeLayout>

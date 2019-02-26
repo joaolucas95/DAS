@@ -1,15 +1,15 @@
 <resources>
-	<string name="app_name">DAS</string>
-	<string name="enter_name">Enter name:</string>
-	<string name="enter">Enter</string>
-	<string name="new_project">New project</string>
-	<string name="edit_add">Add</string>
-	<string name="edit_save">Save</string>
-	<string name="edit_undo">Undo</string>
-	<string name="edit_redo">Redo</string>
-	<string name="choose_component">Choose component</string>
-	<string name="hello_message">Hello %1$s</string>
-	<string name="invalid_username">Invalid username</string>
+    <string name="app_name">DAS</string>
+    <string name="enter_name">Enter name:</string>
+    <string name="enter">Enter</string>
+    <string name="new_project">New project</string>
+    <string name="edit_add">Add</string>
+    <string name="edit_save">Save</string>
+    <string name="edit_undo">Undo</string>
+    <string name="edit_redo">Redo</string>
+    <string name="choose_component">Choose component</string>
+    <string name="hello_message">Hello %1$s</string>
+    <string name="invalid_username">Invalid username</string>
     <string name="simple_project">Simple</string>
     <string name="complex_project">Complex</string>
     <string name="choose_project_type">Choose project type</string>
@@ -17,11 +17,11 @@
     <string name="title_complex_project">Complex project</string>
     <string name="action_create">Create</string>
 
-	<string name="dialog_not_found">No components found</string>
-	<string name="dialog_cancel">Cancel</string>
+    <string name="dialog_not_found">No components found</string>
+    <string name="dialog_cancel">Cancel</string>
     <string name="options">Options</string>
     <string name="title_activity_simulation">SimulationActivity</string>
-	<string name="simulationOfProject">Simulation of Project</string>
+    <string name="simulationOfProject">Simulation of Project</string>
     <string name="selected_component">Component selected</string>
     <string name="choose_file">Choose File</string>
     <string name="on">ON</string>
@@ -29,4 +29,12 @@
     <string name="run_simulation">Run Simulation</string>
     <string name="close_and_save_simulation">Close and Save Simulation</string>
     <string name="delete_last_combination">Delete Last Combination</string>
+    <string name="new_test">New Test</string>
+    <string name="close_save_tests">Close and Save Tests</string>
+    <string name="run_test">Run Test</string>
+    <string name="add_input_combination">Add Input Combination</string>
+    <string name="delete_last_input_combination">Delete Last Input Combination</string>
+    <string name="add_expected_combination">Add Expected Combination</string>
+    <string name="delete_last_expected_combination">Delete Last Expected Combination</string>
+    <string name="remove_last_test">Remove Last Test</string>
 </resources>

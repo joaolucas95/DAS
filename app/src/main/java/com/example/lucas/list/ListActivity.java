@@ -111,7 +111,7 @@ public class ListActivity extends AppCompatActivity {
         User user = mFileHistoryViewModel.findUserByUsername(username);
 
         String projectName = "modelTest";
-        String filePathString = getApplicationContext().getFilesDir().getPath().toString() + "/" + projectName + ".blif"; //shoud be setted when save project... should be something like: getApplicationContext().getFilesDir().getPath().toString() + "/" + projectName + ".bin"
+        String filePathString = getApplicationContext().getFilesDir().getPath().toString() + "/" + projectName + ".bin"; //shoud be setted when save project... should be something like: getApplicationContext().getFilesDir().getPath().toString() + "/" + projectName + ".bin"
 
         FilePath filePath = new FilePath(projectName, filePathString, user.id);
         mFileHistoryViewModel.insertFilePath(filePath);
@@ -122,7 +122,7 @@ public class ListActivity extends AppCompatActivity {
             Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(), projectName);
             project.setComponentModule(model);
             //Log.d("test", "Project created:" + project);
-            LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
+            LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
 
         } catch (Exception ex) {
             Log.d("test", "Project already created");
@@ -142,7 +142,7 @@ public class ListActivity extends AppCompatActivity {
             project = null;
             project = LogicController.getInstance().getFacade().getProject(getApplicationContext().getFilesDir().getPath().toString() + "/modelGlobalTest.blif");
             Log.d("test", "Project loaded:" + project);
-            
+
         }catch (Exception ex){
             Log.d("test", "Error:" + ex);
         }

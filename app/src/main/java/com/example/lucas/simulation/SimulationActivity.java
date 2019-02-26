@@ -31,7 +31,6 @@ public class SimulationActivity extends AppCompatActivity {
 
     private FilePath filePath;
     private Project project;
-    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +57,7 @@ public class SimulationActivity extends AppCompatActivity {
         setupNewCombinationButton();
         setupDeleteCombinationButton();
         setupRunCombinationsButton();
-        setupInputs();
+        setupInputs(); //if the project has combinations create their layout...
     }
 
     private void setupDeleteCombinationButton() {
@@ -102,21 +101,21 @@ public class SimulationActivity extends AppCompatActivity {
         Button button = findViewById(R.id.button_new_combination);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Map<String, Boolean> testtmp = new HashMap<>();
-                ComponentModule module = (ComponentModule) project.getComponentModule();
-                for(Component input : module.getInputList()){
-                    testtmp.put(input.getName(), false);
-                }
-                if(project.getSignalForSimulation() == null)
-                    project.setSignalForSimulation(new Signal());
+            Map<String, Boolean> testtmp = new HashMap<>();
+            ComponentModule module = (ComponentModule) project.getComponentModule();
+            for(Component input : module.getInputList()){
+                testtmp.put(input.getName(), false);
+            }
+            if(project.getSignalForSimulation() == null)
+                project.setSignalForSimulation(new Signal());
 
-                Combination combination = new Combination(testtmp);
+            Combination combination = new Combination(testtmp);
 
-                project.getSignalForSimulation().getCombinations().add(combination);
+            project.getSignalForSimulation().getCombinations().add(combination);
 
-                LinearLayout combinationsListLinearLayout= findViewById(R.id.combination_list);
-                LinearLayout combinationLinearLayout = createCombination(combination);
-                combinationsListLinearLayout.addView(combinationLinearLayout);
+            LinearLayout combinationsListLinearLayout= findViewById(R.id.combination_list);
+            LinearLayout combinationLinearLayout = createCombination(combination);
+            combinationsListLinearLayout.addView(combinationLinearLayout);
             }
         });
     }
@@ -170,7 +169,6 @@ public class SimulationActivity extends AppCompatActivity {
             LinearLayout combinationLinearLayout = createCombination(combination);
             combinationsListLinearLayout.addView(combinationLinearLayout);
         }
-
     }
 
     private LinearLayout createCombination(Combination combinationTmp){

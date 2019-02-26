@@ -68,11 +68,15 @@ public class Project implements Serializable{
     }
     
     public boolean runTest(Test test){
+
         if(!tests.contains(test))
             throw new IllegalStateException("Does not exist the test: " + test + " associated with this project.");
         
         if(test.getSignalInput().getCombinations().size() != test.getSignalExpected().getCombinations().size())
-            throw new IllegalStateException("The number of input combinations dont match with the number of expected results.");
+            throw new IllegalStateException("The number of input combinations don't match with the number of expected results.");
+
+        if(test.getSignalExpected().getCombinations().isEmpty() && test.getSignalInput().getCombinations().isEmpty())
+            throw new IllegalStateException("It's necessary define at least one input and expected combination.");
 
         return test.getResult(componentModule);
     }
