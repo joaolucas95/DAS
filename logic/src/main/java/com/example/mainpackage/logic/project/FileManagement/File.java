@@ -80,8 +80,6 @@ public class File {
     public static boolean exportTestsToHtml(String filePath, Project project) {
         try {
 
-            List<ComponentInput> inputTempTempList = new ArrayList<>();
-
             List<String> content = new ArrayList<>();
             content.add("<!DOCTYPE html><html>");
             content.add("<head>");
@@ -111,8 +109,20 @@ public class File {
 
             content.add("</body></html>");
 
-            Path file = Paths.get(project.getName() + ".html");
-            Files.write(file, content, Charset.forName("UTF-8"));
+            String strContent="";
+            for(String str : content){
+                strContent+= str +"\n";
+            }
+
+            String path = filePath + "/" + project.getName() + ".html";
+            java.io.File file = new java.io.File(path);
+            FileOutputStream fos;
+            file.getParentFile().mkdirs();
+
+            fos = new FileOutputStream(file);
+            fos.write(strContent.getBytes());
+            fos.close();
+
         } catch (IOException ex) {
             Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);
             return false;

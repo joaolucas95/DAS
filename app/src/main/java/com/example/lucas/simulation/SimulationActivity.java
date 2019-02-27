@@ -45,7 +45,7 @@ public class SimulationActivity extends AppCompatActivity {
         try {
             if (savedInstanceState == null) {
                 filePath = (FilePath) getIntent().getExtras().getSerializable("filePath");
-                Log.d("test", "FilePath in simulation:" + filePath);
+                Log.d("test", "FilePath in simulation activity:" + filePath);
             }
             this.project = LogicController.getInstance().getFacade().getProject(filePath.filePath);
             Log.d("test", "Project loaded:" + project);

@@ -30,9 +30,6 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
             for(Component component : modulesToPrint){
                 content.addAll(printModuleBlifFormat((ComponentModule) component, modulesToPrint));
             }
-            //Path file = Paths.get(filePathString + "/" + project.getName() + ".blif");
-            //Files.write(file, content, Charset.forName("UTF-8"));
-
 
             String strContent="";
             for(String str : content){
@@ -42,17 +39,11 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
             String path = filePathString + "/" + project.getName() + ".blif";
             File file = new File(path);
             FileOutputStream fos;
-            try {
-                file.getParentFile().mkdirs();
+            file.getParentFile().mkdirs();
 
-                fos = new FileOutputStream(file);
-                fos.write(strContent.getBytes());
-                fos.close();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            fos = new FileOutputStream(file);
+            fos.write(strContent.getBytes());
+            fos.close();
 
         } catch (Exception ex) {
             Logger.getLogger(File.class.getName()).log(Level.SEVERE, null, ex);

@@ -25,6 +25,7 @@ import com.example.mainpackage.logic.project.Signal;
 import com.example.mainpackage.logic.project.Test;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
+import com.example.mainpackage.logic.utils.Config;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,7 +47,7 @@ public class TestActivity extends AppCompatActivity {
         try {
             if (savedInstanceState == null) {
                 filePath = (FilePath) getIntent().getExtras().getSerializable("filePath");
-                Log.d("test", "FilePath in simulation:" + filePath);
+                Log.d("test", "FilePath in test activity:" + filePath);
             }
             this.project = LogicController.getInstance().getFacade().getProject(filePath.filePath);
             Log.d("test", "Project loaded:" + project);
@@ -311,16 +312,16 @@ public class TestActivity extends AppCompatActivity {
         Button button = findViewById(R.id.btn_close_save_tests);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            try {
-                if(filePath.filePath.contains(".bin"))
-                    LogicController.getInstance().getFacade().saveProject(project, false, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
-                else
-                    LogicController.getInstance().getFacade().saveProject(project, false, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                try {
+                    if(filePath.filePath.contains(".bin"))
+                        LogicController.getInstance().getFacade().saveProject(project, false, Config.BASE_FILE_PATH, FileType.BINARY);
+                    else
+                        LogicController.getInstance().getFacade().saveProject(project, false, Config.BASE_FILE_PATH, FileType.BLIF);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-            finish();
+                finish();
             }
         });
     }
