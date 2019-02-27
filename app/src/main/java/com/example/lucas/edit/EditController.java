@@ -96,8 +96,7 @@ public class EditController {
         LogicController.getInstance().getFacade().redoOperation();
     }
 
-    void doSave(String filePath, FileType fileType) {
-        String projectName = "modelTest";
+    void doSave(String filePath, FileType fileType, String projectName) {
         Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(), projectName);
         LogicController.getInstance().getFacade().saveProject(project, filePath, fileType);
     }

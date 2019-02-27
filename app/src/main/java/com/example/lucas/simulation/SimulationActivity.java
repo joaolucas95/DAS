@@ -23,6 +23,8 @@ import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.Signal;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
+import com.example.mainpackage.logic.utils.Config;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -84,15 +86,13 @@ public class SimulationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     if(filePath.filePath.contains(".bin"))
-                        LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
+                        LogicController.getInstance().getFacade().saveProject(project, Config.BASE_FILE_PATH, FileType.BINARY);
                     else
-                        LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
+                        LogicController.getInstance().getFacade().saveProject(project, Config.BASE_FILE_PATH, FileType.BLIF);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                //Log.d("test", "filePath:" + filePath.filePath );
-                //Log.d("test", "Project path:" + getApplicationContext().getFilesDir().getPath().toString() + "/" + project.getName() + ".blif");
                 finish();
             }
         });
@@ -104,9 +104,13 @@ public class SimulationActivity extends AppCompatActivity {
             public void onClick(View v) {
             Map<String, Boolean> testtmp = new HashMap<>();
             ComponentModule module = (ComponentModule) project.getComponentModule();
-            for(Component input : module.getInputList()){
-                testtmp.put(input.getName(), false);
+
+
+            for(int i= module.getInputList().size()-1; i >= 0; i--){
+                testtmp.put(module.getInputList().get(i).getName(), false);
+
             }
+
             if(project.getSignalForSimulation() == null)
                 project.setSignalForSimulation(new Signal());
 

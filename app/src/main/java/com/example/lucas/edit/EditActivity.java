@@ -1,10 +1,17 @@
 package com.example.lucas.edit;
 
+import com.example.lucas.logic.LogicController;
+import com.example.lucas.logic.dblogic.FileHistoryViewModel;
+import com.example.lucas.logic.dblogic.FilePath;
+import com.example.lucas.logic.dblogic.User;
 import com.example.lucas.main.R;
+import com.example.mainpackage.logic.project.FileManagement.File;
 import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.utils.Config;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -60,7 +67,6 @@ public class EditActivity extends AppCompatActivity {
             case R.id.action_add:
                 handleActionAdd();
                 break;
-
             case R.id.action_undo:
                 handleActionUndo();
                 break;
@@ -155,8 +161,23 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                String filePath =  getApplicationContext().getFilesDir().getPath().toString();
-                mController.doSave(filePath, mController.getFileTypes().get(pos));
+
+                //save the file in the storage
+                FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(EditActivity.this).get(FileHistoryViewModel.class);
+                String username = LogicController.getInstance().getFacade().getCurrentUsername();
+                User user = mFileHistoryViewModel.findUserByUsername(username);
+                String projectName = "Project" + System.currentTimeMillis();
+
+                mController.doSave(Config.BASE_FILE_PATH, mController.getFileTypes().get(pos), projectName);
+
+                String filePathString = Config.BASE_FILE_PATH;
+                //save the file path in the bd
+                filePathString+= projectName;
+                filePathString += mController.getFileTypes().get(pos) == FileType.BINARY? ".bin": ".blif";
+                FilePath filePath = new FilePath(projectName, filePathString, user.id);
+                mFileHistoryViewModel.insertFilePath(filePath);
+
+                finish();
             }
         });
 

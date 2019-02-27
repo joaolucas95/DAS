@@ -82,13 +82,7 @@ public abstract class Component implements Serializable{
         File.saveLastComponentNumber(lastComponentNumber);
         return (name + "" + lastComponentNumber);
     }
-    
-    public int getUniqueNumber(){
-        String str = new String(name);
-        String numberstr = str.replaceAll("[^\\d.]", "");
-        return Integer.parseInt(numberstr);
-    }
-    
+
     private static String defineComponentName(ComponentType type) {
 
         switch(type){

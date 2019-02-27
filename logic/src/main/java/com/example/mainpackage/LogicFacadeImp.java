@@ -56,6 +56,10 @@ public class LogicFacadeImp implements ILogicFacade {
     @Override
     public boolean saveProject(Project project, String filePath, FileType fileType) {
         boolean result;
+
+        Component module = mEditorStateMachine.finishComponentEditor();
+        project.setComponentModule(module);
+
         ProjectFileManagement projectFileManagement = new ProjectFileManagement();
         result = projectFileManagement.saveProject(project, filePath, fileType);
         return result;
