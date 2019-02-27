@@ -23,7 +23,8 @@ public interface ILogicFacade {
 
     Project getProject(String filePath) throws Exception;
 
-    boolean saveProject(Project project, String filePath, FileType fileType);
+    //is a new project when we are creating a new project... isn't a new project when we are just saving the tests or simulations
+    boolean saveProject(Project project, boolean isNewProject, String filePath, FileType fileType);
 
     /* Edit actions */
 

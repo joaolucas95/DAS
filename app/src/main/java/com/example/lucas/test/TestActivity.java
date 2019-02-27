@@ -312,9 +312,9 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v) {
             try {
                 if(filePath.filePath.contains(".bin"))
-                    LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
+                    LogicController.getInstance().getFacade().saveProject(project, false, getApplicationContext().getFilesDir().getPath().toString(), FileType.BINARY);
                 else
-                    LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
+                    LogicController.getInstance().getFacade().saveProject(project, false, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
             } catch (Exception e) {
                 e.printStackTrace();
             }

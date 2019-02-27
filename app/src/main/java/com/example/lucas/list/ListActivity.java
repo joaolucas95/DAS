@@ -122,7 +122,7 @@ public class ListActivity extends AppCompatActivity {
             Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(), projectName);
             project.setComponentModule(model);
             //Log.d("test", "Project created:" + project);
-            LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
+            LogicController.getInstance().getFacade().saveProject(project, true, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
 
         } catch (Exception ex) {
             Log.d("test", "Project already created");
@@ -137,7 +137,7 @@ public class ListActivity extends AppCompatActivity {
             Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(),projectNameTest);
             project.setComponentModule(model);
 
-            LogicController.getInstance().getFacade().saveProject(project, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
+            LogicController.getInstance().getFacade().saveProject(project, true, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
 
             project = null;
             project = LogicController.getInstance().getFacade().getProject(getApplicationContext().getFilesDir().getPath().toString() + "/modelGlobalTest.blif");

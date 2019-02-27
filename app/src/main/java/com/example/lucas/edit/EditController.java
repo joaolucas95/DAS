@@ -98,7 +98,7 @@ public class EditController {
 
     void doSave(String filePath, FileType fileType, String projectName) {
         Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(), projectName);
-        LogicController.getInstance().getFacade().saveProject(project, filePath, fileType);
+        LogicController.getInstance().getFacade().saveProject(project, true, filePath, fileType);
     }
 
     /* Intersection logic */
