@@ -198,7 +198,9 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void doDraw() {
-        Component module = mController.getProject();
-        mEditView.drawProject(module, mController.getSelectedComponent());
+
+        List<Component> actualComponents = mController.getActualComponents();
+
+        mEditView.drawProject(actualComponents, mController.getSelectedComponent());
     }
 }

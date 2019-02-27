@@ -39,7 +39,8 @@ public class CommandManager {
         last.doCommand(componentBuilder);
         undoList.add(last);
     }
-    
+
+    public List<Component> getActualDataToDraw(){ return componentBuilder.getData();}
     public Component finishComponentEditor(){
         return componentBuilder.build();
     }

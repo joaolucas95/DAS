@@ -77,21 +77,19 @@ public class EditView extends AppCompatImageView {
 
     /* Draw methods */
 
-    void drawProject(Component component, Component selectedComponent) {
+    void drawProject(List<Component> actualComponents, Component selectedComponent) {
         if (mBitmap == null) {
             init();
         }
 
         mCanvas.drawColor(Color.BLACK, PorterDuff.Mode.CLEAR);
-        ComponentModule module = (ComponentModule) component;
-        List<Component> components = module.getData();
 
-        if (components.isEmpty()) {
+        if (actualComponents.isEmpty()) {
             setImageBitmap(mBitmap);
             return;
         }
 
-        for (Component cmp : components) {
+        for (Component cmp : actualComponents) {
             boolean isSelected = EditUtils.isSameComponent(cmp, selectedComponent);
             drawDataComponent(cmp, isSelected);
         }

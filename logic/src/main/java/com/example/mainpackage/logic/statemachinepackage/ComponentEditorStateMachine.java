@@ -71,6 +71,7 @@ public class ComponentEditorStateMachine {
     public String toString() {
         return "ComponentEditorStateMachine{" + "state=" + state + '}';
     }
-    
-    
+
+    public List<Component> getActualDataToDraw(){ return commandManager.getActualDataToDraw();}
+
 }

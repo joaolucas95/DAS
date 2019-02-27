@@ -74,8 +74,8 @@ public class LogicFacadeImp implements ILogicFacade {
     }
 
     @Override
-    public Component getProjectInEdition() {
-        return mEditorStateMachine.finishComponentEditor();
+    public List<Component> getActualComponents() {
+        return mEditorStateMachine.getActualDataToDraw();
     }
 
     @Override

@@ -68,5 +68,8 @@ public class ComponentBuilder {
         }
         return null;
     }
-    
+
+    public List<Component> getData() {
+        return data;
+    }
 }

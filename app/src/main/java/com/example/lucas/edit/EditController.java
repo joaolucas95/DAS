@@ -45,8 +45,8 @@ public class EditController {
         return mSelectedComponent;
     }
 
-    Component getProject() {
-        return LogicController.getInstance().getFacade().getProjectInEdition();
+    List<Component> getActualComponents() {
+        return LogicController.getInstance().getFacade().getActualComponents();
     }
 
     /* Connection logic*/
@@ -104,10 +104,8 @@ public class EditController {
     /* Intersection logic */
 
     private Component intersects(int[] tapPos) {
-        Component component = getProject();
-        ComponentModule module = (ComponentModule) component;
-
-        for (Component cmp : module.getData()) {
+        List<Component> actualComponents = getActualComponents();
+        for (Component cmp : actualComponents) {
             if (intersects(tapPos, cmp)) {
                 return cmp;
             }

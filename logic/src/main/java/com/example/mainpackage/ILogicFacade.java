@@ -29,7 +29,7 @@ public interface ILogicFacade {
 
     void newEdition(boolean isSimpleProject);
 
-    Component getProjectInEdition();
+    List<Component> getActualComponents();
 
     void cancelConnection();
 
