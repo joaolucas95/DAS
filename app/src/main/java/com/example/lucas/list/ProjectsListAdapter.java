@@ -4,12 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lucas.edit.EditActivity;
 import com.example.lucas.logic.dblogic.FilePath;
@@ -17,7 +19,9 @@ import com.example.lucas.main.R;
 import com.example.lucas.simulation.SimulationActivity;
 import com.example.lucas.test.TestActivity;
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.utils.Config;
 
+import java.io.IOException;
 import java.util.List;
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.MyViewHolder> {
 
@@ -59,7 +63,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
             public void onClick(View v) {
                 Log.d("test", "" + filePath.toString());
 
-                String[] items = {"Simulation", "Tests", "Remove Project"};
+                String[] items = {"Simulation", "Tests", "Open HTML", "Remove Project"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(holder.itemView.getContext());
                 builder.setTitle(R.string.options)
@@ -80,6 +84,22 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                                     context.startActivity(intent);
                                     break;
                                 case 2:
+
+                                    try{
+                                        String path = Config.BASE_FILE_PATH + filePath.getProjectName() + ".html";
+                                        Log.d("test", "HTML file path:" + path);
+                                        Uri uri = Uri.fromFile(new java.io.File(path));
+                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW);
+                                        browserIntent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                                        browserIntent.setData(uri);
+                                        browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        context.startActivity(browserIntent);
+                                    }catch (Exception e){
+                                        Toast.makeText(context, "Need to create and save simulations or tests first.", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                    break;
+                                case 3:
                                     break;
                             }
                             }

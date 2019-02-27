@@ -26,7 +26,7 @@ public class ProjectFileManagement {
         result = saveProjectBuilder.saveProject(filePath, project);
 
         //TODO: when export project to html?
-        //exportTestsToHtml(filePath, project);
+        exportTestsToHtml(filePath, project);
         /*
         if(result)
             File.saveLastComponentNumber(project.getComponentModule().getUniqueNumber());
