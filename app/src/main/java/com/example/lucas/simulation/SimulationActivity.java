@@ -27,7 +27,9 @@ import com.example.mainpackage.logic.utils.Config;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 public class SimulationActivity extends AppCompatActivity {
@@ -102,12 +104,17 @@ public class SimulationActivity extends AppCompatActivity {
         Button button = findViewById(R.id.button_new_combination);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            Map<String, Boolean> testtmp = new HashMap<>();
+            Map<String, Boolean> testtmp = new LinkedHashMap<>();
             ComponentModule module = (ComponentModule) project.getComponentModule();
 
+            List<Component> inputList = module.getInputList();
 
-            for(int i= module.getInputList().size()-1; i >= 0; i--){
-                testtmp.put(module.getInputList().get(i).getName(), false);
+            for(Component input : inputList){
+                testtmp.put(input.getName(), false);
+            }
+
+            for(int i= inputList.size()-1; i >= 0; i--){
+                testtmp.put(inputList.get(i).getName(), false);
 
             }
 

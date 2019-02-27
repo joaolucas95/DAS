@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ public class Signal implements Serializable {
                 module.setInput((String)pair.getKey(), (boolean)pair.getValue());
             }
             //get result
-            testtmp = new HashMap<>();
+            testtmp = new LinkedHashMap<>();
             for(Component output : module.getOutputList())
                 testtmp.put(output.getName(), module.getOutput(output.getName()));
             

@@ -29,6 +29,7 @@ import com.example.mainpackage.logic.project.component.ComponentModule;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -239,7 +240,7 @@ public class TestActivity extends AppCompatActivity {
         Button button = testLinearLayout.findViewById(R.id.btn_new_expected_combination_test);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Map<String, Boolean> testtmp = new HashMap<>();
+                Map<String, Boolean> testtmp = new LinkedHashMap<>();
                 ComponentModule module = (ComponentModule) project.getComponentModule();
                 for(Component output : module.getOutputList()){
                     testtmp.put(output.getName(), false);
@@ -260,7 +261,7 @@ public class TestActivity extends AppCompatActivity {
         Button button = testLinearLayout.findViewById(R.id.btn_new_input_combination_test);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Map<String, Boolean> testtmp = new HashMap<>();
+                Map<String, Boolean> testtmp = new LinkedHashMap<>();
                 ComponentModule module = (ComponentModule) project.getComponentModule();
                 for(Component input : module.getInputList()){
                     testtmp.put(input.getName(), false);
