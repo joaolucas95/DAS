@@ -92,16 +92,12 @@ public class TestActivity extends AppCompatActivity {
         LinearLayout inputCombinationsListLinearLayout= testRelativeLayout.findViewById(R.id.input_combination_list_test);
         LinearLayout expectedCombinationsListLinearLayout= testRelativeLayout.findViewById(R.id.expected_combination_list_test);
 
-        if(test.getSignalInput().getCombinations() == null || test.getSignalInput().getCombinations().isEmpty())
-            return;
-        if(test.getSignalExpected().getCombinations() == null || test.getSignalExpected().getCombinations().isEmpty())
-            return;
-
         for(Combination combination : test.getSignalInput().getCombinations())
         {
             LinearLayout combinationLinearLayout = createCombination(combination);
             inputCombinationsListLinearLayout.addView(combinationLinearLayout);
         }
+
         for(Combination combination : test.getSignalExpected().getCombinations())
         {
             LinearLayout combinationLinearLayout = createCombination(combination);

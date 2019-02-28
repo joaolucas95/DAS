@@ -84,7 +84,6 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                                     context.startActivity(intent);
                                     break;
                                 case 2:
-
                                     try{
                                         String path = Config.BASE_FILE_PATH + filePath.getProjectName() + ".html";
                                         Log.d("test", "HTML file path:" + path);
