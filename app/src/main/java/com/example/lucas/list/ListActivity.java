@@ -60,7 +60,7 @@ public class ListActivity extends AppCompatActivity {
         //FilePath filePath = mFileHistoryViewModel.findFilePathEntityByFilePath("projetoxpt");
         //if(filePath != null)
             //mFileHistoryViewModel.deleteFilePath(filePath);
-*/
+
         //just a test
         mFileHistoryViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
             @Override
@@ -77,6 +77,9 @@ public class ListActivity extends AppCompatActivity {
                 Log.d("test", "---------");
             }
         });
+
+        */
+
     }
 
     private void setUiComponents() {
@@ -258,7 +261,7 @@ public class ListActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
 
                     // specify an adapter (see also next example)
-                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext());
+                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext(),mFileHistoryViewModel);
                     recyclerView.setAdapter(mAdapter);
                 }
             });

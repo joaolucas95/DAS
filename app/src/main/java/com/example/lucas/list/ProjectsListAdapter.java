@@ -1,10 +1,13 @@
 package com.example.lucas.list;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,19 +17,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lucas.edit.EditActivity;
+import com.example.lucas.logic.LogicController;
+import com.example.lucas.logic.dblogic.FileHistoryViewModel;
 import com.example.lucas.logic.dblogic.FilePath;
+import com.example.lucas.logic.dblogic.User;
 import com.example.lucas.main.R;
 import com.example.lucas.simulation.SimulationActivity;
 import com.example.lucas.test.TestActivity;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.utils.Config;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.MyViewHolder> {
 
     private List<FilePath> filePathList;
     private Context context;
+    private FileHistoryViewModel mFileHistoryViewModel;
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
@@ -39,9 +48,10 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
     }
 
 
-    public ProjectsListAdapter(List<FilePath> filePathList, Context context) {
+    public ProjectsListAdapter(List<FilePath> filePathList, Context context, FileHistoryViewModel mFileHistoryViewModel) {
         this.filePathList = filePathList;
         this.context = context;
+        this.mFileHistoryViewModel = mFileHistoryViewModel;
     }
 
     @Override
@@ -99,6 +109,19 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
                                     break;
                                 case 3:
+
+                                    FilePath filePathTmp = mFileHistoryViewModel.findFilePathEntityByProjectName(filePath.projectName);
+                                    if(filePathTmp != null)
+                                    {
+                                        try {
+                                            mFileHistoryViewModel.deleteFilePath(filePathTmp);
+                                            LogicController.getInstance().getFacade().removeProject(filePathTmp.filePath);
+                                        } catch (FileNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+
                                     break;
                             }
                             }

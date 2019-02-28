@@ -7,6 +7,7 @@ import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.utils.Config;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -145,5 +146,25 @@ public class File {
             }
         }
         return str;
+    }
+
+    public static void removeProject(String filePath) throws FileNotFoundException {
+
+        String htmlPath = new String(filePath);
+
+        if(filePath.contains(".blif"))
+            htmlPath = htmlPath.replace(".blif", ".html");
+        else if(filePath.contains(".bin"))
+            htmlPath = htmlPath.replace(".bin", ".html");
+
+        //remove project file
+        java.io.File file = new java.io.File(filePath);
+        file.delete();
+
+        //remove html file
+        file = new java.io.File(htmlPath);
+        file.delete();
+
+
     }
 }

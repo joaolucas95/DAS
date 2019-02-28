@@ -10,6 +10,7 @@ import com.example.mainpackage.logic.project.component.ComponentUtils;
 import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 import com.example.mainpackage.logic.user.User;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class LogicFacadeImp implements ILogicFacade {
@@ -51,6 +52,12 @@ public class LogicFacadeImp implements ILogicFacade {
     public Project getProject(String filePath) throws Exception {
         ProjectFileManagement projectFileManagement = new ProjectFileManagement();
         return projectFileManagement.loadProject(filePath, User.getInstance());
+    }
+
+    @Override
+    public void removeProject(String filePath) throws FileNotFoundException {
+        ProjectFileManagement projectFileManagement = new ProjectFileManagement();
+        projectFileManagement.removeProject(filePath);
     }
 
     @Override

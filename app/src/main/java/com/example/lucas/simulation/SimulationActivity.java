@@ -89,8 +89,8 @@ public class SimulationActivity extends AppCompatActivity {
                 try {
                     if(filePath.filePath.contains(".bin"))
                         LogicController.getInstance().getFacade().saveProject(project, false, Config.BASE_FILE_PATH, FileType.BINARY);
-                    else
-                        LogicController.getInstance().getFacade().saveProject(project, false, Config.BASE_FILE_PATH, FileType.BLIF);
+                    //else
+                        //LogicController.getInstance().getFacade().saveProject(project, false, Config.BASE_FILE_PATH, FileType.BLIF);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

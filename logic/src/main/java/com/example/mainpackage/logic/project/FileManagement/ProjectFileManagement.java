@@ -8,6 +8,7 @@ import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.user.User;
 import com.example.mainpackage.logic.utils.Config;
 
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,7 +48,10 @@ public class ProjectFileManagement {
 
         return loadProject.loadProject(filePathProject, user);
     }
-    
+
+    public void removeProject(String filePath) throws FileNotFoundException {
+        File.removeProject(filePath);
+    }
     
     private FileType getProjectType(String fileName) throws Exception{
         List<String> items;
