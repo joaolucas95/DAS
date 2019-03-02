@@ -1,6 +1,4 @@
-package com.example.mainpackage.logic.project.FileManagement.SaveFilePackage;
-
-import com.example.mainpackage.logic.project.Project;
+package com.example.mainpackage.logic.project.filemanagement.savefilepkg;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -8,7 +6,7 @@ import java.io.ObjectOutputStream;
 public class BinarySaveProjectBuilder extends SaveProjectBuilder{
 
     @Override
-    public boolean saveProject(String filePathString, Project project) {
+    public boolean saveProject() {
 
         //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
 

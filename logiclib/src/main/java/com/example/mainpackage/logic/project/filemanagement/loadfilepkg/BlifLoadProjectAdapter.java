@@ -1,4 +1,4 @@
-package com.example.mainpackage.logic.project.FileManagement.loadfilepackage;
+package com.example.mainpackage.logic.project.filemanagement.loadfilepkg;
 
 
 import com.example.mainpackage.logic.project.Project;

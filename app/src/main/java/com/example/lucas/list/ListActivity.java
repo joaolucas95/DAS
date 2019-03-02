@@ -4,7 +4,6 @@ import com.example.lucas.edit.EditActivity;
 import com.example.lucas.edit.EditUtils;
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
-import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
 import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.dblogic.User;
 import com.example.mainpackage.logic.project.filemanagement.FileType;
@@ -31,14 +30,10 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
-    private FileHistoryViewModel mFileHistoryViewModel;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
-        this.mFileHistoryViewModel = ViewModelProviders.of(this).get(FileHistoryViewModel.class);
 
         setUiComponents();
 
@@ -108,6 +103,8 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void createModelTestBin() {
+        /*
+
         String username = LogicController.getInstance().getFacade().getCurrentUsername();
         User user = mFileHistoryViewModel.findUserByUsername(username);
 
@@ -147,6 +144,7 @@ public class ListActivity extends AppCompatActivity {
         } catch (Exception ex) {
             Log.d("test", "Error:" + ex);
         }
+ */
 
     }
 
@@ -235,7 +233,9 @@ public class ListActivity extends AppCompatActivity {
     private void setRecyclerView() {
 
         String username = LogicController.getInstance().getFacade().getCurrentUsername();
-        User user = mFileHistoryViewModel.findUserByUsername(username);
+        User user = (User) LogicController.getInstance().getFacade().findUserByUsername(username, this);
+
+/*
 
         if (user != null) {
             mFileHistoryViewModel.getAllFilesPathOfUser(user.id).observe(this, new Observer<List<FilePath>>() {
@@ -264,6 +264,8 @@ public class ListActivity extends AppCompatActivity {
                 }
             });
         }
+
+ */
     }
 
     private void handleNewProject() {

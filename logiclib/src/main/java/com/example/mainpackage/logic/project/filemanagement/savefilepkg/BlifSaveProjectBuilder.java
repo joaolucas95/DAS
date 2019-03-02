@@ -1,4 +1,4 @@
-package com.example.mainpackage.logic.project.FileManagement.SaveFilePackage;
+package com.example.mainpackage.logic.project.filemanagement.savefilepkg;
 
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class BlifSaveProjectBuilder extends SaveProjectBuilder{
 
     @Override
-    public boolean saveProject(String filePathString, Project project) {
+    public boolean saveProject() {
 
         try {
             List<Component> modulesToPrint = new ArrayList<>();

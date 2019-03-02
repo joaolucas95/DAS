@@ -1,5 +1,11 @@
 package com.example.mainpackage;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.v4.app.FragmentActivity;
+
+import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
+import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.project.filemanagement.FileUtils;
 import com.example.mainpackage.logic.project.filemanagement.ProjectFileManagement;
@@ -110,5 +116,18 @@ public class LogicFacadeImp implements ILogicFacade {
     @Override
     public void redoOperation() {
         mEditorStateMachine.redoOperation();
+    }
+
+    @Override
+    public com.example.mainpackage.logic.dblogic.User findUserByUsername(String username, FragmentActivity fragmentActivity) {
+        FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(fragmentActivity).get(FileHistoryViewModel.class);
+        return mFileHistoryViewModel.findUserByUsername(username);
+    }
+
+    @Override
+    public LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id, FragmentActivity fragmentActivity) {
+        FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(fragmentActivity).get(FileHistoryViewModel.class);
+
+        return mFileHistoryViewModel.getAllFilesPathOfUser(user_id);
     }
 }

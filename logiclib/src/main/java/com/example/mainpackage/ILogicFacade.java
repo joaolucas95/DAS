@@ -1,5 +1,10 @@
 package com.example.mainpackage;
 
+import android.arch.lifecycle.LiveData;
+import android.support.v4.app.FragmentActivity;
+
+import com.example.mainpackage.logic.dblogic.FilePath;
+import com.example.mainpackage.logic.dblogic.User;
 import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
@@ -45,4 +50,10 @@ public interface ILogicFacade {
 
     void redoOperation();
 
+
+    /* Db access methods */
+
+    User findUserByUsername(String username, FragmentActivity fragmentActivity);
+
+    LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id, FragmentActivity fragmentActivity);
 }
