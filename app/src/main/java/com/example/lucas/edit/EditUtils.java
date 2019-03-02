@@ -10,6 +10,7 @@ public class EditUtils {
     public static final float LINE_THICKNESS = 10f;
 
     public static final int REQUEST_CODE_CHOOSE_MODULE = 1;
+    public static final String EXTRA_MODULE = "EXTRA_MODULE";
 
     public static final String IS_SIMPLE_EXTRA = "IS_SIMPLE_EXTRA";
 

@@ -64,13 +64,14 @@ public class EditActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
+        if (resultCode != RESULT_OK || data == null) {
             return;
         }
 
         switch (requestCode) {
             case EditUtils.REQUEST_CODE_CHOOSE_MODULE:
-                Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show();
+                Component module = (Component) data.getSerializableExtra(EditUtils.EXTRA_MODULE);
+                Toast.makeText(this, "TODO. module=" + module, Toast.LENGTH_SHORT).show();
                 break;
 
             default:
