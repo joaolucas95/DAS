@@ -1,8 +1,8 @@
 package com.example.mainpackage;
 
-import com.example.mainpackage.logic.project.FileManagement.FileType;
-import com.example.mainpackage.logic.project.FileManagement.FileUtils;
-import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
+import com.example.mainpackage.logic.project.filemanagement.FileUtils;
+import com.example.mainpackage.logic.project.filemanagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;

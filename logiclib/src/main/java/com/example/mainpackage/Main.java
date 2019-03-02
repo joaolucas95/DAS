@@ -1,15 +1,15 @@
 package com.example.mainpackage;
 
-import com.example.mainpackage.logic.project.Combination;
+import com.example.mainpackage.logic.project.tests.Combination;
 import com.example.mainpackage.logic.project.CommandAddComponent;
 import com.example.mainpackage.logic.project.CommandConnectComponent;
 import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.ComponentBuilder;
-import com.example.mainpackage.logic.project.FileManagement.FileType;
-import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
+import com.example.mainpackage.logic.project.filemanagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.Project;
-import com.example.mainpackage.logic.project.Signal;
-import com.example.mainpackage.logic.project.Test;
+import com.example.mainpackage.logic.project.tests.Signal;
+import com.example.mainpackage.logic.project.tests.Test;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;

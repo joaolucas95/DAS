@@ -2,6 +2,9 @@ package com.example.mainpackage.logic.project;
 
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
+import com.example.mainpackage.logic.project.tests.Combination;
+import com.example.mainpackage.logic.project.tests.Signal;
+import com.example.mainpackage.logic.project.tests.Test;
 import com.example.mainpackage.logic.user.User;
 
 import java.io.Serializable;

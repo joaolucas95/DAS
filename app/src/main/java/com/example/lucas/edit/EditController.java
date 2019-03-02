@@ -1,10 +1,9 @@
 package com.example.lucas.edit;
 
 import com.example.lucas.logic.LogicController;
-import com.example.mainpackage.logic.project.FileManagement.FileType;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
-import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import java.util.List;

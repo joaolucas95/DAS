@@ -5,7 +5,7 @@ import com.example.lucas.main.R;
 import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
 import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.dblogic.User;
-import com.example.mainpackage.logic.project.FileManagement.FileType;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.utils.Config;

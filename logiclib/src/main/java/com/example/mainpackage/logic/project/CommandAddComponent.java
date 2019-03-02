@@ -1,6 +1,6 @@
 package com.example.mainpackage.logic.project;
 
-import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
+import com.example.mainpackage.logic.project.filemanagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.project.component.ComponentModule;

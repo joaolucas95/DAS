@@ -1,4 +1,4 @@
-package com.example.mainpackage.logic.project;
+package com.example.mainpackage.logic.project.tests;
 
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
@@ -29,7 +29,7 @@ public class Signal implements Serializable {
         this.combinations = combinations;
     }
 
-    List<Combination> runSimulation(ComponentModule module) {
+    public List<Combination> runSimulation(ComponentModule module) {
         List<Combination> result = new ArrayList();
         Map<String, Boolean> testtmp;
         

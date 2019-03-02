@@ -1,4 +1,4 @@
-package com.example.mainpackage.logic.project;
+package com.example.mainpackage.logic.project.tests;
 
 import java.io.Serializable;
 import java.util.Map;

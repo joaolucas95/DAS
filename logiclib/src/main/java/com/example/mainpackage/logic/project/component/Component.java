@@ -1,6 +1,6 @@
 package com.example.mainpackage.logic.project.component;
 
-import com.example.mainpackage.logic.project.FileManagement.File;
+import com.example.mainpackage.logic.project.filemanagement.File;
 
 import java.io.Serializable;
 import java.util.List;

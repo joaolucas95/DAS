@@ -1,4 +1,4 @@
-package com.example.mainpackage.logic.project;
+package com.example.mainpackage.logic.project.tests;
 
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;

@@ -1,4 +1,4 @@
-package com.example.mainpackage.logic.project.FileManagement;
+package com.example.mainpackage.logic.project.filemanagement;
 
 import java.util.Arrays;
 import java.util.List;

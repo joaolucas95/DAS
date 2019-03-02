@@ -1,10 +1,13 @@
-package com.example.mainpackage.logic.project.FileManagement;
+package com.example.mainpackage.logic.project.filemanagement;
 
-import com.example.mainpackage.logic.project.FileManagement.SaveFilePackage.SaveProjectBuilder;
-import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.BinaryLoadProjectAdapter;
-import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.BlifLoadProjectAdapter;
-import com.example.mainpackage.logic.project.FileManagement.loadfilepackage.LoadProject;
+import com.example.mainpackage.logic.project.filemanagement.savefilepkg.SaveProjectBuilder;
+import com.example.mainpackage.logic.project.filemanagement.loadfilepkg.BinaryLoadProjectAdapter;
+import com.example.mainpackage.logic.project.filemanagement.loadfilepkg.BlifLoadProjectAdapter;
+import com.example.mainpackage.logic.project.filemanagement.loadfilepkg.LoadProject;
 import com.example.mainpackage.logic.project.Project;
+import com.example.mainpackage.logic.project.tests.export.ExportTestBuilder;
+import com.example.mainpackage.logic.project.tests.export.ExportType;
+import com.example.mainpackage.logic.project.tests.export.HtmlExportTestsBuilder;
 import com.example.mainpackage.logic.user.User;
 import com.example.mainpackage.logic.utils.Config;
 
@@ -24,19 +27,20 @@ public class ProjectFileManagement {
     public boolean saveProject(Project project, String filePath, FileType fileType) {
         boolean result;
         saveProjectBuilder = SaveProjectBuilder.getBuilder(fileType);
-        result = saveProjectBuilder.saveProject(filePath, project);
+        saveProjectBuilder.setFilePathString(filePath);
+        saveProjectBuilder.setProject(project);
+        result = saveProjectBuilder.saveProject();
 
-        //TODO: when export project to html?
         exportTestsToHtml(filePath, project);
-        /*
-        if(result)
-            File.saveLastComponentNumber(project.getComponentModule().getUniqueNumber());
-        */
+
         return result;
     }
 
     private void exportTestsToHtml(String filePath, Project project) {
-        File.exportTestsToHtml(filePath, project);
+        ExportTestBuilder builder = ExportTestBuilder.getBuilder(ExportType.HTML);
+        builder.setFilePath(filePath);
+        builder.setProject(project);
+        builder.export();
     }
 
     public Project loadProject(String filePathProject, User user) throws Exception{
