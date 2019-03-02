@@ -52,8 +52,8 @@ public interface ILogicFacade {
 
 
     /* Db access methods */
-
     User findUserByUsername(String username, FragmentActivity fragmentActivity);
-
     LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id, FragmentActivity fragmentActivity);
+    void deleteFilePath(FilePath filePath, FragmentActivity fragmentActivity);
+    FilePath findFilePathEntityByProjectName(String projectName, FragmentActivity fragmentActivity);
 }

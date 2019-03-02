@@ -36,43 +36,6 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         setUiComponents();
-
-
-/*
-        //
-        //  example - add file path to user
-        //
-        String username = LogicController.getInstance().getFacade().getCurrentUsername();
-        User user = mFileHistoryViewModel.findUserByUsername(username);
-        FilePath filePath = new FilePath("projectxpto", "/projectxpto.bin" , user.id);
-        mFileHistoryViewModel.insertFilePath(filePath);
-
-        //
-        //  example - remove file path
-        //
-        //FilePath filePath = mFileHistoryViewModel.findFilePathEntityByFilePath("projetoxpt");
-        //if(filePath != null)
-            //mFileHistoryViewModel.deleteFilePath(filePath);
-
-        //just a test
-        mFileHistoryViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
-            @Override
-            public void onChanged(@Nullable List<User> users) {
-
-                Log.d("test", "------ All users");
-                for (User user : users) {
-                    Log.d("test", String.valueOf(user));
-                    Log.d("test", "FilePath list of user:\n");
-
-                    for (FilePath filePath : mFileHistoryViewModel.findAllFilesPathOfUser(user.id))
-                        Log.d("test", String.valueOf(filePath));
-                }
-                Log.d("test", "---------");
-            }
-        });
-
-        */
-
     }
 
     private void setUiComponents() {
@@ -101,7 +64,7 @@ public class ListActivity extends AppCompatActivity {
             }
         });
     }
-
+    //for tests
     private void createModelTestBin() {
         /*
 
@@ -235,10 +198,8 @@ public class ListActivity extends AppCompatActivity {
         String username = LogicController.getInstance().getFacade().getCurrentUsername();
         User user = (User) LogicController.getInstance().getFacade().findUserByUsername(username, this);
 
-/*
-
         if (user != null) {
-            mFileHistoryViewModel.getAllFilesPathOfUser(user.id).observe(this, new Observer<List<FilePath>>() {
+            LogicController.getInstance().getFacade().getAllFilesPathOfUser(user.id, this).observe(this, new Observer<List<FilePath>>() {
                 @Override
                 public void onChanged(@Nullable List<FilePath> filePaths) {
 
@@ -259,13 +220,11 @@ public class ListActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
 
                     // specify an adapter (see also next example)
-                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext(), mFileHistoryViewModel);
+                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext());
                     recyclerView.setAdapter(mAdapter);
                 }
             });
         }
-
- */
     }
 
     private void handleNewProject() {

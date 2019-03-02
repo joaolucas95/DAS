@@ -28,8 +28,6 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
     private List<FilePath> filePathList;
     private Context context;
-    private FileHistoryViewModel mFileHistoryViewModel;
-
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
@@ -42,10 +40,9 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
     }
 
 
-    public ProjectsListAdapter(List<FilePath> filePathList, Context context, FileHistoryViewModel mFileHistoryViewModel) {
+    public ProjectsListAdapter(List<FilePath> filePathList, Context context) {
         this.filePathList = filePathList;
         this.context = context;
-        this.mFileHistoryViewModel = mFileHistoryViewModel;
     }
 
     @Override
@@ -104,6 +101,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                                         break;
                                     case 3:
 
+                                        /*
                                         FilePath filePathTmp = mFileHistoryViewModel.findFilePathEntityByProjectName(filePath.projectName);
                                         if (filePathTmp != null) {
                                             try {
@@ -113,6 +111,9 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                                                 e.printStackTrace();
                                             }
                                         }
+                                         */
+
+
 
 
                                         break;

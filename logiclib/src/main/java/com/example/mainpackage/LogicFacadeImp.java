@@ -127,7 +127,18 @@ public class LogicFacadeImp implements ILogicFacade {
     @Override
     public LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id, FragmentActivity fragmentActivity) {
         FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(fragmentActivity).get(FileHistoryViewModel.class);
-
         return mFileHistoryViewModel.getAllFilesPathOfUser(user_id);
+    }
+
+    @Override
+    public void deleteFilePath(FilePath filePath, FragmentActivity fragmentActivity) {
+        FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(fragmentActivity).get(FileHistoryViewModel.class);
+        mFileHistoryViewModel.deleteFilePath(filePath);
+    }
+
+    @Override
+    public FilePath findFilePathEntityByProjectName(String projectName, FragmentActivity fragmentActivity) {
+        FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(fragmentActivity).get(FileHistoryViewModel.class);
+        return mFileHistoryViewModel.findFilePathEntityByProjectName(projectName);
     }
 }
