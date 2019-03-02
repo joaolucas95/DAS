@@ -53,7 +53,7 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
 
 
     private static List<String> printModuleBlifFormat(ComponentModule module, List<Component> modulesToPrint) {
-        List<String> content = new ArrayList();
+        List<String> content = new ArrayList<>();
 
         content.add(".model " + module.getName() + "-" + module.getPosition()[0] + ";" + module.getPosition()[1]);
 
@@ -125,7 +125,7 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
                 //if the component is a componentModule the previous components are their output elements... So we need get his previous list by his inputs
                 if(component instanceof ComponentModule)
                 {
-                    previousList = new ArrayList();
+                    previousList = new ArrayList<>();
                     for(Component componenttmp : ((ComponentModule)component).getInputList())
                     {
                         previousList.addAll(componenttmp.getPrevious());

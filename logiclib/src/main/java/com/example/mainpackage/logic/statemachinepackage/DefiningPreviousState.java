@@ -3,45 +3,42 @@ package com.example.mainpackage.logic.statemachinepackage;
 import com.example.mainpackage.logic.project.CommandConnectComponent;
 import com.example.mainpackage.logic.project.CommandManager;
 
-public class DefiningPreviousState extends StateAdapter
-{
+public class DefiningPreviousState extends StateAdapter {
 
-    private String componentName1, componentName2;
+    private String selectedComponentName;
     private IState previousState;
-    
-    public DefiningPreviousState(CommandManager commandManager, String componentName1, IState previousState) {
+
+    DefiningPreviousState(CommandManager commandManager, String componentName, IState previousState) {
         super(commandManager);
-        this.componentName1 = componentName1;
+        this.selectedComponentName = componentName;
         this.previousState = previousState;
-    } 
+    }
 
     @Override
     public IState selectComponent(String componentName) {
-        this.componentName2 = componentName;
         //if names are different.. define connection
-        if(!componentName1.equals(componentName2))
-        {
-            CommandConnectComponent cmConnectComponent = new CommandConnectComponent(componentName1, componentName2);
+        if (!selectedComponentName.equals(componentName)) {
+            CommandConnectComponent cmConnectComponent = new CommandConnectComponent(selectedComponentName, componentName);
             commandManager.apply(cmConnectComponent);
         }
-        
-        componentName1 = null;
-        componentName2 = null;
-        
-        if(previousState instanceof GlobalModuleManagementState)
+
+        selectedComponentName = null;
+
+        if (previousState instanceof GlobalModuleManagementState)
             return new GlobalModuleManagementState(commandManager);
         else
             return new ModuleManagementState(commandManager);
-        
+
     }
 
     @Override
     public IState cancelDefiningPrevious() {
-        componentName1 = null;
-        if(previousState instanceof GlobalModuleManagementState)
+        selectedComponentName = null;
+
+        if (previousState instanceof GlobalModuleManagementState)
             return new GlobalModuleManagementState(commandManager);
         else
             return new ModuleManagementState(commandManager);
     }
-    
+
 }

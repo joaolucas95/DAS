@@ -295,7 +295,7 @@ public class Main {
     }
 
     private static void printTestASimulations(Project project) {
-        List<Combination> combinations = new ArrayList();
+        List<Combination> combinations = new ArrayList<>();
         Map<String, Boolean> testtmp = new HashMap<>();
         
         testtmp.put("input1", false);
@@ -324,7 +324,7 @@ public class Main {
     }
     
     private static void printTestBSimulations(Project project) {
-        List<Combination> combinations = new ArrayList();
+        List<Combination> combinations = new ArrayList<>();
         Map<String, Boolean> testtmp = new HashMap<>();
         
         testtmp.put("input10", false);
@@ -380,8 +380,8 @@ public class Main {
     }
 
     private static void printTestATests(Project project) {
-        List<Combination> combinationsInput = new ArrayList();
-        List<Combination> combinationsExpected = new ArrayList();
+        List<Combination> combinationsInput = new ArrayList<>();
+        List<Combination> combinationsExpected = new ArrayList<>();
 
         Map<String, Boolean> testtmp;
         
@@ -419,8 +419,8 @@ public class Main {
     }
 
     private static void printTestBTests(Project project) {
-        List<Combination> combinationsInput = new ArrayList();
-        List<Combination> combinationsExpected = new ArrayList();
+        List<Combination> combinationsInput = new ArrayList<>();
+        List<Combination> combinationsExpected = new ArrayList<>();
 
         Map<String, Boolean> testtmp;
         

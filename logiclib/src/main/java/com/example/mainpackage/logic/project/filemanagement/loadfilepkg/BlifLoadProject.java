@@ -142,7 +142,7 @@ public class BlifLoadProject {
 
                 String tempModuleName = strComponent[0];
 
-                List<String> linesOfTempModule = new ArrayList();
+                List<String> linesOfTempModule = new ArrayList<>();
                 //create the temp module
                 boolean read = false;
                 int i = allLines.indexOf(line); //to not add the line ".subckt" since it also has the component name

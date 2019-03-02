@@ -5,9 +5,9 @@ import com.example.mainpackage.logic.project.CommandAddComponent;
 import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
-public class ModuleManagementState extends StateAdapter{
-    
-    public ModuleManagementState(CommandManager commandManager) {
+public class ModuleManagementState extends StateAdapter {
+
+    ModuleManagementState(CommandManager commandManager) {
         super(commandManager);
     }
 
@@ -17,10 +17,10 @@ public class ModuleManagementState extends StateAdapter{
         commandManager.apply(cmAddComponent);
         return this;
     }
-    
+
     @Override
     public IState selectComponent(String componentName) {
         return new DefiningPreviousState(commandManager, componentName, this);
     }
-    
+
 }

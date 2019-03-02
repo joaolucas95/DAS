@@ -126,8 +126,8 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                List<Combination> combinationsInput = new ArrayList();
-                List<Combination> combinationsExpected = new ArrayList();
+                List<Combination> combinationsInput = new ArrayList<>();
+                List<Combination> combinationsExpected = new ArrayList<>();
 
                 Signal signalInput = new Signal(combinationsInput);
                 Signal signalExpected = new Signal(combinationsExpected);

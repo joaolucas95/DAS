@@ -5,19 +5,18 @@ import com.example.mainpackage.logic.project.CommandManager;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.user.User;
 
-public class GlobalModuleManagementState extends StateAdapter{
+public class GlobalModuleManagementState extends StateAdapter {
 
-    public GlobalModuleManagementState(CommandManager commandManager) {
+    GlobalModuleManagementState(CommandManager commandManager) {
         super(commandManager);
     }
-    
+
     @Override
     public IState addSimpleComponent(ComponentType type, int[] position) {
-        
-        //if type isnt a input or a output do not had new simple component
-        if(!(type.equals(ComponentType.INPUT) || type.equals(ComponentType.OUTPUT)))
+        //if type isn't a input or a output do not had new simple component
+        if (!(type.equals(ComponentType.INPUT) || type.equals(ComponentType.OUTPUT)))
             return this;
-        
+
         CommandAddComponent cmAddComponent = new CommandAddComponent(type, position);
         commandManager.apply(cmAddComponent);
         return this;
@@ -29,13 +28,10 @@ public class GlobalModuleManagementState extends StateAdapter{
         commandManager.apply(cmAddComponent);
         return this;
     }
-    
-    
 
     @Override
     public IState selectComponent(String componentName) {
         return new DefiningPreviousState(commandManager, componentName, this);
     }
-    
 
 }

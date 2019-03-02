@@ -15,9 +15,9 @@ public class ComponentEditorStateMachine {
 
     public ComponentEditorStateMachine(ComponentType type) {
         this.commandManager = new CommandManager(new ComponentBuilder());
-        if(type.equals(ComponentType.PROJECT))
+        if (type.equals(ComponentType.PROJECT))
             this.state = new GlobalModuleManagementState(commandManager);
-        else if(type.equals(ComponentType.MODULE))
+        else if (type.equals(ComponentType.MODULE))
             this.state = new ModuleManagementState(commandManager);
         else
             throw new IllegalStateException("Only can initialize an component editor with components of type projects or modules.");
@@ -30,20 +30,20 @@ public class ComponentEditorStateMachine {
     private void setState(IState state) {
         this.state = state;
     }
-    
-    public void addModule(String filePathProject, User user, int[] position){
+
+    public void addModule(String filePathProject, User user, int[] position) {
         setState(state.addModule(filePathProject, user, position));
     }
-    
-    public void cancelDefiningPrevious(){
+
+    public void cancelDefiningPrevious() {
         setState(state.cancelDefiningPrevious());
     }
-    
+
     public void addSimpleComponent(ComponentType type, int[] position) {
         setState(state.addSimpleComponent(type, position));
     }
-    
-    public void selectComponent(String componentName){
+
+    public void selectComponent(String componentName) {
         setState(state.selectComponent(componentName));
     }
 
@@ -54,8 +54,8 @@ public class ComponentEditorStateMachine {
     public void redoOperation() {
         setState(state.redoOperation());
     }
-    
-    public Component finishComponentEditor(){
+
+    public Component finishComponentEditor() {
         return commandManager.finishComponentEditor();
     }
 
@@ -66,12 +66,14 @@ public class ComponentEditorStateMachine {
 
         return ComponentUtils.getComponentsTypes(ComponentType.MODULE);
     }
-    
+
     @Override
     public String toString() {
         return "ComponentEditorStateMachine{" + "state=" + state + '}';
     }
 
-    public List<Component> getActualDataToDraw(){ return commandManager.getActualDataToDraw();}
+    public List<Component> getActualDataToDraw() {
+        return commandManager.getActualDataToDraw();
+    }
 
 }

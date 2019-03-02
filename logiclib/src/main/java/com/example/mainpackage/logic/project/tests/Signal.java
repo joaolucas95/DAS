@@ -30,7 +30,7 @@ public class Signal implements Serializable {
     }
 
     public List<Combination> runSimulation(ComponentModule module) {
-        List<Combination> result = new ArrayList();
+        List<Combination> result = new ArrayList<>();
         Map<String, Boolean> testtmp;
         
         for(Combination combination : combinations){

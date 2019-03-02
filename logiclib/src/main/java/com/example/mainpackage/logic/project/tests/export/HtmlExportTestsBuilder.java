@@ -18,7 +18,7 @@ public class HtmlExportTestsBuilder extends ExportTestBuilder{
     public boolean export() {
         try {
             if (this.filePath != null && this.project != null) {
-                List<String> content = new ArrayList();
+                List<String> content = new ArrayList<>();
                 content.add("<!DOCTYPE html><html>");
                 content.add("<head>");
                 content.add("<title>" + this.project.getName() + " </title>");

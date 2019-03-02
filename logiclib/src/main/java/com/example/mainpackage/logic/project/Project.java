@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Project implements Serializable{
-    
+
     private Component componentModule;
     private User user;
     private String name;
@@ -23,7 +23,7 @@ public class Project implements Serializable{
         this.user = user;
         this.name = name;
         this.signalForSimulation = new Signal();
-        this.tests = new ArrayList();
+        this.tests = new ArrayList<>();
     }
 
     public Component getComponentModule() {
