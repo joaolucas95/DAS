@@ -9,6 +9,8 @@ public class EditUtils {
     static final int COMPONENT_RADIUS = 50;
     public static final float LINE_THICKNESS = 10f;
 
+    public static final int REQUEST_CODE_CHOOSE_MODULE = 1;
+
     public static final String IS_SIMPLE_EXTRA = "IS_SIMPLE_EXTRA";
 
     static boolean isSameComponent(Component comp1, Component comp2) {
