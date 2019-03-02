@@ -3,15 +3,13 @@ package com.example.lucas.list;
 import com.example.lucas.edit.EditActivity;
 import com.example.lucas.edit.EditUtils;
 import com.example.lucas.logic.LogicController;
-import com.example.lucas.logic.dblogic.FileHistoryViewModel;
-import com.example.lucas.logic.dblogic.FilePath;
-import com.example.lucas.logic.dblogic.User;
 import com.example.lucas.main.R;
+import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
+import com.example.mainpackage.logic.dblogic.FilePath;
+import com.example.mainpackage.logic.dblogic.User;
 import com.example.mainpackage.logic.project.FileManagement.FileType;
-import com.example.mainpackage.logic.project.FileManagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
-import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 
@@ -132,12 +130,12 @@ public class ListActivity extends AppCompatActivity {
         }
 
 
-        try{
+        try {
             //for test - test create global module and save as blif file and load
             String projectNameTest = "modelGlobalTest";
             Component model = createGlobalModuleTestWithStateMachine(com.example.mainpackage.logic.user.User.getInstance(), getApplicationContext());
 
-            Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(),projectNameTest);
+            Project project = new Project(com.example.mainpackage.logic.user.User.getInstance(), projectNameTest);
             project.setComponentModule(model);
 
             LogicController.getInstance().getFacade().saveProject(project, true, getApplicationContext().getFilesDir().getPath().toString(), FileType.BLIF);
@@ -146,7 +144,7 @@ public class ListActivity extends AppCompatActivity {
             project = LogicController.getInstance().getFacade().getProject(getApplicationContext().getFilesDir().getPath().toString() + "/modelGlobalTest.blif");
             Log.d("test", "Project loaded:" + project);
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             Log.d("test", "Error:" + ex);
         }
 
@@ -194,7 +192,7 @@ public class ListActivity extends AppCompatActivity {
     }
 
     //for tests
-    private static Component createGlobalModuleTestWithStateMachine(com.example.mainpackage.logic.user.User user, Context context){
+    private static Component createGlobalModuleTestWithStateMachine(com.example.mainpackage.logic.user.User user, Context context) {
         ComponentEditorStateMachine stateMachine = new ComponentEditorStateMachine(ComponentType.PROJECT);
         stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{4, 6});
         stateMachine.addSimpleComponent(ComponentType.INPUT, new int[]{2, 1});
@@ -261,7 +259,7 @@ public class ListActivity extends AppCompatActivity {
                     recyclerView.setLayoutManager(layoutManager);
 
                     // specify an adapter (see also next example)
-                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext(),mFileHistoryViewModel);
+                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext(), mFileHistoryViewModel);
                     recyclerView.setAdapter(mAdapter);
                 }
             });

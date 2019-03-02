@@ -2,8 +2,8 @@ package com.example.lucas.main;
 
 import com.example.lucas.list.ListActivity;
 import com.example.lucas.logic.LogicController;
-import com.example.lucas.logic.dblogic.User;
-import com.example.lucas.logic.dblogic.FileHistoryViewModel;
+import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
+import com.example.mainpackage.logic.dblogic.User;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;

@@ -1,11 +1,10 @@
 package com.example.lucas.edit;
 
 import com.example.lucas.logic.LogicController;
-import com.example.lucas.logic.dblogic.FileHistoryViewModel;
-import com.example.lucas.logic.dblogic.FilePath;
-import com.example.lucas.logic.dblogic.User;
 import com.example.lucas.main.R;
-import com.example.mainpackage.logic.project.FileManagement.File;
+import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
+import com.example.mainpackage.logic.dblogic.FilePath;
+import com.example.mainpackage.logic.dblogic.User;
 import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;

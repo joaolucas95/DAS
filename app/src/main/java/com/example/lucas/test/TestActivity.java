@@ -1,23 +1,8 @@
 package com.example.lucas.test;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.Space;
-import android.widget.TextView;
-import android.widget.ToggleButton;
-
 import com.example.lucas.logic.LogicController;
-import com.example.lucas.logic.dblogic.FilePath;
 import com.example.lucas.main.R;
+import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.project.Combination;
 import com.example.mainpackage.logic.project.FileManagement.FileType;
 import com.example.mainpackage.logic.project.Project;
@@ -27,8 +12,21 @@ import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.utils.Config;
 
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Space;
+import android.widget.TextView;
+import android.widget.ToggleButton;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -69,11 +67,11 @@ public class TestActivity extends AppCompatActivity {
 
     private void setupTests() {
 
-        for(Test test : project.getTests()){
+        for (Test test : project.getTests()) {
 
             RelativeLayout testRelativeLayout = getNewTestLinearLayout(test);
 
-            LinearLayout testsLinearLayout= findViewById(R.id.ll_tests);
+            LinearLayout testsLinearLayout = findViewById(R.id.ll_tests);
 
             setupInputAndExpectedCombinations(testRelativeLayout, test);
 
@@ -89,17 +87,15 @@ public class TestActivity extends AppCompatActivity {
 
     private void setupInputAndExpectedCombinations(RelativeLayout testRelativeLayout, Test test) {
 
-        LinearLayout inputCombinationsListLinearLayout= testRelativeLayout.findViewById(R.id.input_combination_list_test);
-        LinearLayout expectedCombinationsListLinearLayout= testRelativeLayout.findViewById(R.id.expected_combination_list_test);
+        LinearLayout inputCombinationsListLinearLayout = testRelativeLayout.findViewById(R.id.input_combination_list_test);
+        LinearLayout expectedCombinationsListLinearLayout = testRelativeLayout.findViewById(R.id.expected_combination_list_test);
 
-        for(Combination combination : test.getSignalInput().getCombinations())
-        {
+        for (Combination combination : test.getSignalInput().getCombinations()) {
             LinearLayout combinationLinearLayout = createCombination(combination);
             inputCombinationsListLinearLayout.addView(combinationLinearLayout);
         }
 
-        for(Combination combination : test.getSignalExpected().getCombinations())
-        {
+        for (Combination combination : test.getSignalExpected().getCombinations()) {
             LinearLayout combinationLinearLayout = createCombination(combination);
             expectedCombinationsListLinearLayout.addView(combinationLinearLayout);
         }
@@ -110,14 +106,14 @@ public class TestActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(project.getTests() == null || project.getTests().isEmpty())
+                if (project.getTests() == null || project.getTests().isEmpty())
                     return;
 
-                project.getTests().remove(project.getTests().size()-1);
+                project.getTests().remove(project.getTests().size() - 1);
 
-                LinearLayout testsListLinearLayout= findViewById(R.id.ll_tests);
-                View testLinearLayout = testsListLinearLayout.getChildAt(testsListLinearLayout.getChildCount()-1);
-                View space = testsListLinearLayout.getChildAt(testsListLinearLayout.getChildCount()-2);
+                LinearLayout testsListLinearLayout = findViewById(R.id.ll_tests);
+                View testLinearLayout = testsListLinearLayout.getChildAt(testsListLinearLayout.getChildCount() - 1);
+                View space = testsListLinearLayout.getChildAt(testsListLinearLayout.getChildCount() - 2);
                 testsListLinearLayout.removeView(testLinearLayout);
                 testsListLinearLayout.removeView(space);
             }
@@ -140,7 +136,7 @@ public class TestActivity extends AppCompatActivity {
 
                 RelativeLayout testRelativeLayout = getNewTestLinearLayout(test);
 
-                LinearLayout testsLinearLayout= findViewById(R.id.ll_tests);
+                LinearLayout testsLinearLayout = findViewById(R.id.ll_tests);
                 testsLinearLayout.addView(testRelativeLayout);
 
                 Space emptySpace = new Space(TestActivity.this);
@@ -157,7 +153,7 @@ public class TestActivity extends AppCompatActivity {
         List<Combination> combinationsInput = test.getSignalInput().getCombinations();
         List<Combination> combinationsExpected = test.getSignalExpected().getCombinations();
 
-        RelativeLayout testRelativeLayout = (RelativeLayout) LayoutInflater.from(TestActivity.this).inflate(R.layout.test_layout,null);
+        RelativeLayout testRelativeLayout = (RelativeLayout) LayoutInflater.from(TestActivity.this).inflate(R.layout.test_layout, null);
 
         //for input combinations
         setupNewInputCombinationButton(testRelativeLayout, combinationsInput);
@@ -179,13 +175,13 @@ public class TestActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(test.getSignalExpected().getCombinations() == null || test.getSignalExpected().getCombinations().isEmpty())
+                if (test.getSignalExpected().getCombinations() == null || test.getSignalExpected().getCombinations().isEmpty())
                     return;
 
-                test.getSignalExpected().getCombinations().remove(test.getSignalExpected().getCombinations().size()-1);
+                test.getSignalExpected().getCombinations().remove(test.getSignalExpected().getCombinations().size() - 1);
 
-                LinearLayout combinationsListLinearLayout= testRelativeLayout.findViewById(R.id.expected_combination_list_test);
-                View viewtmp = combinationsListLinearLayout.getChildAt(combinationsListLinearLayout.getChildCount()-1);
+                LinearLayout combinationsListLinearLayout = testRelativeLayout.findViewById(R.id.expected_combination_list_test);
+                View viewtmp = combinationsListLinearLayout.getChildAt(combinationsListLinearLayout.getChildCount() - 1);
                 combinationsListLinearLayout.removeView(viewtmp);
             }
         });
@@ -196,13 +192,13 @@ public class TestActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(test.getSignalInput().getCombinations() == null || test.getSignalInput().getCombinations().isEmpty())
+                if (test.getSignalInput().getCombinations() == null || test.getSignalInput().getCombinations().isEmpty())
                     return;
 
-                test.getSignalInput().getCombinations().remove(test.getSignalInput().getCombinations().size()-1);
+                test.getSignalInput().getCombinations().remove(test.getSignalInput().getCombinations().size() - 1);
 
-                LinearLayout combinationsListLinearLayout= testRelativeLayout.findViewById(R.id.input_combination_list_test);
-                View viewtmp = combinationsListLinearLayout.getChildAt(combinationsListLinearLayout.getChildCount()-1);
+                LinearLayout combinationsListLinearLayout = testRelativeLayout.findViewById(R.id.input_combination_list_test);
+                View viewtmp = combinationsListLinearLayout.getChildAt(combinationsListLinearLayout.getChildCount() - 1);
                 combinationsListLinearLayout.removeView(viewtmp);
             }
         });
@@ -215,13 +211,13 @@ public class TestActivity extends AppCompatActivity {
 
                 LinearLayout resultsLinearLayour = testRelativeLayout.findViewById(R.id.result_list_test);
 
-                String result ="Result: ";
+                String result = "Result: ";
 
-                try{
+                try {
                     boolean resultTest = project.runTest(test);
-                    result += "The test " + (resultTest == true? "passed" : "did not pass");
+                    result += "The test " + (resultTest == true ? "passed" : "did not pass");
 
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     result += "An error occored. " + ex.getMessage();
                 }
 
@@ -239,7 +235,7 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Map<String, Boolean> testtmp = new LinkedHashMap<>();
                 ComponentModule module = (ComponentModule) project.getComponentModule();
-                for(Component output : module.getOutputList()){
+                for (Component output : module.getOutputList()) {
                     testtmp.put(output.getName(), false);
                 }
 
@@ -247,7 +243,7 @@ public class TestActivity extends AppCompatActivity {
 
                 combinationsExpected.add(combination);
 
-                LinearLayout combinationsListLinearLayout= testLinearLayout.findViewById(R.id.expected_combination_list_test);
+                LinearLayout combinationsListLinearLayout = testLinearLayout.findViewById(R.id.expected_combination_list_test);
                 LinearLayout combinationLinearLayout = createCombination(combination);
                 combinationsListLinearLayout.addView(combinationLinearLayout);
             }
@@ -260,7 +256,7 @@ public class TestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Map<String, Boolean> testtmp = new LinkedHashMap<>();
                 ComponentModule module = (ComponentModule) project.getComponentModule();
-                for(Component input : module.getInputList()){
+                for (Component input : module.getInputList()) {
                     testtmp.put(input.getName(), false);
                 }
 
@@ -268,20 +264,20 @@ public class TestActivity extends AppCompatActivity {
 
                 combinationsInput.add(combination);
 
-                LinearLayout combinationsListLinearLayout= testLinearLayout.findViewById(R.id.input_combination_list_test);
+                LinearLayout combinationsListLinearLayout = testLinearLayout.findViewById(R.id.input_combination_list_test);
                 LinearLayout combinationLinearLayout = createCombination(combination);
                 combinationsListLinearLayout.addView(combinationLinearLayout);
             }
         });
     }
 
-    private LinearLayout createCombination(Combination combinationTmp){
+    private LinearLayout createCombination(Combination combinationTmp) {
         LinearLayout linearLayout = new LinearLayout(this);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
         Iterator it = combinationTmp.getValues().entrySet().iterator();
         while (it.hasNext()) {
-            final Map.Entry pair = (Map.Entry)it.next();
+            final Map.Entry pair = (Map.Entry) it.next();
 
             TextView tv = new TextView(getApplicationContext());
 
@@ -309,10 +305,10 @@ public class TestActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
-                    if(filePath.filePath.contains(".bin"))
+                    if (filePath.filePath.contains(".bin"))
                         LogicController.getInstance().getFacade().saveProject(project, false, Config.BASE_FILE_PATH, FileType.BINARY);
                     //else
-                        //LogicController.getInstance().getFacade().saveProject(project, false, Config.BASE_FILE_PATH, FileType.BLIF);
+                    //LogicController.getInstance().getFacade().saveProject(project, false, Config.BASE_FILE_PATH, FileType.BLIF);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
