@@ -37,4 +37,5 @@
     <string name="add_expected_combination">Add Expected Combination</string>
     <string name="delete_last_expected_combination">Delete Last Expected Combination</string>
     <string name="remove_last_test">Remove Last Test</string>
+    <string name="choose_module">Choose module</string>
 </resources>

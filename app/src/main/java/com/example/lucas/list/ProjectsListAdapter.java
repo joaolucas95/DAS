@@ -1,10 +1,8 @@
 package com.example.lucas.list;
 
-import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
 import com.example.lucas.simulation.SimulationActivity;
 import com.example.lucas.test.TestActivity;
-import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
 import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.utils.Config;
 
@@ -13,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.MyViewHolder> {
@@ -32,9 +30,9 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
+            title = view.findViewById(R.id.title);
         }
 
     }
@@ -45,8 +43,9 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.project_list_row, parent, false);
 
@@ -54,7 +53,7 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
 
         final FilePath filePath = filePathList.get(position);
         holder.title.setText(filePath.getProjectName());
@@ -112,9 +111,6 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                                             }
                                         }
                                          */
-
-
-
 
                                         break;
                                 }

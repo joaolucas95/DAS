@@ -1,5 +1,6 @@
 package com.example.lucas.edit;
 
+import com.example.lucas.edit.choose.ChooseActivity;
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
 import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
@@ -12,6 +13,7 @@ import com.example.mainpackage.logic.utils.Config;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -58,6 +60,22 @@ public class EditActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_edit, menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        switch (requestCode) {
+            case EditUtils.REQUEST_CODE_CHOOSE_MODULE:
+                Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show();
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported request code: " + requestCode);
+        }
     }
 
     @Override
@@ -111,7 +129,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-                mController.setSelectedType(mController.getComponentTypes().get(pos));
+                handleOnPositiveActionAdd(pos);
             }
         });
 
@@ -119,6 +137,18 @@ public class EditActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void handleOnPositiveActionAdd(int pos) {
+        ComponentType selectedType = mController.getComponentTypes().get(pos);
+        mController.setSelectedType(selectedType);
+
+        if (selectedType != ComponentType.MODULE) {
+            return;
+        }
+
+        Intent intent = new Intent(this, ChooseActivity.class);
+        startActivityForResult(intent, EditUtils.REQUEST_CODE_CHOOSE_MODULE);
     }
 
     private void handleActionUndo() {
