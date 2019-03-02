@@ -6,15 +6,13 @@ import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
 import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.dblogic.User;
-import com.example.mainpackage.logic.project.filemanagement.FileType;
-import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 
 import android.app.AlertDialog;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,12 +21,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
+
+    private RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +63,7 @@ public class ListActivity extends AppCompatActivity {
             }
         });
     }
+
     //for tests
     private void createModelTestBin() {
         /*
@@ -163,7 +163,7 @@ public class ListActivity extends AppCompatActivity {
         //test
         stateMachine.addSimpleComponent(ComponentType.LOGIC_AND, new int[]{0, 0});
 
-        stateMachine.addModule(context.getFilesDir().getPath().toString() + "/" + "modelTest.blif", user, new int[]{2, 3});
+        stateMachine.addModule(context.getFilesDir().getPath() + "/" + "modelTest.blif", user, new int[]{2, 3});
 
         stateMachine.selectComponent("input10");
         stateMachine.selectComponent("input14");
@@ -174,7 +174,7 @@ public class ListActivity extends AppCompatActivity {
         stateMachine.selectComponent("input12");
         stateMachine.selectComponent("input16");
 
-        stateMachine.addModule(context.getFilesDir().getPath().toString() + "/" + "modelTest.blif", user, new int[]{0, 0});
+        stateMachine.addModule(context.getFilesDir().getPath() + "/" + "modelTest.blif", user, new int[]{0, 0});
 
         stateMachine.selectComponent("output21");
         stateMachine.selectComponent("input23");
@@ -194,37 +194,28 @@ public class ListActivity extends AppCompatActivity {
     }
 
     private void setRecyclerView() {
+        mRecyclerView = findViewById(R.id.recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
 
         String username = LogicController.getInstance().getFacade().getCurrentUsername();
-        User user = (User) LogicController.getInstance().getFacade().findUserByUsername(username, this);
+        User user = LogicController.getInstance().getFacade().findUserByUsername(username, this);
 
-        if (user != null) {
-            LogicController.getInstance().getFacade().getAllFilesPathOfUser(user.id, this).observe(this, new Observer<List<FilePath>>() {
-                @Override
-                public void onChanged(@Nullable List<FilePath> filePaths) {
-
-                    //Log.d("test", "projects of user: " + String.valueOf(filePaths));
-
-                    RecyclerView recyclerView;
-                    RecyclerView.Adapter mAdapter;
-                    RecyclerView.LayoutManager layoutManager;
-
-                    recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-                    // use this setting to improve performance if you know that changes
-                    // in content do not change the layout size of the RecyclerView
-                    recyclerView.setHasFixedSize(true);
-
-                    // use a linear layout manager
-                    layoutManager = new LinearLayoutManager(getApplicationContext());
-                    recyclerView.setLayoutManager(layoutManager);
-
-                    // specify an adapter (see also next example)
-                    mAdapter = new ProjectsListAdapter(filePaths, getApplicationContext());
-                    recyclerView.setAdapter(mAdapter);
-                }
-            });
+        if (user == null) {
+            return;
         }
+
+        LiveData<List<FilePath>> filePaths = LogicController.getInstance().getFacade().getAllFilesPathOfUser(user.id, this);
+
+        filePaths.observe(this, new Observer<List<FilePath>>() {
+            @Override
+            public void onChanged(@Nullable List<FilePath> filePaths) {
+                RecyclerView.Adapter adapter = new ProjectsListAdapter(filePaths, ListActivity.this);
+                mRecyclerView.setAdapter(adapter);
+            }
+        });
     }
 
     private void handleNewProject() {
@@ -235,21 +226,15 @@ public class ListActivity extends AppCompatActivity {
         String complexProject = getString(R.string.complex_project);
         String[] options = new String[]{normalProject, complexProject};
 
-        int checkedItem = 0;
-        builder.setSingleChoiceItems(options, checkedItem, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing.
-            }
-        });
+        builder.setSingleChoiceItems(options, 0, null);
 
         builder.setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-            int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-            Intent intent = new Intent(ListActivity.this, EditActivity.class);
-            intent.putExtra(EditUtils.IS_SIMPLE_EXTRA, pos == 0);
-            startActivity(intent);
+                int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                Intent intent = new Intent(ListActivity.this, EditActivity.class);
+                intent.putExtra(EditUtils.IS_SIMPLE_EXTRA, pos == 0);
+                startActivity(intent);
             }
         });
 
