@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -101,22 +102,16 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
                                         break;
                                     case 3:
 
-                                        /*
-                                        FilePath filePathTmp = mFileHistoryViewModel.findFilePathEntityByProjectName(filePath.projectName);
+                                        FilePath filePathTmp = LogicController.getInstance().getFacade().findFilePathEntityByProjectName(filePath.projectName, (FragmentActivity) holder.itemView.getContext());
                                         if (filePathTmp != null) {
                                             try {
-                                                mFileHistoryViewModel.deleteFilePath(filePathTmp);
+                                                LogicController.getInstance().getFacade().deleteFilePath(filePathTmp, (FragmentActivity) holder.itemView.getContext());
                                                 LogicController.getInstance().getFacade().removeProject(filePathTmp.filePath);
                                             } catch (FileNotFoundException e) {
                                                 e.printStackTrace();
                                             }
                                         }
-                                         */
-
-
-
-
-                                        break;
+                                    break;
                                 }
                             }
                         });

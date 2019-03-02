@@ -246,12 +246,10 @@ public class ListActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.action_create, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
-
-                Intent intent = new Intent(ListActivity.this, EditActivity.class);
-                intent.putExtra(EditUtils.IS_SIMPLE_EXTRA, pos == 0);
-
-                startActivity(intent);
+            int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+            Intent intent = new Intent(ListActivity.this, EditActivity.class);
+            intent.putExtra(EditUtils.IS_SIMPLE_EXTRA, pos == 0);
+            startActivity(intent);
             }
         });
 
