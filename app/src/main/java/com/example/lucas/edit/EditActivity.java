@@ -198,7 +198,6 @@ public class EditActivity extends AppCompatActivity {
                 User user = LogicController.getInstance().getFacade().findUserByUsername(username, EditActivity.this);
                 //define name of the project
                 String projectName = "Project" + System.currentTimeMillis();
-
                 mController.doSave(Config.BASE_FILE_PATH, mController.getFileTypes().get(pos), projectName);
 
                 //save the file path in the bd
