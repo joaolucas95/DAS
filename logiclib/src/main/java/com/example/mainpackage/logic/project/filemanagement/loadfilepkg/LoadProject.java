@@ -3,6 +3,7 @@ package com.example.mainpackage.logic.project.filemanagement.loadfilepkg;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.user.User;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
@@ -11,7 +12,7 @@ public class LoadProject {
     public Project loadProject(String filePathProject, User user) {
         Project project = null;
 
-        java.io.File filePath = new java.io.File(filePathProject);
+        File filePath = new File(filePathProject);
 
         try {
             FileInputStream fis;
