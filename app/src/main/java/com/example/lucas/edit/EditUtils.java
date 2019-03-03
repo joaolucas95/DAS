@@ -1,6 +1,8 @@
 package com.example.lucas.edit;
 
 import com.example.mainpackage.logic.project.component.Component;
+import com.example.mainpackage.logic.project.component.ComponentModule;
+import com.example.mainpackage.logic.project.component.ComponentType;
 
 import java.util.Arrays;
 
@@ -20,7 +22,29 @@ public class EditUtils {
             return false;
         }
 
-        return Arrays.equals(comp1.getPosition(), comp2.getPosition());
+        if (Arrays.equals(comp1.getPosition(), comp2.getPosition())) {
+            return true;
+        }
+
+        if (!(comp1 instanceof ComponentModule)) {
+            return false;
+        }
+
+        ComponentModule module = (ComponentModule) comp1;
+        for (Component cmp : module.getData()) {
+            if (cmp.getName().equals(comp2.getName())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
+    static String getInputOutputName(Component component, int index) {
+        if (component.getType() == ComponentType.INPUT) {
+            return "Input " + index;
+        }
+
+        return "Output " + index;
+    }
 }

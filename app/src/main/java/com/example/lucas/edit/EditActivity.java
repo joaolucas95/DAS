@@ -117,12 +117,7 @@ public class EditActivity extends AppCompatActivity {
         components = componentNames.toArray(components);
 
         int checkedItem = 0;
-        builder.setSingleChoiceItems(components, checkedItem, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Do nothing.
-            }
-        });
+        builder.setSingleChoiceItems(components, checkedItem, null);
 
         builder.setPositiveButton(R.string.edit_add, new DialogInterface.OnClickListener() {
             @Override
@@ -217,14 +212,14 @@ public class EditActivity extends AppCompatActivity {
     /* Draw handling */
 
     void handleTap(int[] tapPos) {
-        if (!mController.handleConnection(tapPos)) {
+        if (!mController.handleConnection(tapPos, this)) {
             mController.doAdd(tapPos);
         }
 
         doDraw();
     }
 
-    private void doDraw() {
+    void doDraw() {
 
         List<Component> actualComponents = mController.getActualComponents();
 

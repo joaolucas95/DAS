@@ -1,12 +1,18 @@
 package com.example.lucas.edit;
 
 import com.example.lucas.logic.LogicController;
+import com.example.lucas.main.R;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
+import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.user.User;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class EditController {
@@ -56,13 +62,13 @@ public class EditController {
 
     /* Connection logic*/
 
-    boolean handleConnection(int[] tapPos) {
+    boolean handleConnection(int[] tapPos, EditActivity context) {
         Component component = intersects(tapPos);
         if (component == null) {
             return handleNoIntersection();
         }
 
-        return handleIntersection(component);
+        return handleIntersection(component, context);
     }
 
     private boolean handleNoIntersection() {
@@ -75,7 +81,12 @@ public class EditController {
         return true;
     }
 
-    private boolean handleIntersection(Component component) {
+    private boolean handleIntersection(Component component, EditActivity context) {
+        if (component.getType() == ComponentType.MODULE || component.getType() == ComponentType.PROJECT) {
+            handleModuleIntersection((ComponentModule) component, context);
+            return true;
+        }
+
         LogicController.getInstance().getFacade().selectComponent(component.getName());
         Component selected = mSelectedComponent;
         if (selected == null) {
@@ -85,6 +96,42 @@ public class EditController {
 
         mSelectedComponent = null;
         return true;
+    }
+
+    private void handleModuleIntersection(final ComponentModule component, final EditActivity context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.choose_component);
+
+        final List<Component> components = mSelectedComponent == null ?
+                component.getOutputList() : component.getInputList();
+
+        List<String> inputOutputNames = new ArrayList<>();
+        for (int i = 0; i < components.size(); i++) {
+            Component cmp = components.get(i);
+            inputOutputNames.add(EditUtils.getInputOutputName(cmp, i + 1));
+        }
+
+        String[] fileTypes = new String[inputOutputNames.size()];
+        fileTypes = inputOutputNames.toArray(fileTypes);
+
+        int checkedItem = 0;
+        builder.setSingleChoiceItems(fileTypes, checkedItem, null);
+
+        builder.setPositiveButton(R.string.select, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                Component inputOutputSelected = components.get(pos);
+                handleIntersection(inputOutputSelected, context);
+
+                context.doDraw();
+            }
+        });
+
+        builder.setNegativeButton(R.string.dialog_cancel, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /* Actions */
