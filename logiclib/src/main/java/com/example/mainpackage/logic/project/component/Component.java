@@ -65,7 +65,7 @@ public abstract class Component implements Serializable {
                 return new ComponentInput(name, position);
 
             case OUTPUT:
-                return new ComponentOutput(name, null, position);
+                return new ComponentOutput(name, position);
 
             case LOGIC_AND:
                 return new ComponentLogicAnd(name, null, position);

@@ -16,20 +16,8 @@ public class ComponentModule extends Component {
         this.data = new ArrayList<>();
     }
 
-    public void addComponent(Component component) {
-        this.data.add(component);
-    }
-
     public void addComponent(List<Component> component) {
         this.data.addAll(component);
-    }
-
-    public Component getComponent(String name) {
-        for (Component component : data) {
-            if (component.getName().equals(name))
-                return component;
-        }
-        throw new IllegalStateException("no component found");
     }
 
     @Override
@@ -104,14 +92,8 @@ public class ComponentModule extends Component {
         return data;
     }
 
-    public boolean isIsProject() {
-        return isProject;
-    }
-
     @Override
     public String toString() {
         return "ComponentModule{" + "isProject=" + isProject + ", data=" + data + '}';
     }
-
-
 }
