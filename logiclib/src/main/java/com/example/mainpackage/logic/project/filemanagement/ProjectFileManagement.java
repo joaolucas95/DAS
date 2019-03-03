@@ -1,13 +1,11 @@
 package com.example.mainpackage.logic.project.filemanagement;
 
 import com.example.mainpackage.logic.project.filemanagement.savefilepkg.SaveProjectBuilder;
-import com.example.mainpackage.logic.project.filemanagement.loadfilepkg.BinaryLoadProjectAdapter;
 import com.example.mainpackage.logic.project.filemanagement.loadfilepkg.BlifLoadProjectAdapter;
 import com.example.mainpackage.logic.project.filemanagement.loadfilepkg.LoadProject;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.tests.export.ExportTestBuilder;
 import com.example.mainpackage.logic.project.tests.export.ExportType;
-import com.example.mainpackage.logic.project.tests.export.HtmlExportTestsBuilder;
 import com.example.mainpackage.logic.user.User;
 import com.example.mainpackage.logic.utils.Config;
 
@@ -46,7 +44,7 @@ public class ProjectFileManagement {
     public Project loadProject(String filePathProject, User user) throws Exception{
         FileType type = getProjectType(filePathProject);
         if(type == FileType.BINARY)
-            this.loadProject = new BinaryLoadProjectAdapter();
+            this.loadProject = new LoadProject();
         else if(type == FileType.BLIF)
             this.loadProject = new BlifLoadProjectAdapter();
 

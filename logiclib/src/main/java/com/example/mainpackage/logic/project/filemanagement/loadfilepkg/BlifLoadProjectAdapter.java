@@ -12,7 +12,6 @@ public class BlifLoadProjectAdapter extends LoadProject{
         this.flBlifLoadProject = new BlifLoadProject();
     }
     
-    
     @Override
     public Project loadProject(String filePathProject, User user) {
         return flBlifLoadProject.loadBlifProject(filePathProject, user);

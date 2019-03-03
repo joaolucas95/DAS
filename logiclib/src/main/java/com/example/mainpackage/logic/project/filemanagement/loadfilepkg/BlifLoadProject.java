@@ -19,7 +19,7 @@ public class BlifLoadProject {
         Project project;
 
         try {
-            List<String> allLines  = new ArrayList<>(); //= Files.readAllLines(Paths.get(filePathString));
+            List<String> allLines  = new ArrayList<>();
 
             File file = new File(filePathString);
             BufferedReader br = new BufferedReader(new FileReader(file));
