@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HtmlExportTestsBuilder extends ExportTestBuilder{
+public class HtmlExportTestsBuilder extends ExportTestBuilder {
 
     public boolean export() {
         try {
@@ -32,8 +32,8 @@ public class HtmlExportTestsBuilder extends ExportTestBuilder{
                 content.add("<div class='panel-body'>");
                 Iterator var2 = this.project.getTests().iterator();
 
-                while(var2.hasNext()) {
-                    Test test = (Test)var2.next();
+                while (var2.hasNext()) {
+                    Test test = (Test) var2.next();
                     content.add("<b>Input Signal:</b> " + printStringCombinationHtml(test.getSignalInput().getCombinations()) + "</br>");
                     content.add("<b>Expected Signal:</b> " + printStringCombinationHtml(test.getSignalExpected().getCombinations()) + " </br>");
                     content.add("<b>Result:</b> " + this.project.runTest(test) + "</br>");
@@ -46,8 +46,8 @@ public class HtmlExportTestsBuilder extends ExportTestBuilder{
                 String strContent = "";
 
                 String str;
-                for(Iterator var8 = content.iterator(); var8.hasNext(); strContent = strContent + str + "\n") {
-                    str = (String)var8.next();
+                for (Iterator var8 = content.iterator(); var8.hasNext(); strContent = strContent + str + "\n") {
+                    str = (String) var8.next();
                 }
 
                 String path = this.filePath + "/" + this.project.getName() + ".html";
@@ -61,7 +61,7 @@ public class HtmlExportTestsBuilder extends ExportTestBuilder{
                 return false;
             }
         } catch (IOException var6) {
-            Logger.getLogger(com.example.mainpackage.logic.project.filemanagement.File.class.getName()).log(Level.SEVERE, (String)null, var6);
+            Logger.getLogger(com.example.mainpackage.logic.project.filemanagement.File.class.getName()).log(Level.SEVERE, (String) null, var6);
             return false;
         }
     }
@@ -70,13 +70,13 @@ public class HtmlExportTestsBuilder extends ExportTestBuilder{
         String str = "";
         Iterator var2 = combinations.iterator();
 
-        while(var2.hasNext()) {
-            Combination combination = (Combination)var2.next();
+        while (var2.hasNext()) {
+            Combination combination = (Combination) var2.next();
             str = str + "<br>Combination:<br>";
 
             Map.Entry pair;
-            for(Iterator it = combination.getValues().entrySet().iterator(); it.hasNext(); str = str + " " + pair.getKey() + " - " + pair.getValue() + "<br>") {
-                pair = (Map.Entry)it.next();
+            for (Iterator it = combination.getValues().entrySet().iterator(); it.hasNext(); str = str + " " + pair.getKey() + " - " + pair.getValue() + "<br>") {
+                pair = (Map.Entry) it.next();
             }
         }
 

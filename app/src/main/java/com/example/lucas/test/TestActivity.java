@@ -3,13 +3,13 @@ package com.example.lucas.test;
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
 import com.example.mainpackage.logic.dblogic.FilePath;
-import com.example.mainpackage.logic.project.tests.Combination;
-import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.project.Project;
-import com.example.mainpackage.logic.project.tests.Signal;
-import com.example.mainpackage.logic.project.tests.Test;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
+import com.example.mainpackage.logic.project.tests.Combination;
+import com.example.mainpackage.logic.project.tests.Signal;
+import com.example.mainpackage.logic.project.tests.Test;
 import com.example.mainpackage.logic.utils.Config;
 
 import android.os.Bundle;

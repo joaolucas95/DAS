@@ -8,14 +8,14 @@ public class ComponentLogicOr extends ComponentLogic {
     ComponentLogicOr(String name, List<Component> previous, int[] position) {
         super(name, previous, position);
     }
-    
+
     @Override
     public boolean getOutput(String output) {
         boolean result = false;
         for (Component component : previous) {
             result |= component.getOutput(output);
         }
-        
+
         return result;
     }
 
@@ -23,7 +23,7 @@ public class ComponentLogicOr extends ComponentLogic {
     public String getLogicGates() {
         StringBuilder str = new StringBuilder();
 
-        for(int i = 0 ; i < previous.size(); i++){
+        for (int i = 0; i < previous.size(); i++) {
             char[] chars = new char[previous.size()];
             Arrays.fill(chars, '-');
             StringBuilder myName = new StringBuilder(new String(chars));

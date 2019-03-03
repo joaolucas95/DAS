@@ -15,7 +15,7 @@ public class ComponentLogicAnd extends ComponentLogic {
         for (Component component : previous) {
             result &= component.getOutput(output);
         }
-        
+
         return result;
     }
 

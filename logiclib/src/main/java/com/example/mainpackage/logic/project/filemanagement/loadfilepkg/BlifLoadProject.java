@@ -1,15 +1,8 @@
 package com.example.mainpackage.logic.project.filemanagement.loadfilepkg;
 
 
-import android.app.Application;
-import android.arch.lifecycle.ViewModelProviders;
-
-import com.example.mainpackage.LogicFacadeImp;
-import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
-import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
-import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.project.tests.Combination;
@@ -26,12 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 public class BlifLoadProject {
-    
-    public Project loadBlifProject(String filePathProject, User user){
+
+    public Project loadBlifProject(String filePathProject, User user) {
         Project project;
 
         try {
-            List<String> allLines  = new ArrayList<>();
+            List<String> allLines = new ArrayList<>();
 
             File file = new File(filePathProject);
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -41,10 +34,10 @@ public class BlifLoadProject {
             }
 
             String[] filePathByPath = filePathProject.split("/");
-            String projectName= filePathByPath[filePathByPath.length-1];
+            String projectName = filePathByPath[filePathByPath.length - 1];
             projectName = projectName.replace(".blif", "");
 
-            String moduleLine = allLines.get(0).replace(".model ","");
+            String moduleLine = allLines.get(0).replace(".model ", "");
             //modulestr[0] - is the name of the module ; modulestr[1] - are the coords of the component module
             String[] modulestr = moduleLine.split("-");
             ComponentModule module = getModuleFromLines(allLines);
@@ -68,11 +61,10 @@ public class BlifLoadProject {
     private List<Test> getTestsOfProject(List<String> allLines) {
         List<Test> tests = new ArrayList<>();
 
-        for(String line : allLines)
-        {
-            if(line.contains(".test")){
+        for (String line : allLines) {
+            if (line.contains(".test")) {
                 Signal inputSignal = new Signal(), expectedSignal = new Signal();
-                tests.add(new Test(inputSignal,expectedSignal));
+                tests.add(new Test(inputSignal, expectedSignal));
 
                 String lineTmp = line.replace(".test ", "");
 
@@ -82,14 +74,14 @@ public class BlifLoadProject {
                 String[] valuesStr = inputsAndExpected[0].split(" ");
                 Combination combination = getCombination(valuesStr);
 
-                if(combination != null)
+                if (combination != null)
                     inputSignal.getCombinations().add(combination);
 
                 //process expected
                 valuesStr = inputsAndExpected[1].split(" ");
                 combination = getCombination(valuesStr);
 
-                if(combination != null)
+                if (combination != null)
                     expectedSignal.getCombinations().add(combination);
             }
         }
@@ -99,18 +91,17 @@ public class BlifLoadProject {
 
     private Signal getSignalForSimulation(List<String> allLines) throws Exception {
         Signal signalTmp = new Signal();
-        for(String line : allLines)
-        {
-            if(line.contains(".simulation")){
+        for (String line : allLines) {
+            if (line.contains(".simulation")) {
                 String lineTmp = line.replace(".simulation ", "");
 
                 String[] combinationsStr = lineTmp.split(";");
-                for(String combinationStr : combinationsStr){
+                for (String combinationStr : combinationsStr) {
                     String[] valuesStr = combinationStr.split(" ");
 
                     Combination combination = getCombination(valuesStr);
 
-                    if(combination != null && !combination.getValues().isEmpty())
+                    if (combination != null && !combination.getValues().isEmpty())
                         signalTmp.getCombinations().add(combination);
                 }
             }
@@ -123,15 +114,14 @@ public class BlifLoadProject {
 
         Map<String, Boolean> values = new LinkedHashMap<>();
 
-        if(valuesStr == null || valuesStr.length == 0)
+        if (valuesStr == null || valuesStr.length == 0)
             return null;
 
 
-        for(int i = 0 ; i<valuesStr.length ; i++){
+        for (int i = 0; i < valuesStr.length; i++) {
             String[] combinationTmp = valuesStr[i].split("=");
-            if(combinationTmp.length==2)
-            {
-                result = combinationTmp[1].equals("true")? true : false;
+            if (combinationTmp.length == 2) {
+                result = combinationTmp[1].equals("true") ? true : false;
                 values.put(combinationTmp[0], result);
             }
         }
@@ -146,11 +136,11 @@ public class BlifLoadProject {
         //get information of the MODULE
 
         //get the line which has the name and positions of the component module
-        String moduleLine = allLines.get(0).replace(".model ","");
+        String moduleLine = allLines.get(0).replace(".model ", "");
         //modulestr[0] - is the name of the module ; modulestr[1] - are the coords of the component module
         String[] modulestr = moduleLine.split("-");
         //define coords
-        String[] coordsTmp= modulestr[1].split(";");
+        String[] coordsTmp = modulestr[1].split(";");
         int[] positionsOfModule = new int[]{Integer.parseInt(coordsTmp[0]), Integer.parseInt(coordsTmp[1])};
         String moduleName = modulestr[0];
 
@@ -161,14 +151,14 @@ public class BlifLoadProject {
         allLines.remove(0);
 
         //get inputs of the module
-        String inputsTmp = allLines.get(0).replace(".inputs ","");
+        String inputsTmp = allLines.get(0).replace(".inputs ", "");
         String[] inputNames = inputsTmp.split(" ");
-        for(int i = 0; i < inputNames.length; i++){
+        for (int i = 0; i < inputNames.length; i++) {
             //input[0] - is the name of the input ; input[1] - are the coords of the component input
             String[] input = inputNames[i].split("-");
 
             //define coords
-            String[] coords= input[1].split(";");
+            String[] coords = input[1].split(";");
             int[] position = new int[]{Integer.parseInt(coords[0]), Integer.parseInt(coords[1])};
 
             //define the component with the name and the coords
@@ -196,7 +186,7 @@ public class BlifLoadProject {
                     String[] strComponent = componentNames[i].split("-");
 
                     //define coords
-                    String[] coords= strComponent[1].split(";");
+                    String[] coords = strComponent[1].split(";");
                     int[] position = new int[]{Integer.parseInt(coords[0]), Integer.parseInt(coords[1])};
 
 
@@ -223,8 +213,7 @@ public class BlifLoadProject {
                 componentModuleTemp.addComponent(data);
                 componentModuleTemp.setName(moduleName);
                 return componentModuleTemp;
-            }
-            else if(line.contains(".subckt")) {
+            } else if (line.contains(".subckt")) {
                 List<ComponentModule> listModulesTmp = new ArrayList<>();
                 String namesTmp = line.replace(".subckt ", "");
                 String[] components = namesTmp.split(" "); //omponentName1 is the name of the module... the others are components connections
@@ -260,11 +249,11 @@ public class BlifLoadProject {
                 }
 
                 //PROCESS IT's CONNECTIONS
-                for(int k = 1; k <components.length; k++){
+                for (int k = 1; k < components.length; k++) {
                     String connection = new String(components[k]);
                     String[] connectionComponents = connection.split("="); //connection[0] is the previous;
 
-                    if(!(connectionComponents.length==1)) // connectionComponents.length==1 when for example we have "output20=" ...
+                    if (!(connectionComponents.length == 1)) // connectionComponents.length==1 when for example we have "output20=" ...
                     {
                         Component c1 = verifyIfExistComponentWithThatName(data, connectionComponents[0]);
                         Component c2 = verifyIfExistComponentWithThatName(data, connectionComponents[1]);
@@ -280,15 +269,14 @@ public class BlifLoadProject {
 
     private static Component verifyIfExistComponentWithThatName(List<Component> data, String componentName) {
 
-        for(Component component : data){
+        for (Component component : data) {
 
-            if(component instanceof ComponentModule) //if the component it's a component module we need to verify it's data
+            if (component instanceof ComponentModule) //if the component it's a component module we need to verify it's data
             {
                 Component tmp = verifyIfExistComponentWithThatName(((ComponentModule) component).getData(), componentName);
-                if(tmp != null) //if find a module with that component return...
+                if (tmp != null) //if find a module with that component return...
                     return tmp;
-            }
-            else if(component.getName().equals(componentName))
+            } else if (component.getName().equals(componentName))
                 return component;
         }
         return null;
@@ -299,8 +287,7 @@ public class BlifLoadProject {
         String componentName = name;
         String typeOfComponent = name.replaceAll("[0-9]", "");
 
-        switch (typeOfComponent)
-        {
+        switch (typeOfComponent) {
             case "input":
                 componentTmp = Component.getComponent(ComponentType.INPUT, false, position);
                 break;

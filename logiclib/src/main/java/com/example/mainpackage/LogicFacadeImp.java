@@ -16,7 +16,6 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v4.app.FragmentActivity;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public class LogicFacadeImp implements ILogicFacade {
@@ -61,7 +60,7 @@ public class LogicFacadeImp implements ILogicFacade {
     }
 
     @Override
-    public void removeProject(String filePath) throws FileNotFoundException {
+    public void removeProject(String filePath) {
         ProjectFileManagement projectFileManagement = new ProjectFileManagement();
         projectFileManagement.removeProject(filePath);
     }

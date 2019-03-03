@@ -5,11 +5,11 @@ import com.example.mainpackage.logic.project.filemanagement.File;
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class Component implements Serializable{
+public abstract class Component implements Serializable {
 
     private String name;
     private int[] position;
-    
+
     public Component(String name, int[] position) {
         this.name = name;
         this.position = position;
@@ -18,7 +18,8 @@ public abstract class Component implements Serializable{
     public String getName() {
         return name;
     }
-    public void setName(String name){
+
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -36,41 +37,42 @@ public abstract class Component implements Serializable{
 
     // TODO change this to package-private
     public abstract void setPrevious(Component... previous);
+
     public abstract void removePrevious(Component previous);
 
     public abstract List<Component> getPrevious();
 
-        
+
     // TODO change this to package-private
     public abstract void setInput(String name, boolean value);
-    
+
     public static Component getComponent(ComponentType type, boolean defineUniqueNumber, int[] position) {
-        
+
         String name = defineComponentName(type);
 
         //DEFINE UNIQUE NUMBER FOR COMPONENT!!
-        if(defineUniqueNumber)
+        if (defineUniqueNumber)
             name = defineComponentUniqueNumber(name);
-        
+
         switch (type) {
             case PROJECT:
                 return new ComponentModule(name, true, position);
-                
+
             case MODULE:
                 return new ComponentModule(name, false, position);
-                
+
             case INPUT:
                 return new ComponentInput(name, position);
-                
+
             case OUTPUT:
                 return new ComponentOutput(name, null, position);
-                
+
             case LOGIC_AND:
                 return new ComponentLogicAnd(name, null, position);
-                
+
             case LOGIC_OR:
                 return new ComponentLogicOr(name, null, position);
-                
+
             default:
                 throw new IllegalStateException("invalid type:" + type);
         }
@@ -85,7 +87,7 @@ public abstract class Component implements Serializable{
 
     private static String defineComponentName(ComponentType type) {
 
-        switch(type){
+        switch (type) {
             case INPUT:
                 return "input";
             case LOGIC_OR:
@@ -102,11 +104,10 @@ public abstract class Component implements Serializable{
                 throw new IllegalStateException("invalid type:" + type);
         }
     }
-    
+
     @Override
     public String toString() {
         return "Component{" + "name=" + name + '}';
     }
-    
-    
+
 }

@@ -13,7 +13,7 @@ public class ComponentUtils {
         ComponentType[] components = ComponentType.values();
 
         List<ComponentType> aux = new ArrayList<>();
-        for (ComponentType type: components) {
+        for (ComponentType type : components) {
             if (isAllowedType(selectedType, type)) {
                 aux.add(type);
             }

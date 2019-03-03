@@ -14,7 +14,7 @@ public class ComponentOutput extends ComponentSimple {
         if (previous == null) {
             throw new IllegalStateException("no previous component");
         }
-        
+
         return previous.get(0).getOutput(output);
     }
 

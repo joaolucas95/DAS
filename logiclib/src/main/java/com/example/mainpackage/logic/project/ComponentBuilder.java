@@ -9,60 +9,55 @@ import java.util.Collections;
 import java.util.List;
 
 public class ComponentBuilder {
-    
+
     private List<Component> data;
 
     public ComponentBuilder() {
         this.data = new ArrayList<>();
     }
-    
-    public void addNewComponent(Component component)
-    {
+
+    public void addNewComponent(Component component) {
         this.data.add(component);
     }
-    
-    
-    public void connectToComponent(Command command){
-        
+
+
+    public void connectToComponent(Command command) {
+
     }
-    
-    public Component build(){
+
+    public Component build() {
         Component finalComponent = Component.getComponent(ComponentType.PROJECT, true, new int[]{0, 0});
         ((ComponentModule) finalComponent).addComponent(data);
 
         return finalComponent;
     }
-    
-    public void addComponentToData(Component component)
-    {
+
+    public void addComponentToData(Component component) {
         this.data.add(component);
     }
-    
-    public void removeComponentFromData(String componentToRemove){
+
+    public void removeComponentFromData(String componentToRemove) {
         //remove the component...
         List<Component> tmpData = new ArrayList<>(data);
         Collections.reverse(tmpData);
-        for(Component component : tmpData){
-            if(component.getName().equals(componentToRemove))
-            {
+        for (Component component : tmpData) {
+            if (component.getName().equals(componentToRemove)) {
                 data.remove(component);
                 break;
             }
         }
     }
-    
-    public Component findComponentWithName(String name){
-        for(Component component : data){
+
+    public Component findComponentWithName(String name) {
+        for (Component component : data) {
             //if is a module component verify his data
-            if(component instanceof ComponentModule){
-                for(Component componentOfModule : ((ComponentModule)component).getData()){
-                    if(componentOfModule.getName().equals(name))
+            if (component instanceof ComponentModule) {
+                for (Component componentOfModule : ((ComponentModule) component).getData()) {
+                    if (componentOfModule.getName().equals(name))
                         return componentOfModule;
                 }
-            }
-            else
-            {
-                if(component.getName().equals(name))
+            } else {
+                if (component.getName().equals(name))
                     return component;
             }
         }

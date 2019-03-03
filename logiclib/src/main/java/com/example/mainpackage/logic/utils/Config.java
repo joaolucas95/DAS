@@ -12,5 +12,5 @@ public class Config {
     public static String BASE_FILE_PATH = "/storage/emulated/0/";
     public static String ERROR_MSG_FILE_LAST_COMPONENT_NUMBER = "Can't save/load the last component number.";
 
-    
+
 }

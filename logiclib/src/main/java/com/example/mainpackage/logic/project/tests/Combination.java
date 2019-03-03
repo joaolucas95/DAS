@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 public class Combination implements Serializable {
-    
+
     private final Map<String, Boolean> values;
-    
+
     public Combination(Map<String, Boolean> values) {
         this.values = values;
     }
@@ -19,6 +19,6 @@ public class Combination implements Serializable {
     public String toString() {
         return "Combination{" + "values=" + values + '}';
     }
-    
-    
+
+
 }

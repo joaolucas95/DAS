@@ -20,7 +20,7 @@ public class Signal implements Serializable {
     public Signal(List<Combination> combinations) {
         this.combinations = combinations;
     }
-    
+
     public List<Combination> getCombinations() {
         return combinations;
     }
@@ -32,20 +32,20 @@ public class Signal implements Serializable {
     public List<Combination> runSimulation(ComponentModule module) {
         List<Combination> result = new ArrayList<>();
         Map<String, Boolean> testtmp;
-        
-        for(Combination combination : combinations){
+
+        for (Combination combination : combinations) {
             //define inputs to module
             Iterator it = combination.getValues().entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry pair = (Map.Entry)it.next();
-                module.setInput((String)pair.getKey(), (boolean)pair.getValue());
+                Map.Entry pair = (Map.Entry) it.next();
+                module.setInput((String) pair.getKey(), (boolean) pair.getValue());
             }
             //get result
             testtmp = new LinkedHashMap<>();
-            for(Component output : module.getOutputList())
+            for (Component output : module.getOutputList())
                 testtmp.put(output.getName(), module.getOutput(output.getName()));
-            
-            result.add(new Combination(testtmp));      
+
+            result.add(new Combination(testtmp));
         }
         return result;
     }

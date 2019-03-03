@@ -1,28 +1,16 @@
 package com.example.mainpackage.logic.project.filemanagement;
 
-import com.example.mainpackage.logic.project.tests.Combination;
-import com.example.mainpackage.logic.project.Project;
-import com.example.mainpackage.logic.project.tests.Test;
 import com.example.mainpackage.logic.utils.Config;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class File {
 
-    private java.io.File file;
-
-    public static boolean saveLastComponentNumber(int number) {
+    public static void saveLastComponentNumber(int number) {
 
         //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
 
@@ -47,8 +35,6 @@ public class File {
         } catch (IOException e) {
             System.out.println(Config.ERROR_MSG_FILE_LAST_COMPONENT_NUMBER);
         }
-
-        return true;
     }
 
     public static int loadLasComponentNumber() {
@@ -73,13 +59,12 @@ public class File {
         return number;
     }
 
-    public static void removeProject(String filePath) throws FileNotFoundException {
+    public static void removeProject(String filePath) {
+        String htmlPath = filePath;
 
-        String htmlPath = new String(filePath);
-
-        if(filePath.contains(".blif"))
+        if (filePath.contains(".blif"))
             htmlPath = htmlPath.replace(".blif", ".html");
-        else if(filePath.contains(".bin"))
+        else if (filePath.contains(".bin"))
             htmlPath = htmlPath.replace(".bin", ".html");
 
         //remove project file
