@@ -137,7 +137,7 @@ public class EditView extends AppCompatImageView {
         }
 
         for (Component previous : component.getPrevious()) {
-            drawConnection(stopX, stopY, previous);
+            drawConnectionWithModule(stopX, stopY, previous, actualComponents);
         }
     }
 
