@@ -102,7 +102,7 @@ public class EditView extends AppCompatImageView {
     private void drawDataComponent(Component component, boolean isSelected, List<Component> actualComponents) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        int color = isSelected ? Color.BLACK : getColor(component.getType());
+        int color = isSelected ? Color.YELLOW : getColor(component.getType());
         paint.setColor(color);
 
         mCanvas.drawRect(getRectangle(component.getPosition()), paint);
