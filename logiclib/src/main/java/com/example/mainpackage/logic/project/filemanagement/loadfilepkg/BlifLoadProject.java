@@ -72,6 +72,7 @@ public class BlifLoadProject {
         {
             if(line.contains(".test")){
                 Signal inputSignal = new Signal(), expectedSignal = new Signal();
+                tests.add(new Test(inputSignal,expectedSignal));
 
                 String lineTmp = line.replace(".test ", "");
 
@@ -90,7 +91,6 @@ public class BlifLoadProject {
 
                 if(combination != null)
                     expectedSignal.getCombinations().add(combination);
-                tests.add(new Test(inputSignal,expectedSignal));
             }
         }
 
@@ -123,7 +123,7 @@ public class BlifLoadProject {
 
         Map<String, Boolean> values = new LinkedHashMap<>();
 
-        if(valuesStr.length == 0)
+        if(valuesStr == null || valuesStr.length == 0)
             return null;
 
 
