@@ -14,6 +14,7 @@ import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.project.tests.Combination;
 import com.example.mainpackage.logic.project.tests.Signal;
+import com.example.mainpackage.logic.project.tests.Test;
 import com.example.mainpackage.logic.user.User;
 
 import java.io.BufferedReader;
@@ -50,16 +51,50 @@ public class BlifLoadProject {
 
             Signal signalForSimulation = getSignalForSimulation(allLines);
 
+            List<Test> tests = getTestsOfProject(allLines);
+
             project = new Project(user, projectName);
             project.setComponentModule(module);
             project.setSignalForSimulation(signalForSimulation);
-
+            project.setTests(tests);
             return project;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    private List<Test> getTestsOfProject(List<String> allLines) {
+        List<Test> tests = new ArrayList<>();
+
+        for(String line : allLines)
+        {
+            if(line.contains(".test")){
+                Signal inputSignal = new Signal(), expectedSignal = new Signal();
+
+                String lineTmp = line.replace(".test ", "");
+
+                String[] inputsAndExpected = lineTmp.split("/");
+
+                //process inputs
+                String[] valuesStr = inputsAndExpected[0].split(" ");
+                Combination combination = getCombination(valuesStr);
+
+                if(combination != null)
+                    inputSignal.getCombinations().add(combination);
+
+                //process expected
+                valuesStr = inputsAndExpected[1].split(" ");
+                combination = getCombination(valuesStr);
+
+                if(combination != null)
+                    expectedSignal.getCombinations().add(combination);
+                tests.add(new Test(inputSignal,expectedSignal));
+            }
+        }
+
+        return tests;
     }
 
     private Signal getSignalForSimulation(List<String> allLines) throws Exception {
@@ -69,13 +104,15 @@ public class BlifLoadProject {
             if(line.contains(".simulation")){
                 String lineTmp = line.replace(".simulation ", "");
 
-                String[] valuesStr = lineTmp.split(" ");
+                String[] combinationsStr = lineTmp.split(";");
+                for(String combinationStr : combinationsStr){
+                    String[] valuesStr = combinationStr.split(" ");
 
-                Combination combination = getCombination(valuesStr);
+                    Combination combination = getCombination(valuesStr);
 
-                if(combination != null)
-                    signalTmp.getCombinations().add(combination);
-
+                    if(combination != null && !combination.getValues().isEmpty())
+                        signalTmp.getCombinations().add(combination);
+                }
             }
         }
         return signalTmp;
@@ -83,10 +120,12 @@ public class BlifLoadProject {
 
     private Combination getCombination(String[] valuesStr) {
         boolean result;
+
         Map<String, Boolean> values = new LinkedHashMap<>();
 
-        if(valuesStr == null)
+        if(valuesStr.length == 0)
             return null;
+
 
         for(int i = 0 ; i<valuesStr.length ; i++){
             String[] combinationTmp = valuesStr[i].split("=");
