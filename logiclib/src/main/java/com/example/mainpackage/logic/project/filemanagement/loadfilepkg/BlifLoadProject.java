@@ -1,42 +1,59 @@
 package com.example.mainpackage.logic.project.filemanagement.loadfilepkg;
 
 
+import android.app.Application;
+import android.arch.lifecycle.ViewModelProviders;
+
+import com.example.mainpackage.LogicFacadeImp;
+import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
+import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
+import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.project.tests.Combination;
+import com.example.mainpackage.logic.project.tests.Signal;
 import com.example.mainpackage.logic.user.User;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BlifLoadProject {
     
-    public Project loadBlifProject(String filePathString, User user){
+    public Project loadBlifProject(String filePathProject, User user){
         Project project;
 
         try {
             List<String> allLines  = new ArrayList<>();
 
-            File file = new File(filePathString);
+            File file = new File(filePathProject);
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
             while ((line = br.readLine()) != null) {
                 allLines.add(line);
             }
 
-            String projectName="";
+            String[] filePathByPath = filePathProject.split("/");
+            String projectName= filePathByPath[filePathByPath.length-1];
+            projectName = projectName.replace(".blif", "");
+
             String moduleLine = allLines.get(0).replace(".model ","");
             //modulestr[0] - is the name of the module ; modulestr[1] - are the coords of the component module
             String[] modulestr = moduleLine.split("-");
-            projectName = modulestr[0];
             ComponentModule module = getModuleFromLines(allLines);
+
+            Signal signalForSimulation = getSignalForSimulation(allLines);
 
             project = new Project(user, projectName);
             project.setComponentModule(module);
+            project.setSignalForSimulation(signalForSimulation);
+
             return project;
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,6 +61,44 @@ public class BlifLoadProject {
 
         return null;
     }
+
+    private Signal getSignalForSimulation(List<String> allLines) throws Exception {
+        Signal signalTmp = new Signal();
+        for(String line : allLines)
+        {
+            if(line.contains(".simulation")){
+                String lineTmp = line.replace(".simulation ", "");
+
+                String[] valuesStr = lineTmp.split(" ");
+
+                Combination combination = getCombination(valuesStr);
+
+                if(combination != null)
+                    signalTmp.getCombinations().add(combination);
+
+            }
+        }
+        return signalTmp;
+    }
+
+    private Combination getCombination(String[] valuesStr) {
+        boolean result;
+        Map<String, Boolean> values = new LinkedHashMap<>();
+
+        if(valuesStr == null)
+            return null;
+
+        for(int i = 0 ; i<valuesStr.length ; i++){
+            String[] combinationTmp = valuesStr[i].split("=");
+            if(combinationTmp.length==2)
+            {
+                result = combinationTmp[1].equals("true")? true : false;
+                values.put(combinationTmp[0], result);
+            }
+        }
+        return new Combination(values);
+    }
+
 
     private ComponentModule getModuleFromLines(List<String> allLines) throws Exception {
 

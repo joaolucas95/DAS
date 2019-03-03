@@ -5,11 +5,17 @@ import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentInput;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentSimple;
+import com.example.mainpackage.logic.project.tests.Combination;
+import com.example.mainpackage.logic.project.tests.Signal;
+import com.example.mainpackage.logic.project.tests.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +34,9 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
             for(Component component : modulesToPrint){
                 content.addAll(printModuleBlifFormat((ComponentModule) component, modulesToPrint));
             }
+
+
+            printSimulationsAndTests(content, project.getSignalForSimulation(), project.getTests());
 
             String strContent="";
             for(String str : content){
@@ -49,6 +58,50 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
         }
 
         return true;
+    }
+
+    private void printSimulationsAndTests(List<String> content, Signal signalForSimulation, List<Test> tests) {
+        List<String> simulationAndTestsContent = new ArrayList<>();
+
+        int indexOfEndComponent = getIndexOfEndComponent(content);
+
+        simulationAndTestsContent.add(getSimulationContent(signalForSimulation));
+
+        if(indexOfEndComponent == -1)
+            return;
+
+        content.addAll(indexOfEndComponent, simulationAndTestsContent);
+    }
+
+    private int getIndexOfEndComponent(List<String> content) {
+        for(int i = 0; i< content.size(); i++){
+            if(content.get(i).contains(".end"))
+                return i;
+        }
+        return -1;
+    }
+
+    private String getSimulationContent(Signal signalForSimulation) {
+
+        String content = ".simulation ";
+
+        for(Combination combination: signalForSimulation.getCombinations()){
+            content += getCombinationContent(combination);
+            content +="; ";
+        }
+        return content;
+    }
+
+    private String getCombinationContent(Combination combination){
+        String content ="";
+
+        Iterator it = combination.getValues().entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            content+= pair.getKey() + "=" + pair.getValue() + " ";
+        }
+
+        return content;
     }
 
 
