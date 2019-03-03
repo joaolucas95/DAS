@@ -3,6 +3,7 @@ package com.example.lucas.edit;
 import com.example.lucas.edit.draw.DirectDraw;
 import com.example.lucas.edit.draw.IDrawStrategy;
 import com.example.mainpackage.logic.project.component.Component;
+import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import android.annotation.SuppressLint;
@@ -94,22 +95,22 @@ public class EditView extends AppCompatImageView {
 
         for (Component cmp : actualComponents) {
             boolean isSelected = EditUtils.isSameComponent(cmp, selectedComponent);
-            drawDataComponent(cmp, isSelected);
+            drawDataComponent(cmp, isSelected, actualComponents);
         }
     }
 
-    private void drawDataComponent(Component component, boolean isSelected) {
+    private void drawDataComponent(Component component, boolean isSelected, List<Component> actualComponents) {
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         int color = isSelected ? Color.BLACK : getColor(component.getType());
         paint.setColor(color);
 
         mCanvas.drawRect(getRectangle(component.getPosition()), paint);
-        drawConnections(component);
+        drawConnections(component, actualComponents);
         setImageBitmap(mBitmap);
     }
 
-    private void drawConnections(Component component) {
+    private void drawConnections(Component component, List<Component> actualComponents) {
         int[] pos = component.getPosition();
         int stopX = pos[0] - EditUtils.COMPONENT_RADIUS;
         int stopY = pos[1];
@@ -120,6 +121,18 @@ public class EditView extends AppCompatImageView {
         }
 
         if (component.getType() == ComponentType.MODULE || component.getType() == ComponentType.PROJECT) {
+            ComponentModule module = (ComponentModule) component;
+
+            for (Component input : module.getInputList()) {
+                if (input.getPrevious() == null || input.getPrevious().isEmpty()) {
+                    continue;
+                }
+
+                for (Component previous : input.getPrevious()) {
+                    drawConnectionWithModule(stopX, stopY, previous, actualComponents);
+                }
+            }
+
             return;
         }
 
@@ -134,6 +147,35 @@ public class EditView extends AppCompatImageView {
         int startY = pos[1];
 
         mDrawStrategy.drawLine(startX, startY, stopX, stopY, mCanvas);
+    }
+
+    private void drawConnectionWithModule(int stopX, int stopY, Component previous, List<Component> actualComponents) {
+        Component selected = null;
+
+        for (Component cmp : actualComponents) {
+            if (!(cmp instanceof ComponentModule)) {
+                if (previous.getName().equals(cmp.getName())) {
+                    selected = cmp;
+                    break;
+                }
+
+                continue;
+            }
+
+            ComponentModule module = (ComponentModule) cmp;
+            for (Component data : module.getData()) {
+                if (previous.getName().equals(data.getName())) {
+                    selected = module;
+                    break;
+                }
+            }
+        }
+
+        if (selected == null) {
+            return;
+        }
+
+        drawConnection(stopX, stopY, selected);
     }
 
     private int getColor(ComponentType type) {
