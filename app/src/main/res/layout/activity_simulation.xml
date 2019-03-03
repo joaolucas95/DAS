@@ -1,58 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/rl_simulation"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <Button
-        android:id="@+id/button_close_save_simulation"
-        android:text="@string/close_and_save_simulation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-    />
-
-    <Button
-        android:id="@+id/button_new_combination"
-        android:text="@string/add_new_combination"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_close_save_simulation"
-    />
-
-    <Button
-        android:id="@+id/button_delete_combination"
-        android:text="@string/delete_last_combination"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_new_combination"
-        />
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/combination_list"
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/button_delete_combination"
-        android:textColor="@android:color/black"
-    />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button_run_combinations"
-        android:text="@string/run_simulation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/combination_list"/>
+    <RelativeLayout
+            android:id="@+id/rl_simulation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/result_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/button_run_combinations"
-        android:textColor="@android:color/black"
-    />
+        <Button
+                android:id="@+id/button_close_save_simulation"
+                android:text="@string/close_and_save_simulation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+        <Button
+                android:id="@+id/button_new_combination"
+                android:text="@string/add_new_combination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button_close_save_simulation"/>
+
+        <Button
+                android:id="@+id/button_delete_combination"
+                android:text="@string/delete_last_combination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/button_new_combination"/>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:id="@+id/combination_list"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_below="@+id/button_delete_combination"
+                      android:textColor="@android:color/black"/>
+
+        <Button
+                android:id="@+id/button_run_combinations"
+                android:text="@string/run_simulation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/combination_list"/>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                      android:id="@+id/result_list"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+                      android:layout_below="@+id/button_run_combinations"
+                      android:textColor="@android:color/black"/>
+
+    </RelativeLayout>
+
+</ScrollView>
