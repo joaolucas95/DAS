@@ -2,6 +2,7 @@ package com.example.lucas.edit;
 
 import com.example.lucas.edit.draw.DirectDraw;
 import com.example.lucas.edit.draw.IDrawStrategy;
+import com.example.lucas.edit.draw.OrtogonalDraw;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
@@ -42,7 +43,8 @@ public class EditView extends AppCompatImageView {
     private void init() {
         mBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mBitmap);
-        mDrawStrategy = new DirectDraw();
+        mDrawStrategy = getActivity().isSimpleProject() ?
+                new OrtogonalDraw() : new DirectDraw();
     }
 
     @SuppressLint("ClickableViewAccessibility")
