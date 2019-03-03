@@ -141,4 +141,10 @@ public class LogicFacadeImp implements ILogicFacade {
         FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(fragmentActivity).get(FileHistoryViewModel.class);
         return mFileHistoryViewModel.findFilePathEntityByProjectName(projectName);
     }
+
+    @Override
+    public void insertFilePath(FilePath filePath, FragmentActivity fragmentActivity) {
+        FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(fragmentActivity).get(FileHistoryViewModel.class);
+        mFileHistoryViewModel.insertFilePath(filePath);
+    }
 }

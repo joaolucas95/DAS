@@ -15,6 +15,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -193,19 +194,19 @@ public class EditActivity extends AppCompatActivity {
                 int pos = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
 
                 //save the file in the storage
-                FileHistoryViewModel mFileHistoryViewModel = ViewModelProviders.of(EditActivity.this).get(FileHistoryViewModel.class);
                 String username = LogicController.getInstance().getFacade().getCurrentUsername();
-                User user = mFileHistoryViewModel.findUserByUsername(username);
+                User user = LogicController.getInstance().getFacade().findUserByUsername(username, EditActivity.this);
+                //define name of the project
                 String projectName = "Project" + System.currentTimeMillis();
 
                 mController.doSave(Config.BASE_FILE_PATH, mController.getFileTypes().get(pos), projectName);
 
-                String filePathString = Config.BASE_FILE_PATH;
                 //save the file path in the bd
+                String filePathString = Config.BASE_FILE_PATH;
                 filePathString+= projectName;
                 filePathString += mController.getFileTypes().get(pos) == FileType.BINARY? ".bin": ".blif";
                 FilePath filePath = new FilePath(projectName, filePathString, user.id);
-                mFileHistoryViewModel.insertFilePath(filePath);
+                LogicController.getInstance().getFacade().insertFilePath(filePath, EditActivity.this);
 
                 finish();
             }

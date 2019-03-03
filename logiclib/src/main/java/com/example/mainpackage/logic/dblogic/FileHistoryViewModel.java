@@ -19,16 +19,24 @@ public class FileHistoryViewModel extends AndroidViewModel {
 
     //methos of user management
     public LiveData<List<User>> getAllUsers() { return mUserRepository.getAllUsers(); }
+
     public List<User> findAllUsers() { return mUserRepository.findAllUsers(); }
+
     public void insertUser(User user) { mUserRepository.insert(user);}
+
     public User findUserByUsername(String username){ return mUserRepository.findUserByUsername(username); }
 
 
     //methos of filePath management
     public LiveData<List<FilePath>> getAllFilesPath() { return mFilePathRepository.getAllFilesPath(); }
+
     public void insertFilePath(FilePath filePath) { mFilePathRepository.insert(filePath);}
+
     public List<FilePath> findAllFilesPathOfUser(int user_id) { return mFilePathRepository.findAllFilesPathOfUser(user_id);}
+
     public LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id) { return mFilePathRepository.getAllFilesPathOfUser(user_id); }
+
     public void deleteFilePath(FilePath filePath) { mFilePathRepository.delete(filePath);}
+
     public FilePath findFilePathEntityByProjectName(String projectName) { return mFilePathRepository.findFilePathEntityByProjectName(projectName);}
 }
