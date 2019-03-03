@@ -1,20 +1,20 @@
 package com.example.mainpackage;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModelProviders;
-import android.support.v4.app.FragmentActivity;
-
 import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
 import com.example.mainpackage.logic.dblogic.FilePath;
-import com.example.mainpackage.logic.project.filemanagement.FileType;
-import com.example.mainpackage.logic.project.filemanagement.FileUtils;
-import com.example.mainpackage.logic.project.filemanagement.ProjectFileManagement;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
 import com.example.mainpackage.logic.project.component.ComponentUtils;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
+import com.example.mainpackage.logic.project.filemanagement.FileUtils;
+import com.example.mainpackage.logic.project.filemanagement.ProjectFileManagement;
 import com.example.mainpackage.logic.statemachinepackage.ComponentEditorStateMachine;
 import com.example.mainpackage.logic.user.User;
+
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.v4.app.FragmentActivity;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -70,8 +70,7 @@ public class LogicFacadeImp implements ILogicFacade {
     public boolean saveProject(Project project, boolean isNewProject, String filePath, FileType fileType) {
         boolean result;
 
-        if(isNewProject)
-        {
+        if (isNewProject) {
             Component module = mEditorStateMachine.finishComponentEditor();
             project.setComponentModule(module);
         }
@@ -106,6 +105,11 @@ public class LogicFacadeImp implements ILogicFacade {
     @Override
     public void addComponent(ComponentType type, int[] pos) {
         mEditorStateMachine.addSimpleComponent(type, pos);
+    }
+
+    @Override
+    public void addModule(String filePathProject, com.example.mainpackage.logic.user.User user, int[] position) {
+        mEditorStateMachine.addModule(filePathProject, user, position);
     }
 
     @Override

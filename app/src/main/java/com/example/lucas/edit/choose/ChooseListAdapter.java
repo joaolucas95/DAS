@@ -1,11 +1,8 @@
 package com.example.lucas.edit.choose;
 
 import com.example.lucas.edit.EditUtils;
-import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
 import com.example.mainpackage.logic.dblogic.FilePath;
-import com.example.mainpackage.logic.project.Project;
-import com.example.mainpackage.logic.project.component.Component;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -45,15 +42,7 @@ public class ChooseListAdapter extends RecyclerView.Adapter<ChooseListAdapter.Vi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String path = filePath.getFilePath();
-
-                try {
-                    Project project = LogicController.getInstance().getFacade().getProject(path);
-                    handleOnModuleChosen(project.getComponentModule());
-
-                } catch (Exception e) {
-                    throw new IllegalStateException("Failed to obtain file. path=" + path);
-                }
+                handleOnModuleChosen(filePath.getFilePath());
             }
         });
     }
@@ -63,11 +52,11 @@ public class ChooseListAdapter extends RecyclerView.Adapter<ChooseListAdapter.Vi
         return mFilePathList.size();
     }
 
-    private void handleOnModuleChosen(Component module) {
+    private void handleOnModuleChosen(String path) {
         mActivity.setResult(EditUtils.REQUEST_CODE_CHOOSE_MODULE);
         Intent result = new Intent();
 
-        result.putExtra(EditUtils.EXTRA_MODULE, module);
+        result.putExtra(EditUtils.EXTRA_MODULE, path);
 
         mActivity.setResult(Activity.RESULT_OK, result);
         mActivity.finish();

@@ -3,19 +3,16 @@ package com.example.lucas.edit;
 import com.example.lucas.edit.choose.ChooseActivity;
 import com.example.lucas.logic.LogicController;
 import com.example.lucas.main.R;
-import com.example.mainpackage.logic.dblogic.FileHistoryViewModel;
 import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.dblogic.User;
-import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.utils.Config;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -71,8 +68,8 @@ public class EditActivity extends AppCompatActivity {
 
         switch (requestCode) {
             case EditUtils.REQUEST_CODE_CHOOSE_MODULE:
-                Component module = (Component) data.getSerializableExtra(EditUtils.EXTRA_MODULE);
-                Toast.makeText(this, "TODO. module=" + module, Toast.LENGTH_SHORT).show();
+                String path = data.getStringExtra(EditUtils.EXTRA_MODULE);
+                mController.setSelectedModule(path);
                 break;
 
             default:
@@ -202,8 +199,8 @@ public class EditActivity extends AppCompatActivity {
 
                 //save the file path in the bd
                 String filePathString = Config.BASE_FILE_PATH;
-                filePathString+= projectName;
-                filePathString += mController.getFileTypes().get(pos) == FileType.BINARY? ".bin": ".blif";
+                filePathString += projectName;
+                filePathString += mController.getFileTypes().get(pos) == FileType.BINARY ? ".bin" : ".blif";
                 FilePath filePath = new FilePath(projectName, filePathString, user.id);
                 LogicController.getInstance().getFacade().insertFilePath(filePath, EditActivity.this);
 

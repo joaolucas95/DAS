@@ -3,7 +3,6 @@ package com.example.lucas.edit;
 import com.example.lucas.edit.draw.DirectDraw;
 import com.example.lucas.edit.draw.IDrawStrategy;
 import com.example.mainpackage.logic.project.component.Component;
-import com.example.mainpackage.logic.project.component.ComponentModule;
 import com.example.mainpackage.logic.project.component.ComponentType;
 
 import android.annotation.SuppressLint;
@@ -120,6 +119,10 @@ public class EditView extends AppCompatImageView {
             return;
         }
 
+        if (component.getType() == ComponentType.MODULE || component.getType() == ComponentType.PROJECT) {
+            return;
+        }
+
         for (Component previous : component.getPrevious()) {
             drawConnection(stopX, stopY, previous);
         }
@@ -148,6 +151,7 @@ public class EditView extends AppCompatImageView {
                 return Color.GRAY;
 
             case MODULE:
+            case PROJECT:
                 return Color.BLUE;
 
             default:

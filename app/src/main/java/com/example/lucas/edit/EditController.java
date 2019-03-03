@@ -1,10 +1,11 @@
 package com.example.lucas.edit;
 
 import com.example.lucas.logic.LogicController;
-import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
+import com.example.mainpackage.logic.user.User;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class EditController {
 
     private ComponentType mSelectedType;
     private Component mSelectedComponent;
+    private String mSelectedModulePath;
 
     EditController(boolean isSimpleProject) {
         LogicController.getInstance().getFacade().newEdition(isSimpleProject);
@@ -46,6 +48,10 @@ public class EditController {
 
     List<Component> getActualComponents() {
         return LogicController.getInstance().getFacade().getActualComponents();
+    }
+
+    void setSelectedModule(String modulePath) {
+        mSelectedModulePath = modulePath;
     }
 
     /* Connection logic*/
@@ -84,7 +90,13 @@ public class EditController {
     /* Actions */
 
     void doAdd(int[] pos) {
-        LogicController.getInstance().getFacade().addComponent(mSelectedType, pos);
+        if (mSelectedType != ComponentType.MODULE || mSelectedModulePath == null) {
+            LogicController.getInstance().getFacade().addComponent(mSelectedType, pos);
+            return;
+        }
+
+        User user = User.getInstance();
+        LogicController.getInstance().getFacade().addModule(mSelectedModulePath, user, pos);
     }
 
     void doUndo() {

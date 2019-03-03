@@ -1,14 +1,14 @@
 package com.example.mainpackage;
 
-import android.arch.lifecycle.LiveData;
-import android.support.v4.app.FragmentActivity;
-
 import com.example.mainpackage.logic.dblogic.FilePath;
 import com.example.mainpackage.logic.dblogic.User;
-import com.example.mainpackage.logic.project.filemanagement.FileType;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.project.component.Component;
 import com.example.mainpackage.logic.project.component.ComponentType;
+import com.example.mainpackage.logic.project.filemanagement.FileType;
+
+import android.arch.lifecycle.LiveData;
+import android.support.v4.app.FragmentActivity;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -46,12 +46,14 @@ public interface ILogicFacade {
 
     void addComponent(ComponentType type, int[] pos);
 
+    void addModule(String filePathProject, com.example.mainpackage.logic.user.User user, int[] position);
+
     void undoOperation();
 
     void redoOperation();
 
-
     /* Db access methods */
+
     User findUserByUsername(String username, FragmentActivity fragmentActivity);
 
     LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id, FragmentActivity fragmentActivity);
