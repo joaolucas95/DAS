@@ -67,10 +67,35 @@ public class BlifSaveProjectBuilder extends SaveProjectBuilder{
 
         simulationAndTestsContent.add(getSimulationContent(signalForSimulation));
 
+        simulationAndTestsContent.add(getTestsContent(tests));
+
+
         if(indexOfEndComponent == -1)
             return;
 
         content.addAll(indexOfEndComponent, simulationAndTestsContent);
+    }
+
+    private String getTestsContent(List<Test> tests) {
+        String content ="";
+
+        for(Test test : tests){
+            String testStr = ".test ";
+
+            for(Combination combination: test.getSignalInput().getCombinations()){
+                testStr += getCombinationContent(combination);
+            }
+
+            testStr +="/ ";
+
+            for(Combination combination: test.getSignalExpected().getCombinations()){
+                testStr += getCombinationContent(combination);
+            }
+
+            content+=testStr + "\n";
+        }
+
+        return content;
     }
 
     private int getIndexOfEndComponent(List<String> content) {
