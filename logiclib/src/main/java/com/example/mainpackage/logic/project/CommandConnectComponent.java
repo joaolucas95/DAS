@@ -16,7 +16,6 @@ public class CommandConnectComponent implements Command, Serializable {
 
     @Override
     public void doCommand(ComponentBuilder componentBuilder) {
-
         Component c1 = componentBuilder.findComponentWithName(componentName1);
         Component c2 = componentBuilder.findComponentWithName(componentName2);
 

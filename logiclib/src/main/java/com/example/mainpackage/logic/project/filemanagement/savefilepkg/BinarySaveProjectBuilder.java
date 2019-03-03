@@ -7,7 +7,6 @@ public class BinarySaveProjectBuilder extends SaveProjectBuilder {
 
     @Override
     public boolean saveProject() {
-
         filePathString += "/" + project.getName() + ".bin";
 
         java.io.File filePath = new java.io.File(filePathString);
@@ -28,6 +27,5 @@ public class BinarySaveProjectBuilder extends SaveProjectBuilder {
 
         return true;
     }
-
 
 }

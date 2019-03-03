@@ -19,6 +19,7 @@ public class Test implements Serializable {
     }
 
     public Test() {
+        // Do nothing.
     }
 
     public Signal getSignalInput() {

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Signal implements Serializable {
+
     private List<Combination> combinations;
 
     public Signal() {
@@ -31,7 +32,7 @@ public class Signal implements Serializable {
 
     public List<Combination> runSimulation(ComponentModule module) {
         List<Combination> result = new ArrayList<>();
-        Map<String, Boolean> testtmp;
+        Map<String, Boolean> testTmp;
 
         for (Combination combination : combinations) {
             //define inputs to module
@@ -40,12 +41,13 @@ public class Signal implements Serializable {
                 Map.Entry pair = (Map.Entry) it.next();
                 module.setInput((String) pair.getKey(), (boolean) pair.getValue());
             }
-            //get result
-            testtmp = new LinkedHashMap<>();
-            for (Component output : module.getOutputList())
-                testtmp.put(output.getName(), module.getOutput(output.getName()));
 
-            result.add(new Combination(testtmp));
+            //get result
+            testTmp = new LinkedHashMap<>();
+            for (Component output : module.getOutputList())
+                testTmp.put(output.getName(), module.getOutput(output.getName()));
+
+            result.add(new Combination(testTmp));
         }
         return result;
     }

@@ -42,14 +42,6 @@ public class Project implements Serializable {
         this.componentModule = componentModule;
     }
 
-    public List<Component> getInputs() {
-        return ((ComponentModule) componentModule).getInputList();
-    }
-
-    public List<Component> getOutputs() {
-        return ((ComponentModule) componentModule).getOutputList();
-    }
-
     public Signal getSignalForSimulation() {
         return signalForSimulation;
     }
@@ -95,7 +87,6 @@ public class Project implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
 
     @Override
     public String toString() {

@@ -11,9 +11,6 @@ import java.io.ObjectOutputStream;
 public class File {
 
     public static void saveLastComponentNumber(int number) {
-
-        //String filePathString = context.getFilesDir().getPath().toString() + "/" + FILE_NAME;
-
         String filePathString = Config.LAST_COMPONENT_NUMBER_FILENAME;
 
         java.io.File file = new java.io.File(filePathString);
@@ -74,7 +71,5 @@ public class File {
         //remove html file
         file = new java.io.File(htmlPath);
         file.delete();
-
-
     }
 }

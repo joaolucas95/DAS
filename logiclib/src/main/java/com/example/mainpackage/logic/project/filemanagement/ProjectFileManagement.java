@@ -67,10 +67,10 @@ public class ProjectFileManagement {
             else if (lastString.equals("bin"))
                 return FileType.BINARY;
             else
-                throw new Exception(Config.ERROR_MSG_FILETYPE);
+                throw new Exception(Config.ERROR_MSG_FILE_TYPE);
 
         } catch (Exception ex) {
-            throw new Exception(Config.ERROR_MSG_FILETYPE);
+            throw new Exception(Config.ERROR_MSG_FILE_TYPE);
         }
     }
 }

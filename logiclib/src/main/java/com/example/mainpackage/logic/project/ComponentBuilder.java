@@ -16,15 +16,6 @@ public class ComponentBuilder {
         this.data = new ArrayList<>();
     }
 
-    public void addNewComponent(Component component) {
-        this.data.add(component);
-    }
-
-
-    public void connectToComponent(Command command) {
-
-    }
-
     public Component build() {
         Component finalComponent = Component.getComponent(ComponentType.PROJECT, true, new int[]{0, 0});
         ((ComponentModule) finalComponent).addComponent(data);

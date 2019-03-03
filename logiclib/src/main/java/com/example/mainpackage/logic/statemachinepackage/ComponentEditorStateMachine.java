@@ -23,10 +23,6 @@ public class ComponentEditorStateMachine {
             throw new IllegalStateException("Only can initialize an component editor with components of type projects or modules.");
     }
 
-    public IState getState() {
-        return state;
-    }
-
     private void setState(IState state) {
         this.state = state;
     }
