@@ -121,10 +121,11 @@ public class BlifLoadProject {
     private Combination getCombination(String[] valuesStr) {
         boolean result;
 
-        Map<String, Boolean> values = new LinkedHashMap<>();
 
         if(valuesStr == null || valuesStr.length == 0)
             return null;
+
+        Map<String, Boolean> values = new LinkedHashMap<>();
 
 
         for(int i = 0 ; i<valuesStr.length ; i++){
@@ -135,6 +136,10 @@ public class BlifLoadProject {
                 values.put(combinationTmp[0], result);
             }
         }
+
+        if(values.isEmpty())
+           return null;
+
         return new Combination(values);
     }
 
