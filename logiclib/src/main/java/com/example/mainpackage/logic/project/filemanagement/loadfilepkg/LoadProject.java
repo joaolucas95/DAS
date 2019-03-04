@@ -3,18 +3,19 @@ package com.example.mainpackage.logic.project.filemanagement.loadfilepkg;
 import com.example.mainpackage.logic.project.Project;
 import com.example.mainpackage.logic.user.User;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
 public class LoadProject {
-    
-    public Project loadProject(String filePathProject, User user){
+
+    public Project loadProject(String filePathProject, User user) {
         Project project = null;
 
-        java.io.File filePath = new java.io.File(filePathProject);
+        File filePath = new File(filePathProject);
 
         try {
-            FileInputStream fis = null;
+            FileInputStream fis;
             fis = new FileInputStream(filePath);
             ObjectInputStream is = new ObjectInputStream(fis);
 
@@ -23,11 +24,10 @@ public class LoadProject {
             is.close();
             fis.close();
 
-
-            if(project.getUser().getUsername() == user.getUsername())
+            if (project.getUser().getUsername().equals(user.getUsername()))
                 throw new Exception("Invalid access: This file belongs from another user.");
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return project;

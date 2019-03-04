@@ -7,7 +7,7 @@ package com.example.mainpackage.logic.user;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User implements Serializable {
 
     private static User sInstance;
 
@@ -28,7 +28,7 @@ public class User implements Serializable{
     private User() {
         // Do nothing.
     }
-    
+
     public void setUsername(String username) {
         this.username = username;
     }

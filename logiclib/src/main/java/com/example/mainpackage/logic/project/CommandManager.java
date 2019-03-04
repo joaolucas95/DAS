@@ -9,7 +9,7 @@ public class CommandManager {
 
     private List<Command> undoList;
     private List<Command> redoList;
-    
+
     private ComponentBuilder componentBuilder;
 
     public CommandManager(ComponentBuilder componentBuilder) {
@@ -18,30 +18,33 @@ public class CommandManager {
         this.redoList = new ArrayList<>();
     }
 
-    public void apply(Command c){
+    public void apply(Command c) {
         c.doCommand(componentBuilder);
         redoList.clear();
         undoList.add(c);
     }
-    
-    public void undo(){
-        if(undoList.isEmpty())
+
+    public void undo() {
+        if (undoList.isEmpty())
             return;
-        Command last = undoList.remove(undoList.size()-1);
+        Command last = undoList.remove(undoList.size() - 1);
         last.undoCommand(componentBuilder);
         redoList.add(last);
     }
-    
-    public void redo(){
-        if(redoList.isEmpty())
+
+    public void redo() {
+        if (redoList.isEmpty())
             return;
-        Command last =redoList.remove(redoList.size()-1);
+        Command last = redoList.remove(redoList.size() - 1);
         last.doCommand(componentBuilder);
         undoList.add(last);
     }
 
-    public List<Component> getActualDataToDraw(){ return componentBuilder.getData();}
-    public Component finishComponentEditor(){
+    public List<Component> getActualDataToDraw() {
+        return componentBuilder.getData();
+    }
+
+    public Component finishComponentEditor() {
         return componentBuilder.build();
     }
 }

@@ -1,11 +1,10 @@
 package com.example.mainpackage.logic.project.component;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class ComponentOutput extends ComponentSimple {
 
-    ComponentOutput(String name, List<Component> previous, int[] position) {
+    ComponentOutput(String name, int[] position) {
         super(name, position);
     }
 
@@ -14,7 +13,7 @@ public class ComponentOutput extends ComponentSimple {
         if (previous == null) {
             throw new IllegalStateException("no previous component");
         }
-        
+
         return previous.get(0).getOutput(output);
     }
 

@@ -6,7 +6,7 @@ public abstract class ExportTestBuilder {
     protected Project project;
     protected String filePath;
 
-    public abstract boolean export();
+    public abstract void export();
 
     public static ExportTestBuilder getBuilder(ExportType type) {
         if (type == ExportType.HTML) {

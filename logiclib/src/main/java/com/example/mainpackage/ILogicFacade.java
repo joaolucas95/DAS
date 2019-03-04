@@ -10,7 +10,6 @@ import com.example.mainpackage.logic.project.filemanagement.FileType;
 import android.arch.lifecycle.LiveData;
 import android.support.v4.app.FragmentActivity;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public interface ILogicFacade {
@@ -32,7 +31,7 @@ public interface ILogicFacade {
     //is a new project when we are creating a new project... isn't a new project when we are just saving the tests or simulations
     boolean saveProject(Project project, boolean isNewProject, String filePath, FileType fileType);
 
-    void removeProject(String filePath) throws FileNotFoundException;
+    void removeProject(String filePath);
 
     /* Edit actions */
 

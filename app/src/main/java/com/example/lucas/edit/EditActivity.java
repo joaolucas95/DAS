@@ -209,6 +209,10 @@ public class EditActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    boolean isSimpleProject() {
+        return mIsSimpleProject;
+    }
+
     /* Draw handling */
 
     void handleTap(int[] tapPos) {
@@ -220,7 +224,6 @@ public class EditActivity extends AppCompatActivity {
     }
 
     void doDraw() {
-
         List<Component> actualComponents = mController.getActualComponents();
 
         mEditView.drawProject(actualComponents, mController.getSelectedComponent());

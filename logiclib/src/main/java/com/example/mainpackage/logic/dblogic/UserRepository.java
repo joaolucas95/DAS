@@ -7,10 +7,10 @@ import android.os.AsyncTask;
 import java.util.List;
 
 public class UserRepository {
+
     private UserDao mUserDao;
 
-
-    public UserRepository(Application application) {
+    UserRepository(Application application) {
         FileHistoryRoomDatabase db = FileHistoryRoomDatabase.getDatabase(application);
         mUserDao = db.userDao();
     }
@@ -23,9 +23,11 @@ public class UserRepository {
         return mUserDao.findAllUsers();
     }
 
-    public User findUserByUsername(String username){ return mUserDao.findUserByUsername(username); }
+    public User findUserByUsername(String username) {
+        return mUserDao.findUserByUsername(username);
+    }
 
-    public void insert (User user) {
+    public void insert(User user) {
         new insertAsyncTask(mUserDao).execute(user);
     }
 
@@ -41,7 +43,7 @@ public class UserRepository {
         protected Void doInBackground(final User... params) {
 
             //verify if does not exist an user with that username
-            if(mAsyncTaskDao.findUserByUsername(params[0].username) != null)
+            if (mAsyncTaskDao.findUserByUsername(params[0].username) != null)
                 return null;
 
             mAsyncTaskDao.insert(params[0]);

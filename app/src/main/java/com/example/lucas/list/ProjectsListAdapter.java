@@ -22,7 +22,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapter.MyViewHolder> {
@@ -105,12 +104,8 @@ public class ProjectsListAdapter extends RecyclerView.Adapter<ProjectsListAdapte
 
                                         FilePath filePathTmp = LogicController.getInstance().getFacade().findFilePathEntityByProjectName(filePath.projectName, (FragmentActivity) holder.itemView.getContext());
                                         if (filePathTmp != null) {
-                                            try {
-                                                LogicController.getInstance().getFacade().deleteFilePath(filePathTmp, (FragmentActivity) holder.itemView.getContext());
-                                                LogicController.getInstance().getFacade().removeProject(filePathTmp.filePath);
-                                            } catch (FileNotFoundException e) {
-                                                e.printStackTrace();
-                                            }
+                                            LogicController.getInstance().getFacade().deleteFilePath(filePathTmp, (FragmentActivity) holder.itemView.getContext());
+                                            LogicController.getInstance().getFacade().removeProject(filePathTmp.filePath);
                                         }
                                         break;
                                 }

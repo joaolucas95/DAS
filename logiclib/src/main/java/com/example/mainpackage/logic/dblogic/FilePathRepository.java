@@ -7,15 +7,17 @@ import android.os.AsyncTask;
 import java.util.List;
 
 public class FilePathRepository {
+
     private FilePathDao mFilePathDao;
 
-
-    public FilePathRepository(Application application) {
+    FilePathRepository(Application application) {
         FileHistoryRoomDatabase db = FileHistoryRoomDatabase.getDatabase(application);
         this.mFilePathDao = db.filePathDao();
     }
 
-    public LiveData<List<FilePath>> getAllFilesPath() { return mFilePathDao.getAllFilesPath(); }
+    public LiveData<List<FilePath>> getAllFilesPath() {
+        return mFilePathDao.getAllFilesPath();
+    }
 
     public List<FilePath> findAllFilesPathOfUser(int user_id) {
         return mFilePathDao.findAllFilesPathOfUser(user_id);
@@ -25,10 +27,11 @@ public class FilePathRepository {
         return mFilePathDao.findFilePathEntityByProjectName(projectName);
     }
 
-    public LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id) { return mFilePathDao.getAllFilesPathOfUser(user_id); }
+    public LiveData<List<FilePath>> getAllFilesPathOfUser(int user_id) {
+        return mFilePathDao.getAllFilesPathOfUser(user_id);
+    }
 
-
-    public void insert (FilePath filePath) {
+    public void insert(FilePath filePath) {
         new FilePathRepository.insertAsyncTask(mFilePathDao).execute(filePath);
     }
 
@@ -44,7 +47,7 @@ public class FilePathRepository {
         protected Void doInBackground(final FilePath... params) {
 
             //verify if does not exist a project with that project name
-            if(mAsyncTaskDao.findFilePathEntityByProjectName(params[0].projectName) != null)
+            if (mAsyncTaskDao.findFilePathEntityByProjectName(params[0].projectName) != null)
                 return null;
 
             mAsyncTaskDao.insert(params[0]);
@@ -52,7 +55,7 @@ public class FilePathRepository {
         }
     }
 
-    public void delete (FilePath filePath) {
+    public void delete(FilePath filePath) {
         new FilePathRepository.deleteAsyncTask(mFilePathDao).execute(filePath);
     }
 
